@@ -30,3 +30,4 @@ release/
 Thumbs.db
 .vscode/
 .idea/
+dist-electron/
