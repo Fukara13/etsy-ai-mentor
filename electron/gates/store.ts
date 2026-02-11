@@ -26,3 +26,4 @@ export function getStatus(state: GateState, gate: GateId): GateStatus {
 export function getDefaultGateState(): GateState {
   return { ...defaultState };
 }
+

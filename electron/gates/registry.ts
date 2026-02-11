@@ -39,3 +39,4 @@ export const GATE_REGISTRY: Record<GateId, GateDef> = {
     deps: ['gate9'],
   },
 };
+

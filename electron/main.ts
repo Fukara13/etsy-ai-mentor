@@ -4,6 +4,7 @@ import fs from 'fs'
 import { initDB, getSession, insertSession, insertCapture, getAssetsDir, getCapture, insertAiOutput, getAiOutputByCapture, listSessions, listCapturesBySession, listStores, updateStoreGoal, getSetting, setSetting, updateSessionNote, setSessionCompetitorUrl, getSessionCompetitorUrl, insertCompetitorCapture, updateCompetitorSignals, getLatestCompetitorCapture, insertListingSnapshot } from './db'
 import { runSeoAudit } from './openai'
 import { parseListing } from './parser'
+import { getDefaultGateState } from './gates/store'
 
 let mainWindow: BrowserWindow | null = null
 let browserView: BrowserView | null = null
@@ -296,6 +297,11 @@ function registerIpcHandlers() {
   })
 
   ipcMain.handle('session:create', (_event, id: string, note?: string) => {
+    const gateState = getDefaultGateState()
+    if (gateState.gate10 !== 'OPEN' && gateState.gate10 !== 'PASS') {
+      console.error('[gates] gate10 not OPEN. Mentor action blocked.')
+      return null
+    }
     if (!getSession(id)) insertSession(id, note)
     setSessionCompetitorUrl(id, null)
   })
@@ -472,6 +478,11 @@ function registerIpcHandlers() {
   })
 
   ipcMain.handle('capture:create', async (_event, payload: { sessionId?: string } | string) => {
+    const gateState = getDefaultGateState()
+    if (gateState.gate10 !== 'OPEN' && gateState.gate10 !== 'PASS') {
+      console.error('[gates] gate10 not OPEN. Mentor action blocked.')
+      return null
+    }
     const providedSessionId = typeof payload === 'object' && payload !== null && typeof payload.sessionId === 'string'
       ? payload.sessionId
       : (typeof payload === 'string' ? payload : '')
@@ -607,6 +618,11 @@ function registerIpcHandlers() {
   })
 
   ipcMain.handle('capture:analyze', async (_event, captureId: string): Promise<{ ok: true; data: unknown } | { ok: false; errorMessage: string }> => {
+    const gateState = getDefaultGateState()
+    if (gateState.gate10 !== 'OPEN' && gateState.gate10 !== 'PASS') {
+      console.error('[gates] gate10 not OPEN. Mentor action blocked.')
+      return { ok: false, errorMessage: 'Mentor actions are disabled by gate10.' }
+    }
     try {
       const capture = getCapture(captureId)
       if (!capture) {
@@ -651,7 +667,15 @@ function registerIpcHandlers() {
 
 app.whenReady().then(async () => {
   await initDB()
+  const gateState = getDefaultGateState()
+  if (gateState.gate9 !== 'PASS') {
+    console.error('[gates] gate9 is not PASS. Application will exit.')
+    app.quit()
+    return
+  }
   createWindow()
+
+  console.log('[gates] boot state:', gateState)
 
   const editMenuTemplate: Electron.MenuItemConstructorOptions[] = [
     {
