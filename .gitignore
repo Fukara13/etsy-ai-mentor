@@ -1,0 +1,32 @@
+# --- Secrets (Sırlar) ---
+.env
+.env.*
+*.pem
+*.key
+*.p12
+*.pfx
+
+# --- Dependencies (Bağımlılıklar) ---
+node_modules/
+
+# --- Build outputs (Derleme çıktıları) ---
+dist/
+build/
+out/
+release/
+
+# --- Electron binaries / caches ---
+**/electron/dist/
+**/*.exe
+
+# --- Logs & caches ---
+*.log
+.vite/
+.cache/
+.eslintcache
+
+# --- OS / IDE ---
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

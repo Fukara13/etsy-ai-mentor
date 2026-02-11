@@ -1,0 +1,28 @@
+{
+  "name": "etsy-mentor",
+  "version": "1.0.0",
+  "private": true,
+  "main": "dist-electron/main.js",
+  "scripts": {
+    "dev": "npm run dev:renderer",
+    "dev:renderer": "vite --port 5173 --strictPort",
+    "dev:electron": "tsc -p tsconfig.electron.json && npx electron .",
+    "build": "vite build && tsc -p tsconfig.electron.json",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "openai": "^4.73.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "sql.js": "^1.13.0",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "@vitejs/plugin-react": "^4.3.3",
+    "electron": "^33.4.11",
+    "typescript": "^5.6.3",
+    "vite": "^5.4.11"
+  }
+}
