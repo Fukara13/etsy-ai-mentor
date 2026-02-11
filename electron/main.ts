@@ -5,6 +5,7 @@ import { initDB, getSession, insertSession, insertCapture, getAssetsDir, getCapt
 import { runSeoAudit } from './openai'
 import { parseListing } from './parser'
 import { getDefaultGateState } from './gates/store'
+import { loadGateState } from './gates/persistence'
 
 let mainWindow: BrowserWindow | null = null
 let browserView: BrowserView | null = null
@@ -667,7 +668,7 @@ function registerIpcHandlers() {
 
 app.whenReady().then(async () => {
   await initDB()
-  const gateState = getDefaultGateState()
+  const gateState = loadGateState()
   if (gateState.gate9 !== 'PASS') {
     console.error('[gates] gate9 is not PASS. Application will exit.')
     app.quit()

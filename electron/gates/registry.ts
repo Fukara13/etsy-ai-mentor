@@ -1,4 +1,4 @@
-export type GateId = 'gate7' | 'gate8' | 'gate8_2' | 'gate9' | 'gate10';
+export type GateId = 'gate7' | 'gate8' | 'gate8_2' | 'gate9' | 'gate10' | 'gate11';
 
 export type GateStatus = 'LOCKED' | 'OPEN' | 'PASS';
 
@@ -37,6 +37,12 @@ export const GATE_REGISTRY: Record<GateId, GateDef> = {
     title: 'Gate 10',
     description: 'Gate motor enforcement (state-driven).',
     deps: ['gate9'],
+  },
+  gate11: {
+    id: 'gate11',
+    title: 'Persistence',
+    description: 'Gate state persistence.',
+    deps: ['gate10'],
   },
 };
 
