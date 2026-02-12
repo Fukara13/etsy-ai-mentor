@@ -10,7 +10,8 @@ interface ElectronAPI {
   captureCreate: (payload: { sessionId: string }) => Promise<{ captureId: string; sessionId: string; url: string } | null>
   onCaptureCreated: (cb: (data: { captureId: string; sessionId: string; url: string }) => void) => () => void
   onCaptureFailed: (cb: (errorMessage: string) => void) => (() => void) | undefined
-  analyzeCapture: (captureId: string) => Promise<{ ok: true; data: unknown } | { ok: false; errorMessage: string }>
+  onGateBlocked: (cb: (payload: { code: string; message: string }) => void) => (() => void) | undefined
+  analyzeCapture: (captureId: string) => Promise<{ ok: true; data: unknown } | { ok: false; errorMessage: string; code?: string }>
   listSessions: () => Promise<{ id: string; note: string | null; created_at: number }[]>
   listStores: () => Promise<{ id: number; name: string; url: string | null; niche_theme: string | null; niche_emotion: string | null; niche_buyer: string | null; level: string; risk_profile: string | null; active_goal: string | null }[]>
   updateStoreGoal: (id: number, goal: string | null) => Promise<void>

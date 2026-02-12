@@ -11,7 +11,21 @@ function App() {
   const [view, setView] = useState<View>('dashboard')
   const [sessionId, setSessionId] = useState<string | null>(null)
   const [previousView, setPreviousView] = useState<View | null>(null)
+  const [gateBlockedMessage, setGateBlockedMessage] = useState<string | null>(null)
   const currentSessionIdRef = useRef<string | null>(null)
+
+  useEffect(() => {
+    const unsub = window.electronAPI?.onGateBlocked?.((payload) => {
+      setGateBlockedMessage(payload.message || 'Gate blocked')
+    })
+    return () => { unsub?.() }
+  }, [])
+
+  useEffect(() => {
+    if (!gateBlockedMessage) return
+    const t = setTimeout(() => setGateBlockedMessage(null), 5000)
+    return () => clearTimeout(t)
+  }, [gateBlockedMessage])
 
   // Only sync view to main when it's not dashboard; dashboard sends 'dashboard' itself on "Geri Dön" so Gate 7 BrowserView is not closed by effect re-runs
   useEffect(() => {
@@ -65,50 +79,50 @@ function App() {
     setPreviousView(null)
   }
 
-  if (view === 'settings') {
-    return <Settings onClose={closeSettings} />
-  }
+  const getCurrentSessionId = () => currentSessionIdRef.current ?? sessionId ?? ''
 
-  if (view === 'dashboard') {
-    return <PortfolioDashboard onSettings={openSettings} />
-  }
-
-  if (view === 'home') {
-    return (
+  const mainContent =
+    view === 'settings' ? (
+      <Settings onClose={closeSettings} />
+    ) : view === 'dashboard' ? (
+      <PortfolioDashboard onSettings={openSettings} />
+    ) : view === 'home' ? (
+      <Home
+        onNewSession={handleNewSession}
+        onOpenSession={handleOpenSession}
+        onSettings={openSettings}
+      />
+    ) : view === 'session' && sessionId ? (
+      (() => {
+        const activeSessionId = currentSessionIdRef.current ?? sessionId
+        return activeSessionId ? (
+          <BrowserSession
+            sessionId={activeSessionId}
+            getCurrentSessionId={getCurrentSessionId}
+            onBack={handleBackToHome}
+            onSettings={openSettings}
+          />
+        ) : null
+      })()
+    ) : view === 'session' ? (
+      <div className="app-loading">Loading session…</div>
+    ) : (
       <Home
         onNewSession={handleNewSession}
         onOpenSession={handleOpenSession}
         onSettings={openSettings}
       />
     )
-  }
-
-  const getCurrentSessionId = () => currentSessionIdRef.current ?? sessionId ?? ''
-
-  if (view === 'session' && sessionId) {
-    const activeSessionId = currentSessionIdRef.current ?? sessionId
-    if (activeSessionId) {
-      return (
-        <BrowserSession
-          sessionId={activeSessionId}
-          getCurrentSessionId={getCurrentSessionId}
-          onBack={handleBackToHome}
-          onSettings={openSettings}
-        />
-      )
-    }
-  }
-
-  if (view === 'session') {
-    return <div className="app-loading">Loading session…</div>
-  }
 
   return (
-    <Home
-      onNewSession={handleNewSession}
-      onOpenSession={handleOpenSession}
-      onSettings={openSettings}
-    />
+    <div className="app-root">
+      {gateBlockedMessage && (
+        <div className="toast toast-error" style={{ position: 'fixed', top: 16, left: '50%', transform: 'translateX(-50%)', zIndex: 9999 }}>
+          {gateBlockedMessage}
+        </div>
+      )}
+      {mainContent}
+    </div>
   )
 }
 

@@ -239,6 +239,7 @@ export default function PortfolioDashboard({ onSettings }: Props) {
     if (!selectedStore) return
     setSeoCapturePhase('browser_open')
     window.electronAPI?.sendAppView?.('gate7')
+    console.log('IPC channel invoked:', 'gate7:setContext')
     window.electronAPI?.gate7SetContext?.({ storeId: selectedStore.id })
   }
 

@@ -1,0 +1,40 @@
+Gate Registry:
+============================================================
+
+gate7 (Gate 7)
+  Description: Neutral listing recognition + back navigation.
+  Default Status: PASS
+
+gate8 (Gate 8)
+  Description: Git security setup.
+  Default Status: PASS
+
+gate8_2 (Gate 8.2)
+  Description: Stop tracking dist-electron + ignore.
+  Default Status: PASS
+  Dependencies: gate8
+
+gate9 (Gate 9)
+  Description: Repo hygiene + ignore + line endings.
+  Default Status: PASS
+  Dependencies: gate8_2
+
+gate10 (Gate 10)
+  Description: Gate motor enforcement (state-driven).
+  Default Status: OPEN
+  Dependencies: gate9
+
+gate11 (Persistence)
+  Description: Gate state persistence.
+  Default Status: OPEN
+  Dependencies: gate10
+
+
+Gate Files:
+============================================================
+- Registry: electron/gates/registry.ts
+- Store: electron/gates/store.ts
+- Persistence: electron/gates/persistence.ts
+
+Dev Seed: Parsed from process.env.GATE_DEV_SEED in persistence.ts
+  Format: "gate10=PASS,gate11=OPEN" (comma or semicolon separated)

@@ -6,11 +6,16 @@ import { runSeoAudit } from './openai'
 import { parseListing } from './parser'
 import { getDefaultGateState } from './gates/store'
 import { loadGateState } from './gates/persistence'
+import { createAppServices, type AppServices } from '../src/application/AppServices'
+import { GateBlockedError } from '../src/application/types'
 
 let mainWindow: BrowserWindow | null = null
 let browserView: BrowserView | null = null
 let gate7StoreId: number | null = null
 let gate7Active = false
+let services: AppServices | null = null
+/** Gate state loaded once at boot; used by IPC handlers for gate10 enforcement. */
+let bootGateState: ReturnType<typeof loadGateState> | null = null
 
 function getBrowserViewBounds() {
   const sidebarWidth = 380
@@ -273,6 +278,7 @@ function registerIpcHandlers() {
   })
 
   ipcMain.handle('gate7:setContext', (_event, payload: { storeId?: number } | undefined) => {
+    console.log('IPC called:', 'gate7:setContext')
     gate7StoreId = payload?.storeId ?? null
   })
 
@@ -284,6 +290,7 @@ function registerIpcHandlers() {
   })
 
   ipcMain.handle('nav:go', (_event, url: string) => {
+    console.log('IPC called:', 'nav:go')
     if (!browserView) return
     let u = url.trim()
     if (!u.startsWith('http://') && !u.startsWith('https://')) {
@@ -293,37 +300,43 @@ function registerIpcHandlers() {
   })
 
   ipcMain.handle('getCurrentUrl', () => {
+    console.log('IPC called:', 'getCurrentUrl')
     if (!browserView) return ''
     return browserView.webContents.getURL()
   })
 
-  ipcMain.handle('session:create', (_event, id: string, note?: string) => {
-    const gateState = getDefaultGateState()
-    if (gateState.gate10 !== 'OPEN' && gateState.gate10 !== 'PASS') {
-      console.error('[gates] gate10 not OPEN. Mentor action blocked.')
-      return null
+  ipcMain.handle('session:create', async (_event, id: string, note?: string) => {
+    console.log('IPC called:', 'session:create')
+    console.log('[gate-check] gate10 =', bootGateState?.gate10)
+    if (bootGateState?.gate10 !== 'PASS') {
+      throw new Error('Gate10 blocked: gate10 must be PASS')
     }
-    if (!getSession(id)) insertSession(id, note)
-    setSessionCompetitorUrl(id, null)
+    if (!services) return null
+    await services.session.createSession({ id, note })
+    return null
   })
 
   ipcMain.handle('competitor:set', (_event, payload: { sessionId: string; url: string }) => {
+    console.log('IPC called:', 'competitor:set')
     const { sessionId, url } = payload
     if (!sessionId || !url) return
     setSessionCompetitorUrl(sessionId, url.trim())
   })
 
   ipcMain.handle('competitor:clear', (_event, sessionId: string) => {
+    console.log('IPC called:', 'competitor:clear')
     if (!sessionId) return
     setSessionCompetitorUrl(sessionId, null)
   })
 
   ipcMain.handle('getCompetitorUrl', (_event, sessionId: string) => {
+    console.log('IPC called:', 'getCompetitorUrl')
     if (!sessionId) return null
     return getSessionCompetitorUrl(sessionId)
   })
 
   ipcMain.handle('getLatestCompetitorSignals', (_event, sessionId: string) => {
+    console.log('IPC called:', 'getLatestCompetitorSignals')
     if (!sessionId) return null
     try {
       const row = getLatestCompetitorCapture(sessionId)
@@ -337,6 +350,7 @@ function registerIpcHandlers() {
 
   // Gate 7: neutral listing capture (no evaluation; store context only)
   ipcMain.handle('gate7:captureListing', async (_e, payload: { storeId: number }) => {
+    console.log('IPC called:', 'gate7:captureListing')
     const { storeId } = payload || {}
     if (!storeId || !mainWindow?.webContents || mainWindow.isDestroyed()) {
       return { ok: false, error: 'window not ready' }
@@ -359,11 +373,13 @@ function registerIpcHandlers() {
   })
 
   ipcMain.handle('ping', async (_e, p) => {
+    console.log('IPC called:', 'ping')
     console.log('PING_HANDLER', p)
     return { ok: true, pong: true }
   })
 
   ipcMain.handle('competitor:capture', async (_e, payload: { sessionId: string; url: string }) => {
+    console.log('IPC called:', 'competitor:capture')
     console.log('COMP_HANDLER_HIT', payload)
     const { sessionId, url } = payload || {}
     if (!sessionId || !url || !url.includes('/listing/')) {
@@ -479,88 +495,22 @@ function registerIpcHandlers() {
   })
 
   ipcMain.handle('capture:create', async (_event, payload: { sessionId?: string } | string) => {
-    const gateState = getDefaultGateState()
-    if (gateState.gate10 !== 'OPEN' && gateState.gate10 !== 'PASS') {
-      console.error('[gates] gate10 not OPEN. Mentor action blocked.')
-      return null
+    console.log('IPC called:', 'capture:create')
+    console.log('[gate-check] gate10 =', bootGateState?.gate10)
+    if (bootGateState?.gate10 !== 'PASS') {
+      throw new Error('Gate10 blocked: gate10 must be PASS')
     }
-    const providedSessionId = typeof payload === 'object' && payload !== null && typeof payload.sessionId === 'string'
-      ? payload.sessionId
-      : (typeof payload === 'string' ? payload : '')
-    if (!providedSessionId || providedSessionId.trim() === '') {
-      sendCaptureFailed('No session. Start a session first.')
-      throw new Error('capture:create requires sessionId from renderer')
-    }
+    if (!services) return null
+    const providedSessionId =
+      typeof payload === 'object' && payload !== null && typeof payload.sessionId === 'string'
+        ? payload.sessionId
+        : (typeof payload === 'string' ? payload : '')
     try {
-      if (!mainWindow || mainWindow.isDestroyed()) {
-        sendCaptureFailed('App window not ready.')
-        return null
+      const result = await services.capture.createCapture({ sessionId: providedSessionId })
+      if (result && mainWindow && !mainWindow.isDestroyed()) {
+        mainWindow.webContents.send('capture:created', result)
       }
-      if (!browserView) {
-        sendCaptureFailed('Browser view not attached. Open a session first.')
-        return null
-      }
-      const wc = browserView.webContents
-      const url = wc.getURL()
-      console.log('[main] capture:create received', { sessionId: providedSessionId, url })
-      if (!getSession(providedSessionId)) insertSession(providedSessionId)
-      if (!url || url === 'about:blank') {
-        sendCaptureFailed('No page loaded. Navigate to a URL first.')
-        return null
-      }
-
-      const captureId = 'cap_' + Date.now()
-      let assetsDir: string
-      try {
-        assetsDir = getAssetsDir()
-      } catch (e) {
-        sendCaptureFailed('Could not create assets directory.', e)
-        return null
-      }
-      const htmlPath = path.join(assetsDir, captureId + '.html')
-      const pngPath = path.join(assetsDir, captureId + '.png')
-
-      let html: string
-      try {
-        html = await wc.executeJavaScript('document.documentElement.outerHTML')
-        fs.writeFileSync(htmlPath, html, 'utf-8')
-      } catch (e) {
-        sendCaptureFailed('Failed to get or save page HTML.', e)
-        return null
-      }
-
-      try {
-        const image = await wc.capturePage()
-        const png = image.toPNG()
-        fs.writeFileSync(pngPath, png)
-      } catch (e) {
-        sendCaptureFailed('Failed to capture or save screenshot.', e)
-        return null
-      }
-
-      const isListing = url.includes('/listing/')
-      let parseStatus = isListing ? 'ok' : 'failed'
-      let parsedJson = '{}'
-      if (isListing) {
-        try {
-          const parsed = parseListing(html, url)
-          parsedJson = JSON.stringify(parsed)
-        } catch {
-          parseStatus = 'failed'
-          parsedJson = '{"parseConfidence":0}'
-        }
-      }
-
-      try {
-        insertCapture(captureId, providedSessionId, url, htmlPath, pngPath, parseStatus, parsedJson)
-        console.log('[main] capture:create inserted', { captureId, sessionIdSaved: providedSessionId })
-      } catch (e) {
-        sendCaptureFailed('Failed to save capture to database.', e)
-        return null
-      }
-
-      mainWindow.webContents.send('capture:created', { captureId, sessionId: providedSessionId, url })
-      return { captureId, sessionId: providedSessionId, url }
+      return result
     } catch (e) {
       const msg = e instanceof Error ? e.message : String(e)
       sendCaptureFailed('Capture failed: ' + msg, e)
@@ -568,21 +518,58 @@ function registerIpcHandlers() {
     }
   })
 
-  ipcMain.handle('listSessions', () => listSessions())
-  ipcMain.handle('listStores', () => listStores())
-  ipcMain.handle('updateStoreGoal', (_event, id: number, goal: string | null) => {
-    updateStoreGoal(id, goal ?? null)
+  ipcMain.handle('listSessions', () => {
+    console.log('IPC called:', 'listSessions')
+    if (!services) return []
+    return services.session.listSessions()
+  })
+
+  ipcMain.handle('listStores', () => {
+    console.log('IPC called:', 'listStores')
+    if (!services) return []
+    return services.store.listStores()
+  })
+
+  ipcMain.handle('updateStoreGoal', async (_event, id: number, goal: string | null) => {
+    console.log('IPC called:', 'updateStoreGoal')
+    if (!services) return { ok: false }
+    await services.store.updateStoreGoal(id, goal ?? null)
     return { ok: true }
   })
-  ipcMain.handle('getSession', (_event, id: string) => getSession(id))
-  ipcMain.handle('getSetting', (_event, key: string) => getSetting(key))
-  ipcMain.handle('setSetting', (_event, key: string, value: string) => setSetting(key, value))
-  ipcMain.handle('updateSessionNote', (_event, sessionId: string, note: string) => {
-    insertSession(sessionId)
-    updateSessionNote(sessionId, note)
+
+  ipcMain.handle('getSession', (_event, id: string) => {
+    console.log('IPC called:', 'getSession')
+    if (!services) return null
+    return services.session.getSession(id)
   })
-  ipcMain.handle('getCapture', (_event, id: string) => getCapture(id))
+
+  ipcMain.handle('getSetting', async (_event, key: string) => {
+    console.log('IPC called:', 'getSetting')
+    if (!services) return null
+    return services.settings.getSetting(key)
+  })
+
+  ipcMain.handle('setSetting', async (_event, key: string, value: string) => {
+    console.log('IPC called:', 'setSetting')
+    if (!services) return
+    await services.settings.setSetting(key, value)
+  })
+
+  ipcMain.handle('updateSessionNote', async (_event, sessionId: string, note: string) => {
+    console.log('IPC called:', 'updateSessionNote')
+    if (!services) return
+    await services.session.updateSessionNote(sessionId, note)
+  })
+
+  ipcMain.handle('getCapture', (_event, id: string) => {
+    console.log('IPC called:', 'getCapture')
+    if (!services) return null
+    return services.capture.getCapture(id)
+  })
+
   ipcMain.handle('getAiOutput', (_event, captureId: string, type: string) => {
+    console.log('IPC called:', 'getAiOutput')
+    // This still relies on DB directly to avoid changing external behavior of the payload shape.
     const row = getAiOutputByCapture(captureId, type)
     if (!row) return null
     try {
@@ -591,77 +578,43 @@ function registerIpcHandlers() {
       return null
     }
   })
+
   ipcMain.handle('listCaptures', (_event, sessionId: string) => {
+    console.log('IPC called:', 'listCaptures')
+    if (!services) return []
     const rows = listCapturesBySession(sessionId)
     console.log('[main] listCaptures', { sessionId, count: rows.length, ts: Date.now() })
     return rows
   })
+
   ipcMain.handle('getCaptureImage', (_event, captureId: string) => {
-    const capture = getCapture(captureId)
-    if (!capture) return null
-    try {
-      const buf = fs.readFileSync(capture.png_path)
-      return 'data:image/png;base64,' + buf.toString('base64')
-    } catch {
-      return null
-    }
+    console.log('IPC called:', 'getCaptureImage')
+    if (!services) return null
+    return services.capture.getCaptureImage(captureId)
   })
 
   ipcMain.handle('getParsedListing', (_event, captureId: string) => {
-    const capture = getCapture(captureId)
-    if (!capture) return null
-    try {
-      const html = fs.readFileSync(capture.html_path, 'utf-8')
-      return parseListing(html, capture.url)
-    } catch {
-      return null
-    }
+    console.log('IPC called:', 'getParsedListing')
+    if (!services) return null
+    return services.capture.getParsedListing(captureId)
   })
 
-  ipcMain.handle('capture:analyze', async (_event, captureId: string): Promise<{ ok: true; data: unknown } | { ok: false; errorMessage: string }> => {
-    const gateState = getDefaultGateState()
-    if (gateState.gate10 !== 'OPEN' && gateState.gate10 !== 'PASS') {
-      console.error('[gates] gate10 not OPEN. Mentor action blocked.')
-      return { ok: false, errorMessage: 'Mentor actions are disabled by gate10.' }
+  ipcMain.handle('capture:analyze', async (_event, captureId: string): Promise<{ ok: true; data: unknown } | { ok: false; errorMessage: string; code?: string }> => {
+    console.log('IPC called:', 'capture:analyze')
+    console.log('[gate-check] gate10 =', bootGateState?.gate10)
+    if (bootGateState?.gate10 !== 'PASS') {
+      throw new Error('Gate10 blocked: gate10 must be PASS')
+    }
+    if (!services) {
+      return { ok: false, errorMessage: 'Services not initialized.' }
     }
     try {
-      const capture = getCapture(captureId)
-      if (!capture) {
-        return { ok: false, errorMessage: 'Capture not found.' }
-      }
-      let html: string
-      try {
-        html = fs.readFileSync(capture.html_path, 'utf-8')
-      } catch {
-        return { ok: false, errorMessage: 'Failed to read capture data.' }
-      }
-      const apiKey = getSetting('openai_api_key') || process.env.OPENAI_API_KEY
-      if (!apiKey) {
-        return { ok: false, errorMessage: 'OpenAI API key not set. Add it in Settings.' }
-      }
-      let result: Awaited<ReturnType<typeof runSeoAudit>>
-      try {
-        result = await runSeoAudit(html, capture.url)
-      } catch (e) {
-        const msg = e instanceof Error ? e.message : String(e)
-        if (/network|fetch|ECONNREFUSED|ETIMEDOUT|ENOTFOUND/i.test(msg)) {
-          return { ok: false, errorMessage: 'Network error. Check your connection and API key.' }
-        }
-        return { ok: false, errorMessage: msg || 'Audit request failed.' }
-      }
-      if (!result) {
-        return { ok: false, errorMessage: 'Audit could not be generated. Please try again.' }
-      }
-      try {
-        const outputId = 'ai_' + Date.now()
-        insertAiOutput(outputId, captureId, 'seo_audit', JSON.stringify(result))
-      } catch {
-        return { ok: false, errorMessage: 'Failed to save audit.' }
-      }
-      return { ok: true, data: result }
+      return await services.capture.analyzeCapture(captureId)
     } catch (e) {
-      const msg = e instanceof Error ? e.message : String(e)
-      return { ok: false, errorMessage: msg || 'Audit failed.' }
+      if (e instanceof GateBlockedError) {
+        return { ok: false, errorMessage: 'Gate blocked', code: 'GATE_BLOCKED' }
+      }
+      throw e
     }
   })
 }
@@ -669,11 +622,73 @@ function registerIpcHandlers() {
 app.whenReady().then(async () => {
   await initDB()
   const gateState = loadGateState()
+  bootGateState = gateState
   if (gateState.gate9 !== 'PASS') {
     console.error('[gates] gate9 is not PASS. Application will exit.')
     app.quit()
     return
   }
+
+  // Initialize application services (application layer)
+  services = createAppServices({
+    gate: {
+      getCurrentGateState: () => {
+        // Mirror existing runtime behavior for IPC-level gate enforcement
+        const current = getDefaultGateState()
+        return current as any
+      },
+    },
+    db: {
+      getSession: (id: string) => getSession(id) ?? null,
+      insertSession,
+      listSessions,
+      updateSessionNote,
+      setSessionCompetitorUrl,
+      listStores,
+      updateStoreGoal,
+      insertCapture,
+      listCapturesBySession,
+      getCapture: (id: string) => getCapture(id) ?? null,
+      insertAiOutput,
+      getAiOutputByCapture: (captureId: string, type: string) => {
+        const row = getAiOutputByCapture(captureId, type)
+        return row ?? null
+      },
+      getSetting,
+      setSetting,
+    },
+    io: {
+      getAssetsDir,
+      readFile: (p: string, encoding: BufferEncoding) => fs.readFileSync(p, encoding),
+      readFileBinary: (p: string) => {
+        try {
+          return fs.readFileSync(p)
+        } catch {
+          return null
+        }
+      },
+      writeFile: (p: string, data: string | Uint8Array) => {
+        fs.writeFileSync(p, data)
+      },
+    },
+    browser: {
+      getMainWindow: () => mainWindow,
+      getBrowserView: () => browserView,
+      sendCaptureFailed: (message: string, err?: unknown) => {
+        if (mainWindow && !mainWindow.isDestroyed()) {
+          mainWindow.webContents.send('capture:failed', { errorMessage: message })
+        }
+        console.error('[capture]', message, err !== undefined ? err : '')
+      },
+    },
+    openai: {
+      runSeoAudit,
+    },
+    parser: {
+      parseListing,
+    },
+  })
+
   createWindow()
 
   console.log('[gates] boot state:', gateState)

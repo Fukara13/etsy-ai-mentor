@@ -8,7 +8,8 @@
     "dev:renderer": "vite --port 5173 --strictPort",
     "dev:electron": "tsc -p tsconfig.electron.json && npx electron .",
     "build": "vite build && tsc -p tsconfig.electron.json",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "arch:snapshot": "node tools/arch-snapshot.mjs"
   },
   "dependencies": {
     "openai": "^4.73.0",

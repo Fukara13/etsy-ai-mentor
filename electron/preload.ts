@@ -36,6 +36,11 @@ contextBridge.exposeInMainWorld('electronAPI', {
     ipcRenderer.on('capture:failed', handler)
     return () => ipcRenderer.removeListener('capture:failed', handler)
   },
+  onGateBlocked: (cb: (payload: { code: string; message: string }) => void) => {
+    const handler = (_: unknown, payload: { code: string; message: string }) => cb(payload)
+    ipcRenderer.on('gate:blocked', handler)
+    return () => ipcRenderer.removeListener('gate:blocked', handler)
+  },
   analyzeCapture: captureAnalyze,
   listSessions: () => ipcRenderer.invoke('listSessions'),
   listStores: () => ipcRenderer.invoke('listStores'),
