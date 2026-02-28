@@ -1,0 +1,6 @@
+# CODEOWNERS — Gate-S1
+# Replace @OWNER_GITHUB_USERNAME with your actual GitHub username or team (e.g. @org/security-team)
+# These owners will be requested for review when a PR touches files matching the rules below.
+# See: https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
+
+* @OWNER_GITHUB_USERNAME
