@@ -1,31 +1,13 @@
-import { app, BrowserWindow, BrowserView, ipcMain, Menu, type WebContents, type MenuItemConstructorOptions } from 'electron'
+import { app, BrowserWindow, BrowserView, Menu, type MenuItemConstructorOptions } from 'electron'
 import path from 'path'
 import fs from 'fs'
-import { initDB, getSession, insertSession, insertCapture, getAssetsDir, getCapture, insertAiOutput, getAiOutputByCapture, listSessions, listCapturesBySession, listStores, updateStoreGoal, updateStoreNiche, insertStore, getStore, updateStoreFromDraft, runInTransaction, getSetting, setSetting, updateSessionNote, setSessionCompetitorUrl, getSessionCompetitorUrl, insertCompetitorCapture, updateCompetitorSignals, getLatestCompetitorCapture, insertListingSnapshot, insertProfileDraft, getProfileDraft, updateProfileDraftProposed, updateProfileDraftStatus, listProfileDraftsByStore, insertEvidence, listEvidenceByDraft, listEvidenceByStoreAndField, listTrends, insertTrend, updateTrendStatus, getTrend, getMentorRuntime, upsertMentorRuntime, resetMentorRuntime, getMentorProfile, upsertMentorProfile, resetMentorProfile } from './db'
-import { runSeoAudit, runSeoAuditV2 } from './openai'
-import { parseListing } from './parser'
-import { getDefaultGateState } from './gates/store'
+import { initDB } from './db'
 import { loadGateState } from './gates/persistence'
-import { createAppServices, type AppServices } from '../src/application/AppServices'
-import { GateBlockedError } from '../src/application/types'
-import { registerGateHandlers, captureListingSnapshotFromWebContents } from './ipc/gateHandlers'
-import { registerSessionHandlers } from './ipc/sessionHandlers'
-import { registerDataHandlers } from './ipc/dataHandlers'
-import { registerStoreHandlers } from './ipc/storeHandlers'
-import { registerDraftHandlers } from './ipc/draftHandlers'
-import { registerBrowserHandlers } from './ipc/browserHandlers'
-import { registerCaptureHandlers } from './ipc/captureHandlers'
-import { registerTrendsHandlers } from './ipc/trendsHandlers'
-import { registerMentorHandlers } from './ipc/mentorHandlers'
-import { registerMentorFlowHandlers } from './ipc/mentorFlowHandlers'
-import { randomUUID } from 'crypto'
-
 let mainWindow: BrowserWindow | null = null
 let browserView: BrowserView | null = null
 let gate7StoreId: number | null = null
 let gate7Active = false
-let services: AppServices | null = null
-/** Gate state loaded once at boot; used by IPC handlers for gate10 enforcement. */
+/** Gate state loaded once at boot; used when IPC handlers are reintroduced. */
 let bootGateState: ReturnType<typeof loadGateState> | null = null
 /** Last Etsy target URL for OAuth return; when storagerelay is seen we redirect here. */
 let lastTargetUrl: string | null = null
@@ -230,26 +212,15 @@ function createBrowserView() {
     console.error('[browserView] render-process-gone', details.reason, details.exitCode ?? '')
   })
 
-  // Gate 7: when user navigates to a listing page, capture neutral facts and notify renderer
-  wc.on('did-finish-load', async () => {
-    if (!gate7Active || gate7StoreId == null || !browserView || !mainWindow?.webContents || mainWindow.isDestroyed()) return
-    const wc = browserView.webContents
+  // Gate 7: placeholder for when ipc/gateHandlers is reintroduced
+  // (captureListingSnapshotFromWebContents was in ipc/gateHandlers)
+  wc.on('did-finish-load', () => {
+    if (!gate7Active || gate7StoreId == null) return
     const url = wc.getURL()
     if (!url || !url.includes('/listing/')) return
-    try {
-      const snapshot = await captureListingSnapshotFromWebContents(wc, gate7StoreId)
-      if (snapshot) {
-        console.log('[nav] main sending gate7:listingCaptured (no view change)')
-        mainWindow.webContents.send('gate7:listingCaptured', snapshot)
-        gate7StoreId = null
-      }
-    } catch (e) {
-      console.warn('[gate7] auto-capture failed', e)
-    }
+    // IPC gate7 capture logic removed until ipc/* modules are restored
   })
 }
-
-// ListingSnapshot type and captureListingSnapshotFromWebContents moved to ipc/gateHandlers.ts
 
 function createWindow() {
   mainWindow = new BrowserWindow({
@@ -332,8 +303,6 @@ function createWindow() {
       menu.popup({ window: mainWindow })
     }
   })
-
-  // BrowserView only when in session view (renderer sends app:view)
 }
 
 function hideBrowserView() {
@@ -341,53 +310,6 @@ function hideBrowserView() {
     mainWindow.setBrowserView(null)
     browserView = null
   }
-}
-
-let ipcHandlersRegistered = false
-
-function registerIpcHandlers() {
-  if (ipcHandlersRegistered) return
-  ipcHandlersRegistered = true
-
-  if (!mainWindow) return
-
-  // Shared state for Gate 7
-  const gateState = {
-    get gate7Active() { return gate7Active },
-    set gate7Active(v) { gate7Active = v },
-    get gate7StoreId() { return gate7StoreId },
-    set gate7StoreId(v) { gate7StoreId = v }
-  }
-
-  const browserViewRef = {
-    get current() { return browserView }
-  }
-
-  registerGateHandlers(mainWindow, browserViewRef, gateState, hideBrowserView, services)
-  registerSessionHandlers(mainWindow, browserViewRef, services, bootGateState, gateState, createBrowserView, hideBrowserView, setLastTargetUrl)
-  registerDataHandlers(services)
-  registerStoreHandlers(services)
-  registerDraftHandlers(services)
-  registerBrowserHandlers(mainWindow, browserViewRef, createBrowserView, (storeId) => getStore(storeId)?.url ?? null, setLastTargetUrl)
-  registerCaptureHandlers(browserViewRef, services)
-  const trendsDb = {
-    listTrends: (storeId: number | null, limit: number) => listTrends(storeId, limit),
-    insertTrend: (row: Parameters<typeof insertTrend>[0]) => insertTrend(row),
-    updateTrendStatus,
-    getTrend: (id: string) => getTrend(id) ?? undefined,
-  }
-  registerTrendsHandlers(services, trendsDb)
-  registerMentorHandlers(mainWindow, services)
-  registerMentorFlowHandlers(
-    services,
-    mainWindow,
-    browserViewRef,
-    createBrowserView,
-    (storeId) => getStore(storeId)?.url ?? null,
-    setLastTargetUrl,
-    { getMentorRuntime, upsertMentorRuntime },
-    trendsDb
-  )
 }
 
 app.whenReady().then(async () => {
@@ -400,87 +322,7 @@ app.whenReady().then(async () => {
     return
   }
 
-  // Initialize application services (application layer)
-  services = createAppServices({
-    gate: {
-      getCurrentGateState: () => {
-        // Mirror existing runtime behavior for IPC-level gate enforcement
-        const current = getDefaultGateState()
-        return current as any
-      },
-    },
-    db: {
-      getSession: (id: string) => getSession(id) ?? null,
-      insertSession,
-      listSessions,
-      updateSessionNote,
-      setSessionCompetitorUrl,
-      listStores,
-      getStore: (id: number) => getStore(id) ?? null,
-      updateStoreGoal,
-      updateStoreNiche,
-      insertStore,
-      updateStoreFromDraft,
-      insertProfileDraft,
-      getProfileDraft,
-      updateProfileDraftProposed,
-      updateProfileDraftStatus,
-      listProfileDraftsByStore,
-      insertEvidence,
-      listEvidenceByDraft,
-      listEvidenceByStoreAndField,
-      runInTransaction,
-      getMentorRuntime,
-      upsertMentorRuntime,
-      resetMentorRuntime,
-      getMentorProfile,
-      upsertMentorProfile,
-      resetMentorProfile,
-      listTrends: (storeId: number | null, limit: number) => listTrends(storeId, limit),
-      insertCapture,
-      listCapturesBySession,
-      getCapture: (id: string) => getCapture(id) ?? null,
-      insertAiOutput,
-      getAiOutputByCapture: (captureId: string, type: string) => {
-        const row = getAiOutputByCapture(captureId, type)
-        return row ?? null
-      },
-      getSetting,
-      setSetting,
-    },
-    generateId: () => randomUUID(),
-    io: {
-      getAssetsDir,
-      readFile: (p: string, encoding: BufferEncoding) => fs.readFileSync(p, encoding),
-      readFileBinary: (p: string) => {
-        try {
-          return fs.readFileSync(p)
-        } catch {
-          return null
-        }
-      },
-      writeFile: (p: string, data: string | Uint8Array) => {
-        fs.writeFileSync(p, data)
-      },
-    },
-    browser: {
-      getMainWindow: () => mainWindow,
-      getBrowserView: () => browserView,
-      sendCaptureFailed: (message: string, err?: unknown) => {
-        if (mainWindow && !mainWindow.isDestroyed()) {
-          mainWindow.webContents.send('capture:failed', { errorMessage: message })
-        }
-        console.error('[capture]', message, err !== undefined ? err : '')
-      },
-    },
-    openai: {
-      runSeoAudit,
-      runSeoAuditV2,
-    },
-    parser: {
-      parseListing,
-    },
-  })
+  // AppServices removed until ipc/* modules are reintroduced
 
   createWindow()
 
@@ -505,7 +347,7 @@ app.whenReady().then(async () => {
   ]
   Menu.setApplicationMenu(Menu.buildFromTemplate(editMenuTemplate))
 
-  registerIpcHandlers()
+  // IPC handlers removed until ipc/* modules are reintroduced
 })
 
 app.on('window-all-closed', () => {

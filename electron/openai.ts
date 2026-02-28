@@ -2,8 +2,6 @@ import OpenAI from 'openai'
 import { getSetting } from './db'
 import { parseListing } from './parser'
 import { SeoAuditResultSchema, type SeoAuditResult } from './schemas'
-import { buildSEOAuditPrompt, parseSEOAuditResponse, type ListingData } from './prompts/seo-audit'
-
 function getApiKey(): string | undefined {
   return getSetting('openai_api_key') || process.env.OPENAI_API_KEY
 }
@@ -36,77 +34,6 @@ export function getTokenUsageHistory(): TokenUsage[] {
 
 export function resetTokenUsageHistory(): void {
   tokenUsageHistory = []
-}
-
-/**
- * New SEO audit using modern prompt template
- */
-export async function runSeoAuditV2(html: string, url: string): Promise<{
-  result: any
-  tokenUsage: TokenUsage
-} | null> {
-  const apiKey = getApiKey()
-  if (!apiKey) throw new Error('OpenAI API key not set. Add it in Settings.')
-
-  const parsed = parseListing(html, url)
-  const client = new OpenAI({ apiKey })
-
-  const listingData: ListingData = {
-    title: parsed.title,
-    description: parsed.description,
-    tags: parsed.tags ?? [],
-    url,
-  }
-
-  const prompt = buildSEOAuditPrompt(listingData)
-
-  try {
-    const model = getSetting('openai_model') || 'gpt-4o'
-    console.log(`[openai] Using model: ${model}`)
-    const completion = await client.chat.completions.create({
-      model: model,
-      messages: [
-        { role: 'user', content: prompt },
-      ],
-      response_format: { type: 'json_object' },
-      temperature: 0.7,
-    })
-
-    const content = completion.choices[0]?.message?.content
-    if (!content) {
-      throw new Error('OpenAI returned empty response')
-    }
-
-    const result = parseSEOAuditResponse(content)
-
-    // Track token usage
-    const usage = completion.usage
-    if (usage) {
-      const tokenUsage: TokenUsage = {
-        promptTokens: usage.prompt_tokens,
-        completionTokens: usage.completion_tokens,
-        totalTokens: usage.total_tokens,
-        model: completion.model,
-        timestamp: Date.now(),
-      }
-      tokenUsageHistory.push(tokenUsage)
-      console.log('[openai] Token usage:', tokenUsage)
-    }
-
-    return {
-      result,
-      tokenUsage: {
-        promptTokens: usage?.prompt_tokens ?? 0,
-        completionTokens: usage?.completion_tokens ?? 0,
-        totalTokens: usage?.total_tokens ?? 0,
-        model: completion.model,
-        timestamp: Date.now(),
-      },
-    }
-  } catch (error) {
-    console.error('[openai] SEO audit v2 failed:', error)
-    throw error
-  }
 }
 
 /**
