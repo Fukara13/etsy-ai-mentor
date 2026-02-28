@@ -13,7 +13,7 @@ Configure under **Settings → Branches → Add branch protection rule** (for `m
 | **Require a pull request before merging** | ✅ Enabled |
 | **Required approvals** | 1 or more |
 | **Require review from Code Owners** | ✅ Enabled |
-| **Require status checks to pass** | ✅ Enabled *(placeholder: status checks will be added in Gate-S2)* |
+| **Require status checks to pass** | ✅ Enabled — require "CI" (Gate-S2 workflow) |
 | **Require branches to be up to date** | ✅ Enabled (recommended) |
 | **Restrict who can push to matching branches** | ✅ Enabled — owner(s) only |
 | **Dismiss stale pull request approvals when new commits are pushed** | ✅ Enabled |
@@ -21,6 +21,8 @@ Configure under **Settings → Branches → Add branch protection rule** (for `m
 | **Do not allow bypassing the above settings** | ✅ Enabled |
 | **Allow force pushes** | ❌ Disabled |
 | **Allow deletions** | ❌ Disabled |
+
+**Status check (Gate-S2):** In branch protection, add **CI** as a required status check. This is the Gate-S2 workflow that runs build (and optionally lint/test) on PRs.
 
 ---
 
