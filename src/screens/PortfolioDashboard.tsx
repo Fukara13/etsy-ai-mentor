@@ -104,8 +104,16 @@ export default function PortfolioDashboard({ onSettings }: Props) {
     return () => unsubscribe?.()
   }, [])
 
-  const handleEnterStore = (store: Store) => {
-    if (selectedStore?.id === store.id) return
+  // Optimization: Use a Ref for selectedStore to keep handleEnterStore stable across selections.
+  // This prevents all StoreCard components from re-rendering when a store is selected.
+  const selectedStoreRef = useRef(selectedStore)
+  useEffect(() => {
+    selectedStoreRef.current = selectedStore
+  }, [selectedStore])
+
+  /** ⚡ Bolt: Stable callback to prevent O(N) re-renders of StoreCard list. */
+  const handleEnterStore = useCallback((store: Store) => {
+    if (selectedStoreRef.current?.id === store.id) return
     setSelectedStore(store)
     setMentorSilent(false)
     setMessages((prev) => [
@@ -123,28 +131,38 @@ export default function PortfolioDashboard({ onSettings }: Props) {
     setActiveModule(null)
     setSeoCapturePhase('idle')
     setLastListingSnapshot(null)
-  }
+  }, []) // Perfectly stable
 
-  const handleSendMessage = (text: string) => {
+  /** ⚡ Bolt: Perfectly stable callback to prevent Dashboard re-renders when child components update messages. */
+  const handleSendMessage = useCallback((text: string) => {
     setMessages((prev) => [
       ...prev,
       { id: 'user_' + Date.now(), role: 'user', text },
     ])
-  }
+  }, [])
 
-  const handleOpenGoal = () => {
-    if (!selectedStore) return
-    setGoalDraft(selectedStore.active_goal ?? '')
+  /** ⚡ Bolt: Depends on selectedStore but remains stable during chat interactions. */
+  const handleOpenGoal = useCallback(() => {
+    if (!selectedStoreRef.current) return
+    setGoalDraft(selectedStoreRef.current.active_goal ?? '')
     setGoalMode(true)
-  }
+  }, [])
 
-  const handleGoalCancel = () => {
+  const handleGoalCancel = useCallback(() => {
     setGoalMode(false)
-  }
+  }, [])
 
-  const handleGoalSave = async () => {
-    if (!selectedStore) return
-    const trimmed = goalDraft.trim()
+  // Optimization: Use Ref for goalDraft to keep handleGoalSave stable.
+  const goalDraftRef = useRef(goalDraft)
+  useEffect(() => {
+    goalDraftRef.current = goalDraft
+  }, [goalDraft])
+
+  /** ⚡ Bolt: Optimized to avoid reference changes during goal typing. */
+  const handleGoalSave = useCallback(async () => {
+    const currentStore = selectedStoreRef.current
+    if (!currentStore) return
+    const trimmed = goalDraftRef.current.trim()
     if (!isValidGoal(trimmed)) {
       setMessages((prev) => [
         ...prev,
@@ -175,9 +193,9 @@ export default function PortfolioDashboard({ onSettings }: Props) {
     } catch {
       // minimal: no extra error messaging for Gate 3
     }
-  }
+  }, [selectedStore, goalDraft])
 
-  const handleOpenModules = () => {
+  const handleOpenModules = useCallback(() => {
     if (!selectedStore) return
     if (moduleGuidanceStoreIds.includes(selectedStore.id)) return
     const goal = selectedStore.active_goal && selectedStore.active_goal.trim()
@@ -198,16 +216,16 @@ export default function PortfolioDashboard({ onSettings }: Props) {
     setModuleGuidanceStoreIds((prev) =>
       prev.includes(selectedStore.id) ? prev : [...prev, selectedStore.id],
     )
-  }
+  }, [selectedStore, moduleGuidanceStoreIds])
 
-  const handleModuleConfirmRequest = (moduleId: 'seo' | 'prompt' | 'history') => {
+  const handleModuleConfirmRequest = useCallback((moduleId: 'seo' | 'prompt' | 'history') => {
     if (!selectedStore) return
     // Do not duplicate confirmation for the same module while it's active
     if (confirmModule === moduleId) return
     setConfirmModule(moduleId)
-  }
+  }, [selectedStore, confirmModule])
 
-  const handleModuleConfirmCancel = () => {
+  const handleModuleConfirmCancel = useCallback(() => {
     if (seoCapturePhase === 'browser_open' || seoCapturePhase === 'captured') {
       window.electronAPI?.gate7CloseBrowser?.()
     }
@@ -217,9 +235,9 @@ export default function PortfolioDashboard({ onSettings }: Props) {
     setSeoCapturePhase('idle')
     setLastListingSnapshot(null)
     window.electronAPI?.sendAppView?.('dashboard')
-  }
+  }, [seoCapturePhase])
 
-  const handleModuleConfirmContinue = () => {
+  const handleModuleConfirmContinue = useCallback(() => {
     const which = confirmModule
     if (!which) return
     setConfirmModule(null)
@@ -232,18 +250,18 @@ export default function PortfolioDashboard({ onSettings }: Props) {
         text: 'Tamam. Bir sonraki adımda modülü başlatacağız.',
       },
     ])
-  }
+  }, [confirmModule])
 
   // Gate 7: open browser to Etsy (store-silent; no interpretation)
-  const handleSeoStartAnalysis = () => {
+  const handleSeoStartAnalysis = useCallback(() => {
     if (!selectedStore) return
     setSeoCapturePhase('browser_open')
     window.electronAPI?.sendAppView?.('gate7')
     console.log('IPC channel invoked:', 'gate7:setContext')
     window.electronAPI?.gate7SetContext?.({ storeId: selectedStore.id })
-  }
+  }, [selectedStore])
 
-  const handleSeoCaptureListing = async () => {
+  const handleSeoCaptureListing = useCallback(async () => {
     if (!selectedStore) return
     const result = await window.electronAPI?.gate7CaptureListing?.(selectedStore.id)
     if (!result) return
@@ -254,7 +272,7 @@ export default function PortfolioDashboard({ onSettings }: Props) {
     }
     setLastListingSnapshot(result.snapshot)
     setSeoCapturePhase('captured')
-  }
+  }, [selectedStore])
 
   const handleSeoBackToModule = useCallback(() => {
     gate7CapturePersisted = null
