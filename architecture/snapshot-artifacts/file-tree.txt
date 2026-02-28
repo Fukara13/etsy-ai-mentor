@@ -1,0 +1,64 @@
+├── architecture
+│   ├── snapshot-artifacts
+│   │   ├── file-tree.txt
+│   │   ├── gates-summary.txt
+│   │   ├── ipc-handlers.txt
+│   │   └── package-scripts.txt
+│   └── snapshot-v1.md
+├── data
+│   └── migrations
+│       ├── 001_init.sql
+│       └── 002_capture_parse_status.sql
+├── electron
+│   ├── gates
+│   │   ├── persistence.ts
+│   │   ├── registry.ts
+│   │   └── store.ts
+│   ├── db.ts
+│   ├── main.ts
+│   ├── openai.ts
+│   ├── parser.ts
+│   ├── preload.ts
+│   ├── schemas.ts
+│   └── sql.js.d.ts
+├── src
+│   ├── application
+│   │   ├── services
+│   │   │   ├── CaptureService.ts
+│   │   │   ├── GateService.ts
+│   │   │   ├── ListingBuilderService.ts
+│   │   │   ├── SessionService.ts
+│   │   │   ├── SettingsService.ts
+│   │   │   └── StoreService.ts
+│   │   ├── AppServices.ts
+│   │   └── types.ts
+│   ├── components
+│   │   ├── BrowserPane.tsx
+│   │   ├── ErrorBoundary.tsx
+│   │   ├── MentorPanel.tsx
+│   │   ├── Sidebar.tsx
+│   │   └── StoreCard.tsx
+│   ├── lib
+│   │   └── schemas.ts
+│   ├── screens
+│   │   ├── BrowserSession.tsx
+│   │   ├── Home.tsx
+│   │   ├── PortfolioDashboard.tsx
+│   │   └── Settings.tsx
+│   ├── App.tsx
+│   ├── index.css
+│   ├── main.tsx
+│   ├── types.ts
+│   └── vite-env.d.ts
+├── tools
+│   └── arch-snapshot.mjs
+├── .gitattributes
+├── .gitignore
+├── index.html
+├── package-lock.json
+├── package.json
+├── README.md
+├── tsconfig.electron.json
+├── tsconfig.json
+├── tsconfig.node.json
+└── vite.config.ts
