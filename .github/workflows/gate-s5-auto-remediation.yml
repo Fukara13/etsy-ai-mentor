@@ -1,0 +1,195 @@
+name: Gate-S5 Auto-Remediation
+
+on:
+  workflow_run:
+    types:
+      - completed
+    workflows:
+      - CI
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+  actions: read
+
+concurrency:
+  group: gate-s5-${{ github.event.workflow_run.id }}
+  cancel-in-progress: false
+
+jobs:
+  auto_remediation:
+    if: >-
+      github.event.workflow_run.conclusion == 'failure'
+      && github.event.workflow_run.pull_requests
+      && length(github.event.workflow_run.pull_requests) > 0
+      && github.event.workflow_run.pull_requests[0].head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Resolve PR from workflow_run
+        id: pr
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const sha = context.payload.workflow_run.head_sha;
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+
+            const prs = await github.request('GET /repos/{owner}/{repo}/commits/{ref}/pulls', {
+              owner, repo, ref: sha,
+              mediaType: { previews: ['groot'] }
+            });
+
+            if (!prs.data || prs.data.length === 0) {
+              core.setOutput('found', 'false');
+              return;
+            }
+
+            const pr = prs.data.find(p => p.state === 'open') ?? prs.data[0];
+            core.setOutput('found', 'true');
+            core.setOutput('number', String(pr.number));
+            core.setOutput('head_ref', pr.head.ref);
+            core.setOutput('head_sha', pr.head.sha);
+            core.setOutput('base_ref', pr.base.ref);
+
+      - name: Exit if no PR found
+        if: steps.pr.outputs.found != 'true'
+        run: echo "No PR found. Exiting."
+
+      - name: Check gate-review label
+        id: gate
+        if: steps.pr.outputs.found == 'true'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { data: pr } = await github.rest.pulls.get({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: Number('${{ steps.pr.outputs.number }}')
+            });
+            const labels = (pr.labels || []).map(l => l.name);
+            core.setOutput('ok', labels.includes('gate-review') ? 'true' : 'false');
+
+      - name: Exit if gate-review missing
+        if: steps.gate.outputs.ok != 'true'
+        run: echo "PR missing gate-review label. Exiting."
+
+      - name: Determine attempt count (shared with S4)
+        id: attempt
+        if: steps.gate.outputs.ok == 'true'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { data: comments } = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: Number('${{ steps.pr.outputs.number }}'),
+              per_page: 100
+            });
+
+            const marker = /<!--\s*GATE_S4_ATTEMPT:(\d+)\s*-->/g;
+            let maxAttempt = 0;
+            for (const c of comments) {
+              let m;
+              while ((m = marker.exec(c.body || '')) !== null) {
+                const n = Number(m[1]);
+                if (!Number.isNaN(n)) maxAttempt = Math.max(maxAttempt, n);
+              }
+            }
+
+            const nextAttempt = maxAttempt + 1;
+            core.setOutput('max', String(maxAttempt));
+            core.setOutput('next', String(nextAttempt));
+
+      - name: Exit if attempt >= 3
+        if: steps.attempt.outputs.next >= '4'
+        run: echo "Attempt limit reached (3/3). No patch. Exiting."
+
+      - name: Checkout PR branch
+        if: steps.attempt.outputs.next <= '3'
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ steps.pr.outputs.head_sha }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Fetch CI logs
+        id: logs
+        if: steps.attempt.outputs.next <= '3'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh run view ${{ github.event.workflow_run.id }} --repo $GITHUB_REPOSITORY --log-failed 2>/dev/null | head -c 12000 > "$GITHUB_WORKSPACE/ci-logs.txt" || echo "Log fetch failed" > "$GITHUB_WORKSPACE/ci-logs.txt"
+
+      - name: Get PR diff
+        id: diff
+        if: steps.attempt.outputs.next <= '3'
+        run: |
+          git fetch origin ${{ steps.pr.outputs.base_ref }}
+          git diff origin/${{ steps.pr.outputs.base_ref }}...HEAD --no-color 2>/dev/null | head -c 8000 > "$GITHUB_WORKSPACE/pr-diff.txt"
+
+      - name: GPT analysis and patch
+        id: gpt
+        if: steps.attempt.outputs.next <= '3'
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: |
+          if [ -z "$OPENAI_API_KEY" ]; then
+            echo "OPENAI_API_KEY not set. Skipping patch."
+            echo "patch=skip" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+
+          LOGS=$(cat "$GITHUB_WORKSPACE/ci-logs.txt" 2>/dev/null || echo "")
+          DIFF=$(cat "$GITHUB_WORKSPACE/pr-diff.txt" 2>/dev/null || echo "")
+          PROMPT="You are a code fix assistant. Given CI failure logs and the PR diff, produce a unified diff patch to fix the failure.
+          Rules: Output ONLY a valid unified diff (diff -u format). No explanation. No markdown fences. Minimal change.
+          If you cannot produce a safe patch, output exactly: NO_PATCH
+
+          --- CI LOGS ---
+          $LOGS
+
+          --- PR DIFF ---
+          $DIFF"
+
+          REQ=$(jq -n \
+            --arg model "gpt-4o-mini" \
+            --arg content "$PROMPT" \
+            '{model: $model, messages: [{role: "user", content: $content}], max_tokens: 2000}')
+
+          RES=$(curl -s -X POST "https://api.openai.com/v1/chat/completions" \
+            -H "Authorization: Bearer $OPENAI_API_KEY" \
+            -H "Content-Type: application/json" \
+            -d "$REQ")
+
+          RAW=$(echo "$RES" | jq -r '.choices[0].message.content // empty')
+          if [ "$RAW" = "NO_PATCH" ] || [ -z "$RAW" ]; then
+            PATCH=""
+          else
+            PATCH="$RAW"
+          fi
+          if [ -n "$PATCH" ]; then
+            echo "$PATCH" > /tmp/patch.diff
+            echo "patch=apply" >> $GITHUB_OUTPUT
+          else
+            echo "patch=skip" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Apply patch and push
+        if: steps.attempt.outputs.next <= '3' && steps.gpt.outputs.patch == 'apply'
+        run: |
+          if grep -qE '^\+\+\+ b/(\.github/|package\.json|pnpm-lock\.yaml|yarn\.lock|package-lock\.json)' /tmp/patch.diff; then
+            echo "Patch touches forbidden paths. Skipping."
+            exit 0
+          fi
+          if git apply --check /tmp/patch.diff 2>/dev/null; then
+            git apply /tmp/patch.diff
+            git config user.name "github-actions[bot]"
+            git config user.email "github-actions[bot]@users.noreply.github.com"
+            git add -A
+            git commit -m "fix(auto): remediation attempt ${{ steps.attempt.outputs.next }}/3"
+            git push origin HEAD:${{ steps.pr.outputs.head_ref }}
+          else
+            echo "Patch validation failed. Not pushing."
+            exit 1
+          fi
