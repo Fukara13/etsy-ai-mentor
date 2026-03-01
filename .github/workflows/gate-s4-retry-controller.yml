@@ -1,6 +1,7 @@
 name: Gate-S4 Retry Controller
 
 on:
+  workflow_dispatch:
   workflow_run:
     workflows: ["CI"]
     types: [completed]
