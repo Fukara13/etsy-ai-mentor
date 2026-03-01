@@ -16,6 +16,13 @@ jobs:
       github.event.workflow_run.conclusion == 'failure'
     runs-on: ubuntu-latest
     steps:
+      - name: Exit if no PR context
+        run: |
+          if [ -z "${{ github.event.workflow_run.pull_requests[0].number }}" ]; then
+            echo "No PR context, exiting."
+            exit 0
+          fi
+
       - name: Checkout PR head
         uses: actions/checkout@v4
         with:
