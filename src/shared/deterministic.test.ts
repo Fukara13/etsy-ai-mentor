@@ -19,3 +19,4 @@ describe('clamp', () => {
     expect(clamp(3, 0, 5)).toBe(3)
   })
 })
+
