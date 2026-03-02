@@ -116,10 +116,6 @@ gate11 (Persistence)
   Description: Gate state persistence.
   Default Status: OPEN
   Dependencies: gate10
-gate12 (Listing Builder MVP)
-  Description: Manual listing content builder (Title, Tags, Description).
-  Default Status: OPEN
-  Dependencies: gate11
 Gate Files:
 ============================================================
 - Registry: electron/gates/registry.ts
@@ -161,10 +157,7 @@ All IPC handlers are registered in `electron/main.ts` via `registerIpcHandlers()
 | HANDLE | listCaptures | electron/main.ts:594 | No description |
 | HANDLE | getCaptureImage | electron/main.ts:599 | No description |
 | HANDLE | getParsedListing | electron/main.ts:610 | No description |
-| HANDLE | capture:analyze | electron/main.ts:602 | Capture management |
-| HANDLE | builder:getState | electron/main.ts:620 | Listing Builder |
-| HANDLE | builder:updateState | electron/main.ts:626 | Listing Builder |
-| HANDLE | builder:reset | electron/main.ts:632 | Listing Builder |
+| HANDLE | capture:analyze | electron/main.ts:621 | Capture management |
 
 **Gate Enforcement:**
 - `session:create`: Guarded at `electron/main.ts:300-305` (checks `gateState.gate10`)

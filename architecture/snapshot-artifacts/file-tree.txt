@@ -22,16 +22,6 @@
 │   ├── schemas.ts
 │   └── sql.js.d.ts
 ├── src
-│   ├── application
-│   │   ├── services
-│   │   │   ├── CaptureService.ts
-│   │   │   ├── GateService.ts
-│   │   │   ├── ListingBuilderService.ts
-│   │   │   ├── SessionService.ts
-│   │   │   ├── SettingsService.ts
-│   │   │   └── StoreService.ts
-│   │   ├── AppServices.ts
-│   │   └── types.ts
 │   ├── components
 │   │   ├── BrowserPane.tsx
 │   │   ├── ErrorBoundary.tsx

@@ -1,55 +1,21 @@
-import { app, BrowserWindow, BrowserView, Menu, type MenuItemConstructorOptions } from 'electron'
+import { app, BrowserWindow, BrowserView, ipcMain, Menu, type WebContents } from 'electron'
 import path from 'path'
 import fs from 'fs'
-import { initDB } from './db'
+import { initDB, getSession, insertSession, insertCapture, getAssetsDir, getCapture, insertAiOutput, getAiOutputByCapture, listSessions, listCapturesBySession, listStores, updateStoreGoal, getSetting, setSetting, updateSessionNote, setSessionCompetitorUrl, getSessionCompetitorUrl, insertCompetitorCapture, updateCompetitorSignals, getLatestCompetitorCapture, insertListingSnapshot } from './db'
+import { runSeoAudit } from './openai'
+import { parseListing } from './parser'
+import { getDefaultGateState } from './gates/store'
 import { loadGateState } from './gates/persistence'
+import { createAppServices, type AppServices } from '../src/application/AppServices'
+import { GateBlockedError } from '../src/application/types'
+
 let mainWindow: BrowserWindow | null = null
 let browserView: BrowserView | null = null
 let gate7StoreId: number | null = null
 let gate7Active = false
-/** Gate state loaded once at boot; used when IPC handlers are reintroduced. */
+let services: AppServices | null = null
+/** Gate state loaded once at boot; used by IPC handlers for gate10 enforcement. */
 let bootGateState: ReturnType<typeof loadGateState> | null = null
-/** Last Etsy target URL for OAuth return; when storagerelay is seen we redirect here. */
-let lastTargetUrl: string | null = null
-function setLastTargetUrl(url: string | null) {
-  lastTargetUrl = url
-}
-
-// --- OAuth popup helpers (no token leakage in logs) ---
-const SENSITIVE_QUERY_PARAMS = new Set([
-  'part', 'as', 'rapt', 'TL', 'sidt', 'continue', 'oauth', 'dsh', 'client_id', 'client_secret',
-  'state', 'code', 'scope', 'redirect_uri', 'access_token', 'refresh_token', 'id_token', 'token',
-  'response_type', 'nonce', 'prompt', 'login_hint',
-])
-
-function sanitizeUrl(url: string): string {
-  try {
-    const u = new URL(url)
-    const keysToMask = [...u.searchParams.keys()].filter((k) => SENSITIVE_QUERY_PARAMS.has(k.toLowerCase()))
-    keysToMask.forEach((k) => u.searchParams.set(k, '***'))
-    return u.toString()
-  } catch {
-    return url.length > 80 ? url.slice(0, 80) + '...' : url
-  }
-}
-
-function isGoogleOAuth(url: string): boolean {
-  if (typeof url !== 'string') return false
-  const lower = url.toLowerCase()
-  return (
-    lower.includes('accounts.google.com') &&
-    (lower.includes('o/oauth2') || lower.includes('/signin/oauth') || lower.includes('gsiwebsdk'))
-  )
-}
-
-function isStorageRelayUrl(url: string): boolean {
-  return typeof url === 'string' && url.startsWith('storagerelay:')
-}
-
-function isEtsyReturn(url: string): boolean {
-  if (typeof url !== 'string') return false
-  return url.startsWith('https://www.etsy.com/') && url.includes('?id=auth')
-}
 
 function getBrowserViewBounds() {
   const sidebarWidth = 380
@@ -67,11 +33,8 @@ function createBrowserView() {
   if (!mainWindow) return
   browserView = new BrowserView({
     webPreferences: {
-      partition: 'persist:etsy',
-      javascript: true,
-      contextIsolation: true,
-      sandbox: true,
       nodeIntegration: false,
+      contextIsolation: true,
       webSecurity: true,
     },
   })
@@ -79,117 +42,15 @@ function createBrowserView() {
   browserView.setBounds(getBrowserViewBounds())
   browserView.setAutoResize({ width: true, height: true })
 
-  const wc = browserView.webContents
-
   const emitUrlChanged = (u: string) => {
     if (mainWindow && !mainWindow.isDestroyed()) {
       mainWindow.webContents.send('browser:urlChanged', u)
     }
   }
 
-  const isStorageRelay = (u: string) =>
-    typeof u === 'string' && (u.startsWith('storagerelay:') || u.includes('storagerelay:'))
-  const getOAuthReturnTarget = () => lastTargetUrl ?? 'https://www.etsy.com/'
-
-  const bounceFromStorageRelay = (u: string, via: string): boolean => {
-    if (!isStorageRelay(u)) return false
-    const target = getOAuthReturnTarget()
-    console.log(`[oauth] storagerelay detected via=${via} -> ${target}`)
-    wc.loadURL(target).catch((e) => console.error('[oauth] loadURL failed', e))
-    return true
-  }
-
-  wc.on('will-navigate', (event: Electron.Event, u: string) => {
-    if (bounceFromStorageRelay(u, 'will-navigate')) event.preventDefault()
-    else emitUrlChanged(u)
-  })
-  wc.on('will-redirect', (event: Electron.Event, u: string) => {
-    if (bounceFromStorageRelay(u, 'will-redirect')) event.preventDefault()
-    else console.log('[wc] will-redirect', u)
-  })
-  wc.on('did-navigate', (_event: Electron.Event, u: string) => {
-    if (bounceFromStorageRelay(u, 'did-navigate')) return
-    console.log('[wc] did-navigate', u)
-    emitUrlChanged(u)
-  })
-  wc.on('did-frame-navigate', (_event: Electron.Event, u: string, _httpCode: number, _httpStatusText: string, isMainFrame: boolean) => {
-    if (isStorageRelay(u)) bounceFromStorageRelay(u, `did-frame-navigate main=${isMainFrame}`)
-  })
-  wc.on('did-start-navigation', (_event: Electron.Event, u: string, isInPlace: boolean, isMainFrame: boolean) => {
-    if (isStorageRelay(u)) bounceFromStorageRelay(u, `did-start-navigation inPlace=${isInPlace} main=${isMainFrame}`)
-  })
-  wc.on('did-navigate-in-page', (_event: Electron.Event, u: string) => {
-    console.log('[wc] did-navigate-in-page', u)
-    emitUrlChanged(u)
-  })
-  wc.on('did-fail-load', (_event: Electron.Event, code: number, desc: string, url: string) => {
-    if (code === -3 && (url || '').startsWith('about:srcdoc')) return // expected in many embedded pages
-    console.log('[wc] did-fail-load', code, desc, url)
-  })
-
-  // Let Electron create the OAuth popup (action: "allow") so window.opener is preserved and
-  // the storagerelay/postMessage handshake works. Manually creating a BrowserWindow (action: "deny")
-  // breaks the opener and causes the Etsy login modal spinner to hang after consent.
-  wc.on('did-create-window', (popupWin, _details) => {
-    const popupWc = popupWin.webContents
-    let finished = false
-    const onOAuthComplete = () => {
-      if (finished) return
-      finished = true
-      setTimeout(() => {
-        try {
-          if (popupWin && !popupWin.isDestroyed()) popupWin.close()
-        } catch (_e) { /* already closed */ }
-      }, 300)
-      setTimeout(() => {
-        wc.reload()
-      }, 600)
-    }
-    const isOAuthComplete = (u: string) => isStorageRelayUrl(u) || isEtsyReturn(u)
-    popupWc.on('will-redirect', (event: Electron.Event, url: string) => {
-      if (isOAuthComplete(url)) {
-        console.log('[oauth] popup completion (redirect)', sanitizeUrl(url))
-        event.preventDefault()
-        onOAuthComplete()
-      }
-    })
-    popupWc.on('did-navigate', (_event: Electron.Event, url: string) => {
-      if (isOAuthComplete(url)) {
-        console.log('[oauth] popup completion (did-navigate)', sanitizeUrl(url))
-        onOAuthComplete()
-      }
-    })
-    popupWc.on('did-navigate-in-page', (_event: Electron.Event, url: string) => {
-      if (isOAuthComplete(url)) {
-        console.log('[oauth] popup completion (in-page)', sanitizeUrl(url))
-        onOAuthComplete()
-      }
-    })
-  })
-
-  wc.setWindowOpenHandler(({ url }) => {
-    if (isGoogleOAuth(url)) {
-      console.log('[oauth] window.open (Google OAuth) allow', sanitizeUrl(url))
-      if (!mainWindow || mainWindow.isDestroyed()) return { action: 'deny' }
-      return {
-        action: 'allow',
-        overrideBrowserWindowOptions: {
-          parent: mainWindow,
-          modal: true,
-          width: 520,
-          height: 720,
-          webPreferences: {
-            nodeIntegration: false,
-            contextIsolation: true,
-            sandbox: true,
-          },
-        },
-      }
-    }
-    console.log('[oauth] window.open (non-OAuth)', sanitizeUrl(url))
-    wc.loadURL(url).catch((e) => console.error('[wc] loadURL failed', e))
-    return { action: 'deny' }
-  })
+  browserView.webContents.on('will-navigate', (_event, u: string) => emitUrlChanged(u))
+  browserView.webContents.on('did-navigate', (_event, u: string) => emitUrlChanged(u))
+  browserView.webContents.on('did-navigate-in-page', (_event, u: string) => emitUrlChanged(u))
 
   const contextMenuTemplate: Electron.MenuItemConstructorOptions[] = [
     { role: 'copy' },
@@ -197,29 +58,100 @@ function createBrowserView() {
     { role: 'paste' },
     { role: 'selectAll' },
   ]
-  wc.on('context-menu', () => {
+  browserView.webContents.on('context-menu', () => {
     if (mainWindow && !mainWindow.isDestroyed()) {
       const menu = Menu.buildFromTemplate(contextMenuTemplate)
       menu.popup({ window: mainWindow })
     }
   })
 
-  wc.on('console-message', (_event, _level, message, _line, sourceId) => {
+  browserView.webContents.setWindowOpenHandler((details) => {
+    const requestedUrl = details.url
+    if (requestedUrl && browserView) {
+      browserView.webContents.loadURL(requestedUrl)
+    }
+    return { action: 'deny' }
+  })
+
+  browserView.webContents.on('console-message', (_event, _level, message, _line, sourceId) => {
     const level = _level as number
     if (level >= 4) console.error('[browserView]', message, sourceId ? `(${sourceId})` : '')
   })
-  wc.on('render-process-gone', (_event, details) => {
+  browserView.webContents.on('did-fail-load', (_event, errorCode, errorDescription, validatedURL, isMainFrame) => {
+    console.error('[browserView] did-fail-load', isMainFrame ? 'main' : 'sub', errorCode, errorDescription, validatedURL)
+  })
+  browserView.webContents.on('render-process-gone', (_event, details) => {
     console.error('[browserView] render-process-gone', details.reason, details.exitCode ?? '')
   })
 
-  // Gate 7: placeholder for when ipc/gateHandlers is reintroduced
-  // (captureListingSnapshotFromWebContents was in ipc/gateHandlers)
-  wc.on('did-finish-load', () => {
-    if (!gate7Active || gate7StoreId == null) return
+  // Gate 7: when user navigates to a listing page, capture neutral facts and notify renderer
+  browserView.webContents.on('did-finish-load', async () => {
+    if (!gate7Active || gate7StoreId == null || !browserView || !mainWindow?.webContents || mainWindow.isDestroyed()) return
+    const wc = browserView.webContents
     const url = wc.getURL()
     if (!url || !url.includes('/listing/')) return
-    // IPC gate7 capture logic removed until ipc/* modules are restored
+    try {
+      const snapshot = await captureListingSnapshotFromWebContents(wc, gate7StoreId)
+      if (snapshot) {
+        console.log('[nav] main sending gate7:listingCaptured (no view change)')
+        mainWindow.webContents.send('gate7:listingCaptured', snapshot)
+        gate7StoreId = null
+      }
+    } catch (e) {
+      console.warn('[gate7] auto-capture failed', e)
+    }
   })
+}
+
+type ListingSnapshot = {
+  id: string
+  listing_url: string
+  title_text: string | null
+  description_text: string | null
+  tags: string[]
+  image_count: number | null
+  created_at: number
+}
+
+async function captureListingSnapshotFromWebContents(wc: WebContents, storeId: number): Promise<ListingSnapshot | null> {
+  const url = wc.getURL()
+  if (!url || !url.includes('/listing/')) return null
+  const html = await wc.executeJavaScript('document.documentElement.outerHTML') as string
+  const parsed = parseListing(html, url)
+  let imageCount: number | null = null
+  try {
+    const count = await wc.executeJavaScript(`
+      (function() {
+        var nodes = document.querySelectorAll('[data-carousel-pane="image"] img, [data-listing-image], ul[role="list"] li img');
+        return nodes ? nodes.length : 0;
+      })();
+    `) as number
+    imageCount = typeof count === 'number' && count >= 0 ? count : null
+  } catch {
+    // non-fatal
+  }
+  const id = 'snap_' + Date.now()
+  const tagsJson = JSON.stringify(parsed.tags ?? [])
+  const createdAt = Math.floor(Date.now() / 1000)
+  insertListingSnapshot(
+    id,
+    storeId,
+    'seo_audit',
+    url,
+    parsed.title ?? null,
+    parsed.description ?? null,
+    tagsJson,
+    imageCount
+  )
+  return {
+    id,
+    listing_url: url,
+    title_text: parsed.title ?? null,
+    description_text: parsed.description ?? null,
+    tags: parsed.tags ?? [],
+    image_count: imageCount,
+    created_at: createdAt,
+  }
 }
 
 function createWindow() {
@@ -227,11 +159,10 @@ function createWindow() {
     width: 1400,
     height: 900,
     webPreferences: {
-      preload: path.resolve(__dirname, 'preload.js'),
+      preload: path.join(__dirname, 'preload.js'),
       contextIsolation: true,
       nodeIntegration: false,
-      sandbox: false,
-      devTools: !app.isPackaged,
+      devTools: true,
     },
   })
 
@@ -252,7 +183,6 @@ function createWindow() {
   })
 
   mainWindow.webContents.on('did-fail-load', (_event, errorCode, errorDescription, validatedURL, isMainFrame) => {
-    if (errorCode === -3 && (validatedURL || '').startsWith('about:srcdoc')) return // expected in many embedded pages
     console.error('[main] did-fail-load', isMainFrame ? 'main' : 'sub', errorCode, errorDescription, validatedURL)
     if (!app.isPackaged && isMainFrame && validatedURL && validatedURL.includes('localhost:5173')) {
       if (mainWindow && !mainWindow.isDestroyed()) {
@@ -280,17 +210,6 @@ function createWindow() {
     browserView = null
   })
 
-  // DevTools: open only for main window and only when it has loaded the app URL (not data: fallback)
-  if (!app.isPackaged) {
-    mainWindow.webContents.once('did-finish-load', () => {
-      const url = mainWindow?.webContents.getURL() ?? ''
-      if (url.startsWith('http://localhost:') || url.startsWith('https://localhost:')) {
-        console.log('[devtools] opening for mainWindow id=', mainWindow?.id, 'url=', url.slice(0, 60))
-        mainWindow?.webContents.openDevTools({ mode: 'detach' })
-      }
-    })
-  }
-
   const contextMenuTemplate: Electron.MenuItemConstructorOptions[] = [
     { role: 'copy' },
     { role: 'cut' },
@@ -303,6 +222,8 @@ function createWindow() {
       menu.popup({ window: mainWindow })
     }
   })
+
+  // BrowserView only when in session view (renderer sends app:view)
 }
 
 function hideBrowserView() {
@@ -310,6 +231,392 @@ function hideBrowserView() {
     mainWindow.setBrowserView(null)
     browserView = null
   }
+}
+
+let ipcHandlersRegistered = false
+
+function registerIpcHandlers() {
+  if (ipcHandlersRegistered) return
+  ipcHandlersRegistered = true
+
+  function sendCaptureFailed(errorMessage: string, err?: unknown) {
+    if (mainWindow && !mainWindow.isDestroyed()) {
+      mainWindow.webContents.send('capture:failed', { errorMessage })
+    }
+    console.error('[capture]', errorMessage, err !== undefined ? err : '')
+  }
+
+  ipcMain.on('app:view', (_event, view: string) => {
+    console.log('[nav] main app:view received', view, 'gate7Active=', gate7Active)
+    if (view === 'session' || view === 'gate7') {
+      if (!browserView && mainWindow) createBrowserView()
+      if (browserView && view === 'gate7') {
+        gate7Active = true
+        browserView.webContents.loadURL('https://www.etsy.com')
+      }
+    } else {
+      // Do NOT destroy BrowserView when gate7 is active — only gate7:closeBrowser may do that
+      if (gate7Active) return
+      gate7Active = false
+      gate7StoreId = null
+      hideBrowserView()
+      mainWindow?.focus()
+      mainWindow?.webContents?.focus()
+    }
+  })
+
+  // Gate 7: only way to close BrowserView after listing recognition; called when user clicks "Geri Dön"
+  ipcMain.on('gate7:closeBrowser', () => {
+    console.log('[nav] main gate7:closeBrowser received')
+    gate7Active = false
+    gate7StoreId = null
+    hideBrowserView()
+    if (mainWindow && !mainWindow.isDestroyed()) {
+      mainWindow.focus()
+      mainWindow.webContents.focus()
+    }
+  })
+
+  ipcMain.handle('gate7:setContext', (_event, payload: { storeId?: number } | undefined) => {
+    console.log('IPC called:', 'gate7:setContext')
+    gate7StoreId = payload?.storeId ?? null
+  })
+
+  ipcMain.on('browser:setBounds', (_event, rect: { x: number; y: number; width: number; height: number }) => {
+    if (!browserView) return
+    const { x, y, width, height } = rect
+    browserView.setBounds({ x: Math.round(x), y: Math.round(y), width: Math.round(width), height: Math.round(height) })
+    browserView.setAutoResize({ width: true, height: true })
+  })
+
+  ipcMain.handle('nav:go', (_event, url: string) => {
+    console.log('IPC called:', 'nav:go')
+    if (!browserView) return
+    let u = url.trim()
+    if (!u.startsWith('http://') && !u.startsWith('https://')) {
+      u = 'https://' + u
+    }
+    browserView!.webContents.loadURL(u)
+  })
+
+  ipcMain.handle('getCurrentUrl', () => {
+    console.log('IPC called:', 'getCurrentUrl')
+    if (!browserView) return ''
+    return browserView.webContents.getURL()
+  })
+
+  ipcMain.handle('session:create', async (_event, id: string, note?: string) => {
+    console.log('IPC called:', 'session:create')
+    console.log('[gate-check] gate10 =', bootGateState?.gate10)
+    if (bootGateState?.gate10 !== 'PASS') {
+      throw new Error('Gate10 blocked: gate10 must be PASS')
+    }
+    if (!services) return null
+    await services.session.createSession({ id, note })
+    return null
+  })
+
+  ipcMain.handle('competitor:set', (_event, payload: { sessionId: string; url: string }) => {
+    console.log('IPC called:', 'competitor:set')
+    const { sessionId, url } = payload
+    if (!sessionId || !url) return
+    setSessionCompetitorUrl(sessionId, url.trim())
+  })
+
+  ipcMain.handle('competitor:clear', (_event, sessionId: string) => {
+    console.log('IPC called:', 'competitor:clear')
+    if (!sessionId) return
+    setSessionCompetitorUrl(sessionId, null)
+  })
+
+  ipcMain.handle('getCompetitorUrl', (_event, sessionId: string) => {
+    console.log('IPC called:', 'getCompetitorUrl')
+    if (!sessionId) return null
+    return getSessionCompetitorUrl(sessionId)
+  })
+
+  ipcMain.handle('getLatestCompetitorSignals', (_event, sessionId: string) => {
+    console.log('IPC called:', 'getLatestCompetitorSignals')
+    if (!sessionId) return null
+    try {
+      const row = getLatestCompetitorCapture(sessionId)
+      if (!row || !row.signals_json) return null
+      const signals = JSON.parse(row.signals_json) as Record<string, unknown>
+      return { signals }
+    } catch {
+      return null
+    }
+  })
+
+  // Gate 7: neutral listing capture (no evaluation; store context only)
+  ipcMain.handle('gate7:captureListing', async (_e, payload: { storeId: number }) => {
+    console.log('IPC called:', 'gate7:captureListing')
+    const { storeId } = payload || {}
+    if (!storeId || !mainWindow?.webContents || mainWindow.isDestroyed()) {
+      return { ok: false, error: 'window not ready' }
+    }
+    if (!browserView) {
+      return { ok: false, error: 'browser not open' }
+    }
+    const wc = browserView.webContents
+    const url = wc.getURL()
+    if (!url || !url.includes('/listing/')) {
+      return { ok: false, error: 'not_listing' }
+    }
+    try {
+      const snapshot = await captureListingSnapshotFromWebContents(wc, storeId)
+      return snapshot ? { ok: true, snapshot } : { ok: false, error: 'capture failed' }
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : String(err)
+      return { ok: false, error: msg }
+    }
+  })
+
+  ipcMain.handle('ping', async (_e, p) => {
+    console.log('IPC called:', 'ping')
+    console.log('PING_HANDLER', p)
+    return { ok: true, pong: true }
+  })
+
+  ipcMain.handle('competitor:capture', async (_e, payload: { sessionId: string; url: string }) => {
+    console.log('IPC called:', 'competitor:capture')
+    console.log('COMP_HANDLER_HIT', payload)
+    const { sessionId, url } = payload || {}
+    if (!sessionId || !url || !url.includes('/listing/')) {
+      return { ok: false, error: 'invalid payload' }
+    }
+    if (!mainWindow || mainWindow.isDestroyed()) {
+      return { ok: false, error: 'window not ready' }
+    }
+    if (!browserView) {
+      return { ok: false, error: 'browser view not attached' }
+    }
+    const wc = browserView.webContents
+    try {
+      // A) Navigate to competitor URL
+      const currentUrl = wc.getURL()
+      if (!currentUrl || currentUrl !== url) {
+        await new Promise<void>((resolve, reject) => {
+          const onFinish = () => {
+            wc.removeListener('did-fail-load', onFail)
+            resolve()
+          }
+          const onFail = (_event: Electron.Event, errorCode: number, errorDescription: string) => {
+            wc.removeListener('did-finish-load', onFinish)
+            reject(new Error(errorDescription || 'Failed to load competitor URL'))
+          }
+          wc.once('did-finish-load', onFinish)
+          wc.once('did-fail-load', onFail)
+          wc.loadURL(url)
+        })
+      }
+      // B) Take screenshot
+      let assetsDir: string
+      try {
+        assetsDir = getAssetsDir()
+      } catch (e) {
+        console.error('[competitor] could not get assets dir', e)
+        return { ok: false, error: 'assets dir failed' }
+      }
+      const id = 'compcap_' + Date.now()
+      const pngPath = path.join(assetsDir, id + '.png')
+      try {
+        const image = await wc.capturePage()
+        const pngBuffer = image.toPNG()
+        fs.writeFileSync(pngPath, pngBuffer)
+      } catch (e) {
+        console.error('[competitor] failed to capture screenshot', e)
+        return { ok: false, error: 'screenshot failed' }
+      }
+      // C) Insert DB row with empty signals_json first
+      try {
+        insertCompetitorCapture(id, sessionId, url, pngPath, '{}')
+        console.log('[competitor] capture saved', { id, sessionId, url, pngPath })
+      } catch (e) {
+        console.error('[competitor] failed to save competitor capture', e)
+        return { ok: false, error: 'db insert failed' }
+      }
+
+      // D) Extract signals from DOM (never throw)
+      let signals: { title: string | null; price: string | null; photoCount: number | null; rating: string | null; reviewCount: number | null; shippingCue: string | null } = { title: null, price: null, photoCount: null, rating: null, reviewCount: null, shippingCue: null }
+      try {
+        const raw = await wc.executeJavaScript(`
+          (function() {
+            try {
+              var getText = function(sel) {
+                var el = document.querySelector(sel);
+                return el ? (el.textContent || '').trim() : null;
+              };
+              var title = getText('h1[data-buy-box-listing-title]') || getText('h1[itemprop="name"]') || getText('h1');
+              var priceEl = document.querySelector('[data-buy-box-region="price"]') || document.querySelector('p[data-buy-box-listing-price]') || document.querySelector('span[itemprop="price"]');
+              var price = priceEl ? (priceEl.textContent || '').trim() : null;
+              var imgNodes = document.querySelectorAll('[data-carousel-pane="image"] img, [data-listing-image], ul[role="list"] li img');
+              var photoCount = imgNodes && imgNodes.length ? imgNodes.length : null;
+              var ratingEl = document.querySelector('span[data-buy-box-region="star-rating"] [aria-hidden="true"]') || document.querySelector('span[itemprop="ratingValue"]');
+              var rating = ratingEl ? (ratingEl.textContent || '').trim() : null;
+              var reviewEl = document.querySelector('a[href*="#reviews"] span') || document.querySelector('span[itemprop="reviewCount"]');
+              var reviewCount = reviewEl ? (reviewEl.textContent || '').trim() : null;
+              var shipEl = document.querySelector('[data-buy-box-region="delivery"]') || document.querySelector('[data-buy-box-region="shipping"]') || document.querySelector('[data-qa="delivery-message"]');
+              var shippingCue = shipEl ? (shipEl.textContent || '').trim() : null;
+              return { title: title || null, price: price || null, photoCount: photoCount, rating: rating || null, reviewCount: reviewCount || null, shippingCue: shippingCue || null };
+            } catch (e) {
+              return { title: null, price: null, photoCount: null, rating: null, reviewCount: null, shippingCue: null };
+            }
+          })();
+        `)
+        if (raw && typeof raw === 'object') {
+          const rev = raw.reviewCount
+          const reviewNum = typeof rev === 'number' ? rev : (typeof rev === 'string' ? parseInt(rev.replace(/\D/g, ''), 10) : NaN)
+          signals = {
+            title: typeof raw.title === 'string' ? raw.title : null,
+            price: typeof raw.price === 'string' ? raw.price : null,
+            photoCount: typeof raw.photoCount === 'number' ? raw.photoCount : null,
+            rating: typeof raw.rating === 'string' ? raw.rating : null,
+            reviewCount: Number.isFinite(reviewNum) ? reviewNum : null,
+            shippingCue: typeof raw.shippingCue === 'string' ? raw.shippingCue : null,
+          }
+        }
+      } catch (e) {
+        console.warn('[competitor] DOM extraction failed (non-fatal)', e)
+      }
+
+      const signalsJson = JSON.stringify(signals)
+      try {
+        updateCompetitorSignals(id, signalsJson)
+      } catch (e) {
+        console.warn('[competitor] updateCompetitorSignals failed (non-fatal)', e)
+      }
+
+      return { ok: true, id, pngPath, signals }
+    } catch (e) {
+      console.error('[competitor] capture failed', e)
+      return { ok: false, error: e instanceof Error ? e.message : String(e) }
+    }
+  })
+
+  ipcMain.handle('capture:create', async (_event, payload: { sessionId?: string } | string) => {
+    console.log('IPC called:', 'capture:create')
+    console.log('[gate-check] gate10 =', bootGateState?.gate10)
+    if (bootGateState?.gate10 !== 'PASS') {
+      throw new Error('Gate10 blocked: gate10 must be PASS')
+    }
+    if (!services) return null
+    const providedSessionId =
+      typeof payload === 'object' && payload !== null && typeof payload.sessionId === 'string'
+        ? payload.sessionId
+        : (typeof payload === 'string' ? payload : '')
+    try {
+      const result = await services.capture.createCapture({ sessionId: providedSessionId })
+      if (result && mainWindow && !mainWindow.isDestroyed()) {
+        mainWindow.webContents.send('capture:created', result)
+      }
+      return result
+    } catch (e) {
+      const msg = e instanceof Error ? e.message : String(e)
+      sendCaptureFailed('Capture failed: ' + msg, e)
+      return null
+    }
+  })
+
+  ipcMain.handle('listSessions', () => {
+    console.log('IPC called:', 'listSessions')
+    if (!services) return []
+    return services.session.listSessions()
+  })
+
+  ipcMain.handle('listStores', () => {
+    console.log('IPC called:', 'listStores')
+    if (!services) return []
+    return services.store.listStores()
+  })
+
+  ipcMain.handle('updateStoreGoal', async (_event, id: number, goal: string | null) => {
+    console.log('IPC called:', 'updateStoreGoal')
+    if (!services) return { ok: false }
+    await services.store.updateStoreGoal(id, goal ?? null)
+    return { ok: true }
+  })
+
+  ipcMain.handle('getSession', (_event, id: string) => {
+    console.log('IPC called:', 'getSession')
+    if (!services) return null
+    return services.session.getSession(id)
+  })
+
+  ipcMain.handle('getSetting', async (_event, key: string) => {
+    console.log('IPC called:', 'getSetting')
+    if (!services) return null
+    return services.settings.getSetting(key)
+  })
+
+  ipcMain.handle('setSetting', async (_event, key: string, value: string) => {
+    console.log('IPC called:', 'setSetting')
+    if (!services) return
+    await services.settings.setSetting(key, value)
+  })
+
+  ipcMain.handle('updateSessionNote', async (_event, sessionId: string, note: string) => {
+    console.log('IPC called:', 'updateSessionNote')
+    if (!services) return
+    await services.session.updateSessionNote(sessionId, note)
+  })
+
+  ipcMain.handle('getCapture', (_event, id: string) => {
+    console.log('IPC called:', 'getCapture')
+    if (!services) return null
+    return services.capture.getCapture(id)
+  })
+
+  ipcMain.handle('getAiOutput', (_event, captureId: string, type: string) => {
+    console.log('IPC called:', 'getAiOutput')
+    // This still relies on DB directly to avoid changing external behavior of the payload shape.
+    const row = getAiOutputByCapture(captureId, type)
+    if (!row) return null
+    try {
+      return JSON.parse(row.payload)
+    } catch {
+      return null
+    }
+  })
+
+  ipcMain.handle('listCaptures', (_event, sessionId: string) => {
+    console.log('IPC called:', 'listCaptures')
+    if (!services) return []
+    const rows = listCapturesBySession(sessionId)
+    console.log('[main] listCaptures', { sessionId, count: rows.length, ts: Date.now() })
+    return rows
+  })
+
+  ipcMain.handle('getCaptureImage', (_event, captureId: string) => {
+    console.log('IPC called:', 'getCaptureImage')
+    if (!services) return null
+    return services.capture.getCaptureImage(captureId)
+  })
+
+  ipcMain.handle('getParsedListing', (_event, captureId: string) => {
+    console.log('IPC called:', 'getParsedListing')
+    if (!services) return null
+    return services.capture.getParsedListing(captureId)
+  })
+
+  ipcMain.handle('capture:analyze', async (_event, captureId: string): Promise<{ ok: true; data: unknown } | { ok: false; errorMessage: string; code?: string }> => {
+    console.log('IPC called:', 'capture:analyze')
+    console.log('[gate-check] gate10 =', bootGateState?.gate10)
+    if (bootGateState?.gate10 !== 'PASS') {
+      throw new Error('Gate10 blocked: gate10 must be PASS')
+    }
+    if (!services) {
+      return { ok: false, errorMessage: 'Services not initialized.' }
+    }
+    try {
+      return await services.capture.analyzeCapture(captureId)
+    } catch (e) {
+      if (e instanceof GateBlockedError) {
+        return { ok: false, errorMessage: 'Gate blocked', code: 'GATE_BLOCKED' }
+      }
+      throw e
+    }
+  })
 }
 
 app.whenReady().then(async () => {
@@ -322,7 +629,65 @@ app.whenReady().then(async () => {
     return
   }
 
-  // AppServices removed until ipc/* modules are reintroduced
+  // Initialize application services (application layer)
+  services = createAppServices({
+    gate: {
+      getCurrentGateState: () => {
+        // Mirror existing runtime behavior for IPC-level gate enforcement
+        const current = getDefaultGateState()
+        return current as any
+      },
+    },
+    db: {
+      getSession: (id: string) => getSession(id) ?? null,
+      insertSession,
+      listSessions,
+      updateSessionNote,
+      setSessionCompetitorUrl,
+      listStores,
+      updateStoreGoal,
+      insertCapture,
+      listCapturesBySession,
+      getCapture: (id: string) => getCapture(id) ?? null,
+      insertAiOutput,
+      getAiOutputByCapture: (captureId: string, type: string) => {
+        const row = getAiOutputByCapture(captureId, type)
+        return row ?? null
+      },
+      getSetting,
+      setSetting,
+    },
+    io: {
+      getAssetsDir,
+      readFile: (p: string, encoding: BufferEncoding) => fs.readFileSync(p, encoding),
+      readFileBinary: (p: string) => {
+        try {
+          return fs.readFileSync(p)
+        } catch {
+          return null
+        }
+      },
+      writeFile: (p: string, data: string | Uint8Array) => {
+        fs.writeFileSync(p, data)
+      },
+    },
+    browser: {
+      getMainWindow: () => mainWindow,
+      getBrowserView: () => browserView,
+      sendCaptureFailed: (message: string, err?: unknown) => {
+        if (mainWindow && !mainWindow.isDestroyed()) {
+          mainWindow.webContents.send('capture:failed', { errorMessage: message })
+        }
+        console.error('[capture]', message, err !== undefined ? err : '')
+      },
+    },
+    openai: {
+      runSeoAudit,
+    },
+    parser: {
+      parseListing,
+    },
+  })
 
   createWindow()
 
@@ -341,13 +706,10 @@ app.whenReady().then(async () => {
         { role: 'selectAll' },
       ],
     },
-    ...(!app.isPackaged
-      ? [{ label: 'View', submenu: [{ role: 'toggleDevTools' as const }] }]
-      : []),
   ]
   Menu.setApplicationMenu(Menu.buildFromTemplate(editMenuTemplate))
 
-  // IPC handlers removed until ipc/* modules are reintroduced
+  registerIpcHandlers()
 })
 
 app.on('window-all-closed', () => {
