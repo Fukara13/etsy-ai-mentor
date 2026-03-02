@@ -55,6 +55,3 @@ export const GATE_REGISTRY: Record<GateId, GateDef> = {
 
 
 
-asd
-asd
-asd
