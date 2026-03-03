@@ -57,9 +57,9 @@ jobs:
           git rebase "origin/$BRANCH" || (git rebase --abort && echo "Rebase failed" && exit 1)
 
           # Push dene; yarış olursa 1 kere daha dene (retry/yeniden dene)
-          git push origin HEAD:"$BRANCH" || (
+          git push --force-with-lease origin HEAD:"$BRANCH" || (
             echo "Push race detected, retrying once..." &&
             git fetch origin "$BRANCH" &&
             git rebase "origin/$BRANCH" &&
-            git push origin HEAD:"$BRANCH"
+            git push --force-with-lease origin HEAD:"$BRANCH"
           )
