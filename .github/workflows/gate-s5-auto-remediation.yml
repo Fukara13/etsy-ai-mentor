@@ -41,6 +41,25 @@ jobs:
 
       - name: Commit and push remediation
         run: |
+          set -euo pipefail
+          BRANCH="${{ github.event.workflow_run.head_branch }}"
+
+          # Remote branch'i çek (fetch/çek)
+          git fetch origin "$BRANCH"
+
+          # Remediation değişikliğini stage et (stage/indeksle)
           git add electron/gates/registry.ts
+
+          # Commit at (commit/işleme al)
           git commit -m "fix(auto): remediation attempt 1/3" || echo "No changes to commit"
-          git push origin HEAD:${{ github.event.workflow_run.head_branch }}
+
+          # Non-fast-forward önlemek için remote'un üstüne rebase et (rebase/yeniden tabanla)
+          git rebase "origin/$BRANCH" || (git rebase --abort && echo "Rebase failed" && exit 1)
+
+          # Push dene; yarış olursa 1 kere daha dene (retry/yeniden dene)
+          git push origin HEAD:"$BRANCH" || (
+            echo "Push race detected, retrying once..." &&
+            git fetch origin "$BRANCH" &&
+            git rebase "origin/$BRANCH" &&
+            git push origin HEAD:"$BRANCH"
+          )
