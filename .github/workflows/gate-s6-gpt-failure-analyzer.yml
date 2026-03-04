@@ -73,25 +73,29 @@ jobs:
       - name: Build compact log
         if: steps.guard_key.outputs.ok == 'true'
         run: |
+          mkdir -p artifacts
           chmod +x scripts/gate-s6/compact_ci_logs.sh
           scripts/gate-s6/compact_ci_logs.sh "$(pwd)/logs" "$(pwd)/artifacts/ci_compact_log.txt"
           wc -c artifacts/ci_compact_log.txt
+
+      - name: Install jq and unzip
+        if: steps.guard_key.outputs.ok == 'true'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y jq unzip
 
       - name: Call OpenAI and parse JSON
         id: openai
         if: steps.guard_key.outputs.ok == 'true'
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-          OPENAI_MODEL: ${{ vars.OPENAI_MODEL || 'gpt-4.1' }}
+          OPENAI_MODEL: ${{ vars.OPENAI_MODEL }}
         run: |
           MODEL="${OPENAI_MODEL:-gpt-4.1}"
-          LOG_CONTENT=$(cat artifacts/ci_compact_log.txt | jq -Rs .)
+          LOG_CONTENT=$(cat artifacts/ci_compact_log.txt)
           SYSTEM='You are an expert CI failure triage assistant. Output ONLY valid JSON with exactly these keys: failure_type, root_cause, suggested_fix, risk_level, confidence, key_evidence. suggested_fix: actionable steps as a single string, max 6 bullets. risk_level: one of LOW, MEDIUM, HIGH. confidence: integer 0-100. key_evidence: array of up to 5 short quoted log snippets.'
-          BODY=$(jq -n \
-            --arg model "$MODEL" \
-            --arg sys "$SYSTEM" \
-            --argjson log "$LOG_CONTENT" \
-            '{model: $model, input: [{type: "message", role: "system", content: $sys}, {type: "message", role: "user", content: $log}]}')
+          BODY=$(jq -n --arg model "$MODEL" --arg sys "$SYSTEM" --arg log "$LOG_CONTENT" \
+            '{model:$model, input:[{type:"message", role:"system", content:$sys},{type:"message", role:"user", content:$log}]}')
           RESP=$(curl -sS -X POST "https://api.openai.com/v1/responses" \
             -H "Authorization: Bearer $OPENAI_API_KEY" \
             -H "Content-Type: application/json" \
