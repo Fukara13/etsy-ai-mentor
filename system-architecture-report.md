@@ -198,14 +198,26 @@ Historical examples include tags:
 
 Rollback is explicit and human-driven:
 
-```bash
-# Hard reset local main to a known-good gate tag
-git checkout main
-git reset --hard gate-9-pass
+- **Preferred path — revert via PR (önerilen yol):**
 
-# Push rollback (force required; must be a conscious governance decision)
-git push --force-with-lease origin main
-```
+  ```bash
+  # Create a revert commit locally and open a PR as usual
+  git checkout main
+  git revert <problematic-commit-or-merge-sha>
+  git push origin main
+  # Then open a PR / complete existing PR through normal review
+  ```
+
+- **Break-glass (acil durum) path — force rollback to tag:**
+
+  ```bash
+  # Hard reset local main to a known-good gate tag
+  git checkout main
+  git reset --hard gate-9-pass
+
+  # Push rollback (force required; must be a conscious governance decision)
+  git push --force-with-lease origin main
+  ```
 
 Rollback to other tags or creating recovery branches (e.g. `recover-from-gate-A`) follows the same manual pattern. The system does **not** auto-rollback.
 
@@ -217,7 +229,7 @@ As of this document, the following gates in the CI / remediation stack are **PAS
 
 - **S1** — Baseline workspace and repo health.
 - **S2** — CI workflow foundation (deterministic `npm ci`, build).
-- **S3** — Gate readiness and initial discipline.
+- **S3** — Deterministic test baseline (deterministik test altyapısı).
 - **S4** — Retry controller (S4) for CI failures.
 - **S5** — Auto-remediation guard.
 - **S5.1** — Hardened S5:  
@@ -228,18 +240,25 @@ As of this document, the following gates in the CI / remediation stack are **PAS
 
 ### 5.1 Tags (etiketler)
 
-Relevant tags include:
+#### A) Current canonical gate tags (S1–S6 series)
+
+These tags represent the **canonical** snapshots for the S1–S6 gate series:
 
 - `gate-8-pass`
 - `gate-8-2-pass`
 - `gate-9-pass`
 - `gate-10-pass`
 - `gate-11-pass`
-- `gate-A-pass`
-- `gate-A-recovered`
 - **`gate-s6-pass`** — indicates that Gate-S6 has passed and was pushed to origin.
 
-These tags are the canonical source of truth for which gates were fully verified at a given point in history.
+#### B) Legacy / historical tags
+
+These tags are **historical** and kept for traceability, but are not part of the current S1–S6 canonical series:
+
+- `gate-A-pass`
+- `gate-A-recovered`
+
+Together, these tags are the canonical source of truth for which gates were fully verified at a given point in history.
 
 ---
 
@@ -298,6 +317,7 @@ Location: `.github/workflows/ci.yml`
 
 - `on: workflow_run` for `CI` workflow.
 - Encodes retry semantics, attempt counting at the *controller* level (distinct from S5’s auto-remediation attempts).
+- S4 counters represent the **CI-level retry policy**, not remediation attempts.
 
 ### 7.3 Gate S5 / S5.1 – Auto Remediation (`gate-s5-auto-remediation.yml`)
 
@@ -309,6 +329,8 @@ Location: `.github/workflows/ci.yml`
 - Core behaviors:
   - Checks out PR head.
   - Bumps `.gates/auto_remediation_attempt.txt` to track attempts.
+  - S5 counters are the **remediation attempt file** values in `.gates/auto_remediation_attempt.txt`.
+  - S4 and S5 counters are both capped at **3** and must not diverge for the same PR.
   - If new attempt >= 3:
     - Posts **idempotent** exhausted comment:
       `Auto-remediation exhausted (3/3). Manual intervention required.`
@@ -326,7 +348,7 @@ Location: `.github/workflows/ci.yml`
   1. Download and unzip CI logs for the specific run.
   2. Build a compact log (`scripts/gate-s6/compact_ci_logs.sh`), capped at ~12k characters and focused on error-like lines + recent tail.
   3. Call OpenAI Responses API:
-     - Model: default `gpt-4.1` (overridable via `OPENAI_MODEL`).  
+     - Model is configurable via `OPENAI_MODEL`; the default is defined inside the Gate-S6 workflow itself.  
      - Response is constrained to a fixed JSON schema with keys:
        `failure_type`, `root_cause`, `suggested_fix`, `risk_level`, `confidence`, `key_evidence`.
   4. Render a Markdown PR comment:
@@ -338,6 +360,7 @@ Location: `.github/workflows/ci.yml`
   5. Idempotent update:
      - If a comment containing the marker exists, it is **PATCH**’ed.
      - Otherwise, a new comment is created.
+  6. **DoD evidence:** Every successful S6 run must leave at least one PR comment containing the marker `<!-- AI_FAILURE_ANALYSIS:S6 -->` on the associated PR.
 
 ---
 
