@@ -30,9 +30,6 @@ jobs:
               ;;
           esac
 
-      - name: Stability Layer active
-        run: echo "Stability Layer active"
-
       - name: Guard 2 — Bot actor filter
         run: |
           ACTOR="${{ github.actor }}"
@@ -63,18 +60,25 @@ jobs:
       - name: Guard 3 — Retry limit protection
         if: steps.pr_context.outputs.pr != ''
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           PR="${{ steps.pr_context.outputs.pr }}"
-          URL="https://api.github.com/repos/${{ github.repository }}/issues/${PR}/comments"
-          RESP=$(curl -sS -H "Authorization: Bearer ${GITHUB_TOKEN}" -H "Accept: application/vnd.github+json" "$URL" 2>/dev/null || true)
+          URL="https://api.github.com/repos/${GITHUB_REPOSITORY}/issues/${PR}/comments"
+
+          RESP=$(curl -sS \
+            -H "Authorization: Bearer ${GH_TOKEN}" \
+            -H "Accept: application/vnd.github+json" \
+            "$URL" 2>/dev/null || true)
+
           if command -v jq >/dev/null 2>&1; then
             BODIES=$(echo "$RESP" | jq -r '.[].body // empty' 2>/dev/null || true)
           else
             BODIES="$RESP"
           fi
+
           if echo "$BODIES" | grep -q "Auto-remediation exhausted (3/3)"; then
             echo "Retry limit reached — automation halted."
             exit 0
           fi
+
           echo "Retry limit check passed"
