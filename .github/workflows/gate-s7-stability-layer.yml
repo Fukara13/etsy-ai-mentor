@@ -1,0 +1,73 @@
+name: Gate-S7 Stability Layer
+
+on:
+  workflow_run:
+    workflows: ["CI"]
+    types: [completed]
+  pull_request:
+    types: [labeled]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  stability-guard:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Guard 4 — Invalid event protection
+        run: |
+          EVENT="${{ github.event_name }}"
+          case "$EVENT" in
+            workflow_run|pull_request|workflow_dispatch)
+              echo "Event $EVENT validated"
+              ;;
+            *)
+              echo "Invalid event — exiting."
+              exit 0
+              ;;
+          esac
+
+      - name: Stability Layer active
+        run: echo "Stability Layer active"
+
+      - name: Guard 2 — Bot actor filter
+        run: |
+          ACTOR="${{ github.actor }}"
+          if echo "$ACTOR" | grep -qiE 'github-actions|dependabot|bot'; then
+            echo "Bot actor detected — exiting."
+            exit 0
+          fi
+          echo "Actor validated"
+
+      - name: Guard 1 — PR context check
+        id: pr_context
+        run: |
+          EVENT="${{ github.event_name }}"
+          if [ "$EVENT" = "workflow_run" ]; then
+            if [ -z "${{ github.event.workflow_run.pull_requests[0].number }}" ]; then
+              echo "No PR context — exiting."
+              exit 0
+            fi
+            echo "pr=${{ github.event.workflow_run.pull_requests[0].number }}" >> "$GITHUB_OUTPUT"
+          elif [ "$EVENT" = "pull_request" ]; then
+            echo "pr=${{ github.event.pull_request.number }}" >> "$GITHUB_OUTPUT"
+          else
+            echo "No PR context for workflow_dispatch — exiting."
+            exit 0
+          fi
+          echo "PR context validated"
+
+      - name: Guard 3 — Retry limit protection
+        if: steps.pr_context.outputs.pr != ''
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          PR="${{ steps.pr_context.outputs.pr }}"
+          COMMENTS=$(gh api "repos/${{ github.repository }}/issues/${PR}/comments" --jq '.[].body' 2>/dev/null || true)
+          if echo "$COMMENTS" | grep -q "Auto-remediation exhausted (3/3)"; then
+            echo "Retry limit reached — automation halted."
+            exit 0
+          fi
+          echo "Retry limit check passed"
