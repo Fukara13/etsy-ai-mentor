@@ -24,6 +24,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Force fail (Gate-S5.1 test)
+        shell: bash
+        run: |
+          if [ -f .gates/force_ci_fail.txt ]; then
+            echo "Forced CI failure for Gate-S5.1 test"
+            exit 1
+          fi
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
