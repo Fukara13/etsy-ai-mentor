@@ -27,10 +27,15 @@ jobs:
       - name: Force fail (Gate-S5.1 test)
         shell: bash
         run: |
-          if [ -f .gates/force_ci_fail.txt ]; then
-            echo "Forced CI failure for Gate-S5.1 test"
+          echo "PWD=$(pwd)"
+          echo "WORKSPACE=$GITHUB_WORKSPACE"
+          ls -la "$GITHUB_WORKSPACE" || true
+          ls -la "$GITHUB_WORKSPACE/.gates" || true
+          if [ -f "$GITHUB_WORKSPACE/.gates/force_ci_fail.txt" ]; then
+            echo "Forced CI failure for Gate-S5.1 test (force_ci_fail.txt detected)"
             exit 1
           fi
+          echo "No force fail file detected; continuing."
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
