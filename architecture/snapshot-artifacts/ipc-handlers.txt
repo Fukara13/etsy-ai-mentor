@@ -1,0 +1,28 @@
+ON | app:view | electron/main.ts:244 | App view change
+ON | gate7:closeBrowser | electron/main.ts:264 | Gate 7: Close BrowserView
+HANDLE | gate7:setContext | electron/main.ts:275 | Gate 7: BrowserView listing capture
+ON | browser:setBounds | electron/main.ts:279 | BrowserView bounds update
+HANDLE | nav:go | electron/main.ts:286 | BrowserView navigation
+HANDLE | getCurrentUrl | electron/main.ts:295 | ' + u
+HANDLE | session:create | electron/main.ts:300 | Session management
+HANDLE | competitor:set | electron/main.ts:310 | Competitor analysis
+HANDLE | competitor:clear | electron/main.ts:316 | Competitor analysis
+HANDLE | getCompetitorUrl | electron/main.ts:321 | No description
+HANDLE | getLatestCompetitorSignals | electron/main.ts:326 | No description
+HANDLE | gate7:captureListing | electron/main.ts:339 | Gate 7: BrowserView listing capture
+HANDLE | ping | electron/main.ts:361 | No description
+HANDLE | competitor:capture | electron/main.ts:366 | Capture management
+HANDLE | capture:create | electron/main.ts:481 | Capture management
+HANDLE | listSessions | electron/main.ts:571 | No description
+HANDLE | listStores | electron/main.ts:572 | No description
+HANDLE | updateStoreGoal | electron/main.ts:573 | No description
+HANDLE | getSession | electron/main.ts:577 | No description
+HANDLE | getSetting | electron/main.ts:578 | No description
+HANDLE | setSetting | electron/main.ts:579 | No description
+HANDLE | updateSessionNote | electron/main.ts:580 | No description
+HANDLE | getCapture | electron/main.ts:584 | No description
+HANDLE | getAiOutput | electron/main.ts:585 | No description
+HANDLE | listCaptures | electron/main.ts:594 | No description
+HANDLE | getCaptureImage | electron/main.ts:599 | No description
+HANDLE | getParsedListing | electron/main.ts:610 | No description
+HANDLE | capture:analyze | electron/main.ts:621 | Capture management

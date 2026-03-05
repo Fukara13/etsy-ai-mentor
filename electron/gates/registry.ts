@@ -52,4 +52,11 @@ export const GATE_REGISTRY: Record<GateId, GateDef> = {
   },
 };
 
+  gate12: {
+    id: 'gate12',
+    title: 'Listing Builder MVP',
+    description: 'Manual listing content construction and management.',
+    deps: ['gate11'],
+  },
+};
 

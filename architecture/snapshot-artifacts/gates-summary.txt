@@ -29,11 +29,6 @@ gate11 (Persistence)
   Default Status: OPEN
   Dependencies: gate10
 
-gate12 (Listing Builder MVP)
-  Description: Manual listing content builder (Title, Tags, Description).
-  Default Status: OPEN
-  Dependencies: gate11
-
 
 Gate Files:
 ============================================================

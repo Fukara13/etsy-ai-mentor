@@ -20,8 +20,9 @@ jobs:
   remediate:
     if: >
       github.event.workflow_run.conclusion == 'failure' &&
-      (length(github.event.workflow_run.pull_requests) == 0 || github.event.workflow_run.pull_requests[0].head.repo.full_name == github.repository)
+      (github.event.workflow_run.pull_requests && length(github.event.workflow_run.pull_requests) > 0)
     runs-on: ubuntu-latest
+
     steps:
       - name: Exit if no PR context
         id: pr_context
@@ -31,88 +32,23 @@ jobs:
             echo "No PR context, exiting."
             exit 0
           fi
-          echo "number=$PR" >> "$GITHUB_OUTPUT"
+          echo "pr=$PR" >> $GITHUB_OUTPUT
 
-      - name: Check gate-review label
-        id: gate_review
-        if: steps.pr_context.outputs.number != ''
+      - name: Comment remediation attempt
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          PR_NUM="${{ github.event.workflow_run.pull_requests[0].number }}"
-          LABELS=$(gh api "repos/${{ github.repository }}/issues/${PR_NUM}/labels" --jq '.[].name' 2>/dev/null || echo "")
-          if ! echo "$LABELS" | grep -qx "gate-review"; then
-            echo "Missing gate-review label, exiting."
-            exit 0
-          fi
-          echo "ok=true" >> "$GITHUB_OUTPUT"
+          PR="${{ steps.pr_context.outputs.pr }}"
+          BODY="Auto-remediation attempt triggered by Gate-S5."
+          curl -s -X POST \
+            -H "Authorization: Bearer $GH_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            https://api.github.com/repos/${{ github.repository }}/issues/$PR/comments \
+            -d "{\"body\":\"$BODY\"}"
 
-      - name: Checkout PR head
-        if: steps.gate_review.outputs.ok == 'true'
-        uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event.workflow_run.head_sha }}
-          fetch-depth: 0
-          persist-credentials: true
-
-      - name: Setup git identity
-        if: steps.gate_review.outputs.ok == 'true'
-        run: |
-          git config user.name "gate-s5-bot"
-          git config user.email "gate-s5-bot@users.noreply.github.com"
-
-      - name: Bump auto-remediation attempt
-        id: attempt
-        if: steps.gate_review.outputs.ok == 'true'
-        run: |
-          ATTEMPT=0
-          if [ -f .gates/auto_remediation_attempt.txt ]; then
-            ATTEMPT=$(cat .gates/auto_remediation_attempt.txt)
-            ATTEMPT=${ATTEMPT:-0}
-          fi
-          mkdir -p .gates
-          NEW=$((ATTEMPT + 1))
-          echo "$NEW" > .gates/auto_remediation_attempt.txt
-          echo "attempt=$NEW" >> "$GITHUB_OUTPUT"
-          git add .gates/auto_remediation_attempt.txt
-          git commit -m "chore(gate-s5.1): bump auto-remediation attempt to ${NEW}/3" || true
-          BRANCH="${{ github.event.workflow_run.head_branch }}"
-          git push origin HEAD:"$BRANCH"
-
-      - name: Exit if exhausted (3/3) with comment
-        if: steps.gate_review.outputs.ok == 'true' && steps.attempt.outputs.attempt == '3'
+      - name: Retrigger CI
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          PR_NUM="${{ github.event.workflow_run.pull_requests[0].number }}"
-          BODY="Auto-remediation exhausted (3/3). Manual intervention required."
-          EXISTING=$(gh api "repos/${{ github.repository }}/issues/${PR_NUM}/comments" --jq '.[].body' 2>/dev/null || true)
-          if echo "$EXISTING" | grep -Fxq "$BODY"; then
-            echo "Exhausted comment already present, skipping."
-          else
-            gh pr comment "$PR_NUM" --body "$BODY"
-          fi
-          echo "Attempt limit reached, exiting."
-          exit 0
-
-      - name: Remove intentional fail marker
-        if: steps.gate_review.outputs.ok == 'true' && steps.attempt.outputs.attempt != '3'
-        run: |
-          sed -i '/^asd$/d' electron/gates/registry.ts || true
-
-      - name: Commit and push remediation
-        if: steps.gate_review.outputs.ok == 'true' && steps.attempt.outputs.attempt != '3'
-        run: |
-          set -euo pipefail
-          BRANCH="${{ github.event.workflow_run.head_branch }}"
-          ATTEMPT="${{ steps.attempt.outputs.attempt }}"
-          git fetch origin "$BRANCH"
-          git add electron/gates/registry.ts
-          git commit -m "fix(auto): remediation attempt ${ATTEMPT}/3" || echo "No changes to commit"
-          git rebase "origin/$BRANCH" || (git rebase --abort && echo "Rebase failed" && exit 1)
-          git push --force-with-lease origin HEAD:"$BRANCH" || (
-            echo "Push race detected, retrying once..." &&
-            git fetch origin "$BRANCH" &&
-            git rebase "origin/$BRANCH" &&
-            git push --force-with-lease origin HEAD:"$BRANCH"
-          )
+          PR="${{ steps.pr_context.outputs.pr }}"
+          echo "Retriggering CI for PR #$PR"

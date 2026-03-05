@@ -8,9 +8,9 @@
     "dev:renderer": "vite --port 5173 --strictPort",
     "dev:electron": "tsc -p tsconfig.electron.json && npx electron .",
     "build": "vite build && tsc -p tsconfig.electron.json",
-    "preview": "vite preview",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "preview": "vite preview",
+    "arch:snapshot": "node tools/arch-snapshot.mjs"
   },
   "dependencies": {
     "openai": "^4.73.0",
@@ -25,7 +25,6 @@
     "@vitejs/plugin-react": "^4.3.3",
     "electron": "^33.4.11",
     "typescript": "^5.6.3",
-    "vite": "^5.4.11",
-    "vitest": "^2.1.0"
+    "vite": "^5.4.11"
   }
 }
