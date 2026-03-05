@@ -7,60 +7,48 @@ on:
       - completed
   workflow_dispatch:
 
+concurrency:
+  group: gate-s5-auto-remediation-${{ github.event.workflow_run.pull_requests[0].number || github.run_id }}
+  cancel-in-progress: false
+
 permissions:
   contents: write
   pull-requests: write
+  actions: read
 
 jobs:
   remediate:
     if: >
-      github.event.workflow_run.conclusion == 'failure'
+      github.event.workflow_run.conclusion == 'failure' &&
+      (github.event.workflow_run.pull_requests && length(github.event.workflow_run.pull_requests) > 0)
     runs-on: ubuntu-latest
+
     steps:
       - name: Exit if no PR context
+        id: pr_context
         run: |
-          if [ -z "${{ github.event.workflow_run.pull_requests[0].number }}" ]; then
+          PR="${{ github.event.workflow_run.pull_requests[0].number }}"
+          if [ -z "$PR" ]; then
             echo "No PR context, exiting."
             exit 0
           fi
+          echo "pr=$PR" >> $GITHUB_OUTPUT
 
-      - name: Checkout PR head
-        uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event.workflow_run.head_sha }}
-          fetch-depth: 0
-          persist-credentials: true
-
-      - name: Setup git identity
+      - name: Comment remediation attempt
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          git config user.name "gate-s5-bot"
-          git config user.email "gate-s5-bot@users.noreply.github.com"
+          PR="${{ steps.pr_context.outputs.pr }}"
+          BODY="Auto-remediation attempt triggered by Gate-S5."
+          curl -s -X POST \
+            -H "Authorization: Bearer $GH_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            https://api.github.com/repos/${{ github.repository }}/issues/$PR/comments \
+            -d "{\"body\":\"$BODY\"}"
 
-      - name: Remove intentional fail marker
+      - name: Retrigger CI
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          sed -i '/^asd$/d' electron/gates/registry.ts || true
-
-      - name: Commit and push remediation
-        run: |
-          set -euo pipefail
-          BRANCH="${{ github.event.workflow_run.head_branch }}"
-
-          # Remote branch'i çek (fetch/çek)
-          git fetch origin "$BRANCH"
-
-          # Remediation değişikliğini stage et (stage/indeksle)
-          git add electron/gates/registry.ts
-
-          # Commit at (commit/işleme al)
-          git commit -m "fix(auto): remediation attempt 1/3" || echo "No changes to commit"
-
-          # Non-fast-forward önlemek için remote'un üstüne rebase et (rebase/yeniden tabanla)
-          git rebase "origin/$BRANCH" || (git rebase --abort && echo "Rebase failed" && exit 1)
-
-          # Push dene; yarış olursa 1 kere daha dene (retry/yeniden dene)
-          git push --force-with-lease origin HEAD:"$BRANCH" || (
-            echo "Push race detected, retrying once..." &&
-            git fetch origin "$BRANCH" &&
-            git rebase "origin/$BRANCH" &&
-            git push --force-with-lease origin HEAD:"$BRANCH"
-          )
+          PR="${{ steps.pr_context.outputs.pr }}"
+          echo "Retriggering CI for PR #$PR"
