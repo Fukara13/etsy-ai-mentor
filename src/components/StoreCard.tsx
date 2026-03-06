@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, memo } from 'react'
 import type { Store } from '../types'
 
 type Props = {
@@ -13,7 +13,8 @@ const LEVEL_LABELS: Record<string, string> = {
   Risky: 'Riskli',
 }
 
-export default function StoreCard({ store, onEnterStore }: Props) {
+/** ⚡ Bolt: Wrapped in memo to prevent re-renders when dashboard state (messages, input) changes. */
+function StoreCard({ store, onEnterStore }: Props) {
   const [showProfile, setShowProfile] = useState(false)
   const levelLabel = LEVEL_LABELS[store.level] ?? store.level
   const nicheSummary = [store.niche_theme, store.niche_emotion, store.niche_buyer].filter(Boolean).join(' · ') || '—'
@@ -49,3 +50,5 @@ export default function StoreCard({ store, onEnterStore }: Props) {
     </div>
   )
 }
+
+export default memo(StoreCard)
