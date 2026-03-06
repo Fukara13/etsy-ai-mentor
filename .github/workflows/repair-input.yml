@@ -1,0 +1,147 @@
+# Gate-S9-A: Repair Brain Input Layer
+# On CI failure (PR with gate-review), collect logs + diff and publish as artifact + PR comment.
+# No GPT, no Jules, no auto-merge.
+
+name: Repair Input (S9-A)
+
+on:
+  workflow_run:
+    workflows: ["CI"]
+    types: [completed]
+
+permissions:
+  actions: read
+  contents: read
+  pull-requests: write
+
+jobs:
+  repair-input:
+    if: github.event.workflow_run.conclusion == 'failure'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Exit if no PR context
+        id: guard_pr
+        run: |
+          if [ -z "${{ github.event.workflow_run.pull_requests[0].number }}" ]; then
+            echo "No PR context, exiting."
+            exit 0
+          fi
+          echo "pr=${{ github.event.workflow_run.pull_requests[0].number }}" >> "$GITHUB_OUTPUT"
+
+      - name: Check gate-review label
+        id: guard_label
+        if: steps.guard_pr.outputs.pr != ''
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          PR="${{ github.event.workflow_run.pull_requests[0].number }}"
+          LABELS=$(gh api "repos/${{ github.repository }}/issues/${PR}/labels" --jq '.[].name' 2>/dev/null || echo "")
+          if ! echo "$LABELS" | grep -qx "gate-review"; then
+            echo "Missing gate-review label, exiting."
+            exit 0
+          fi
+          echo "ok=true" >> "$GITHUB_OUTPUT"
+
+      - name: Fetch PR metadata
+        id: pr_meta
+        if: steps.guard_label.outputs.ok == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          PR="${{ github.event.workflow_run.pull_requests[0].number }}"
+          gh api "repos/${{ github.repository }}/pulls/${PR}" --jq '{base_ref: .base.ref, base_sha: .base.sha, head_sha: .head.sha}' > pr_meta.json
+          echo "base_ref=$(jq -r .base_ref pr_meta.json)" >> "$GITHUB_OUTPUT"
+          echo "base_sha=$(jq -r .base_sha pr_meta.json)" >> "$GITHUB_OUTPUT"
+          echo "head_sha=$(jq -r .head_sha pr_meta.json)" >> "$GITHUB_OUTPUT"
+
+      - name: Checkout at head SHA
+        if: steps.guard_label.outputs.ok == 'true'
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
+          fetch-depth: 0
+
+      - name: Build repair_input (diff + logs + summary)
+        if: steps.guard_label.outputs.ok == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RUN_ID: ${{ github.event.workflow_run.id }}
+          HEAD_SHA: ${{ github.event.workflow_run.head_sha }}
+        run: |
+          set -e
+          PR="${{ steps.guard_pr.outputs.pr }}"
+          BASE_REF="${{ steps.pr_meta.outputs.base_ref }}"
+          BASE_REF="${BASE_REF:-main}"
+          mkdir -p repair_input/logs
+
+          # 1) Diff patch (base..head)
+          git fetch origin "$BASE_REF" --depth=1 2>/dev/null || true
+          git diff --patch --no-color "origin/${BASE_REF}...${HEAD_SHA}" > repair_input/diff.patch 2>/dev/null || true
+          MAX_PATCH=2097152
+          if [ $(wc -c < repair_input/diff.patch) -gt $MAX_PATCH ]; then
+            head -c $MAX_PATCH repair_input/diff.patch > repair_input/diff.patch.tmp
+            echo "" >> repair_input/diff.patch.tmp
+            echo "[TRUNCATED]" >> repair_input/diff.patch.tmp
+            mv repair_input/diff.patch.tmp repair_input/diff.patch
+          fi
+
+          # 2) Job logs
+          JOB_IDS=$(gh api "repos/${{ github.repository }}/actions/runs/${RUN_ID}/jobs?per_page=100" --jq '.jobs[].id' 2>/dev/null || true)
+          for JOB_ID in $JOB_IDS; do
+            JOB_NAME=$(gh api "repos/${{ github.repository }}/actions/jobs/${JOB_ID}" --jq '.name' 2>/dev/null || echo "unknown")
+            SANITIZED=$(echo "$JOB_NAME" | sed 's/[^a-zA-Z0-9._-]/_/g' | cut -c1-50)
+            LOG_PATH="repair_input/logs/job-${JOB_ID}-${SANITIZED}.txt"
+            if ! curl -sSL -H "Authorization: Bearer ${GH_TOKEN}" -H "Accept: application/vnd.github+json" \
+              "https://api.github.com/repos/${{ github.repository }}/actions/jobs/${JOB_ID}/logs" -o "$LOG_PATH" 2>/dev/null; then
+              echo "Failed to download logs for job ${JOB_ID} (${JOB_NAME})" >> repair_input/logs/_errors.txt
+            elif [ "$(head -c 2 "$LOG_PATH" 2>/dev/null)" = "PK" ]; then
+              mv "$LOG_PATH" "repair_input/logs/job-${JOB_ID}-${SANITIZED}.zip"
+            fi
+          done
+
+          # 3) Summary
+          RUN_URL="${{ github.server_url }}/${{ github.repository }}/actions/runs/${RUN_ID}"
+          cat > repair_input/summary.md << EOF
+          | Field | Value |
+          |-------|-------|
+          | PR | #${PR} |
+          | CI run id | ${RUN_ID} |
+          | CI run URL | ${RUN_URL} |
+          | head_sha | ${HEAD_SHA} |
+          | base_ref | ${BASE_REF} |
+          | timestamp (UTC) | $(date -u +%Y-%m-%dT%H:%M:%SZ) |
+          EOF
+          sed -i 's/^          //' repair_input/summary.md
+
+      - name: Upload repair-input artifact
+        if: steps.guard_label.outputs.ok == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: repair-input
+          path: repair_input/
+
+      - name: Comment on PR (idempotent)
+        if: steps.guard_label.outputs.ok == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RUN_ID: ${{ github.event.workflow_run.id }}
+        run: |
+          PR="${{ steps.guard_pr.outputs.pr }}"
+          RUN_URL="${{ github.server_url }}/${{ github.repository }}/actions/runs/${RUN_ID}"
+          {
+            echo "## Repair Input Package (S9-A)"
+            echo ""
+            echo "CI failed. Logs and diff have been collected as artifact **repair-input** on this workflow run."
+            echo ""
+            echo "**Run:** ${RUN_URL}"
+            echo ""
+            echo "Jules is frozen; GPT not called in S9-A."
+          } > comment_body.md
+          EXISTING_ID=$(gh api "repos/${{ github.repository }}/issues/${PR}/comments?per_page=20" --jq '.[] | select(.body | contains("Repair Input Package (S9-A)")) | .id' 2>/dev/null | tail -1)
+          if [ -n "$EXISTING_ID" ]; then
+            gh api -X PATCH "repos/${{ github.repository }}/issues/comments/${EXISTING_ID}" -F body=@comment_body.md
+            echo "Updated existing comment."
+          else
+            gh pr comment "$PR" --body-file comment_body.md
+            echo "Posted new comment."
+          fi
