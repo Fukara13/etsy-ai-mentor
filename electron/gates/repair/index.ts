@@ -122,6 +122,23 @@ export type {
   PlanGovernanceResult,
 } from './plan-governor';
 
+/** Gate-S20: Safety Guard Layer */
+export { evaluateSafety } from './safety-guard';
+export type {
+  GuardOutcome,
+  GuardReasonCode,
+  GuardDecision,
+} from './guard-decision';
+export type { SafetyEvaluationInput } from './safety-guard';
+export {
+  ALLOWED_ACTIONS,
+  FORBIDDEN_ACTIONS,
+  TERMINAL_STATES as SAFETY_TERMINAL_STATES,
+  DEFAULT_MAX_RETRIES,
+  isForbiddenAction,
+  isAllowedAction,
+} from './safety-policy';
+
 /** Gate-S19: Event-Driven Repair State Machine Runtime */
 export { REPAIR_STATES, TERMINAL_STATES, isTerminalState } from './repair-state';
 export type { RepairState } from './repair-state';
