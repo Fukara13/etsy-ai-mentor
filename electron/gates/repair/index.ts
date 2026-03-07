@@ -121,3 +121,18 @@ export type {
   GovernanceReason,
   PlanGovernanceResult,
 } from './plan-governor';
+
+/** Gate-S19: Event-Driven Repair State Machine Runtime */
+export { REPAIR_STATES, TERMINAL_STATES, isTerminalState } from './repair-state';
+export type { RepairState } from './repair-state';
+export { REPAIR_EVENTS } from './repair-event';
+export type { RepairEvent } from './repair-event';
+export { transition } from './state-transition';
+export { dispatch } from './actor-dispatcher';
+export type { ActorIntent } from './actor-dispatcher';
+export {
+  step,
+  runLoop,
+  INITIAL_STATE as REPAIR_INITIAL_STATE,
+} from './state-machine-runner';
+export type { StepResult, ActorExecutor } from './state-machine-runner';
