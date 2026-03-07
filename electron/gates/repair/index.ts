@@ -139,6 +139,15 @@ export {
   isAllowedAction,
 } from './safety-policy';
 
+/** Gate-S21: Repair State Machine Engine */
+export {
+  REPAIR_STATE_SEQUENCE,
+  getAllowedNextStates,
+  canTransition,
+  assertValidTransition,
+  isTerminalRepairState,
+} from './repair-state-machine';
+
 /** Gate-S19: Event-Driven Repair State Machine Runtime */
 export { REPAIR_STATES, TERMINAL_STATES, isTerminalState } from './repair-state';
 export type { RepairState } from './repair-state';
