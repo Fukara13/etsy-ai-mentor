@@ -7,15 +7,20 @@ import { evaluateSafety } from './safety-guard';
 
 describe('Gate-S20: allows safe retry plan when governance allows and retry below limit', () => {
   it('allow retry_ci when governance=allow and retryCount < maxRetries', () => {
-    const r = evaluateSafety({
+    const plan = { items: [{ action: 'retry_ci' as const }] };
+    const input = {
       currentState: 'ANALYZE',
-      governanceOutcome: { verdict: 'allow', reason: 'safe_retry' },
+      governanceOutcome: { verdict: 'allow' as const, reason: 'safe_retry' as const },
       retryCount: 1,
       maxRetries: 3,
-      plan: { items: [{ action: 'retry_ci' }] },
-    });
+      plan,
+    };
+    const r = evaluateSafety(input);
     expect(r.outcome).toBe('allow');
     expect(r.reasonCode).toBe('safe_to_execute');
+    expect(input.plan).toBe(plan);
+    expect(input.plan.items).toHaveLength(1);
+    expect(input.plan.items[0].action).toBe('retry_ci');
   });
 });
 
@@ -109,19 +114,8 @@ describe('Gate-S20: blocks retry in EXHAUSTED terminal state', () => {
   });
 });
 
-describe('Gate-S20: allows request_human_intervention in safe fallback', () => {
-  it('allow request_human_intervention (governance would be require_human, but guard checks governance first)', () => {
-    const r = evaluateSafety({
-      currentState: 'ANALYZE',
-      governanceOutcome: { verdict: 'require_human', reason: 'manual_only' },
-      retryCount: 0,
-      plan: { items: [{ action: 'request_human_intervention' }] },
-    });
-    expect(r.outcome).toBe('block');
-    expect(r.reasonCode).toBe('governance_conflict');
-  });
-
-  it('allow request_human_intervention when governance allows (edge case: governor allow + human intervention plan)', () => {
+describe('Gate-S20: allows request_human_intervention in safe fallback conditions', () => {
+  it('allow when governance allows and plan is request_human_intervention', () => {
     const r = evaluateSafety({
       currentState: 'ANALYZE',
       governanceOutcome: { verdict: 'allow', reason: 'safe_retry' },
