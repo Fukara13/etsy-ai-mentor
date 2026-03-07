@@ -109,3 +109,7 @@ export type { RepairDecision } from './repair-decision';
 
 /** Gate-S16: Decision Integration Layer */
 export { decisionToActionPlan } from './decision-plan-adapter';
+
+/** Gate-S17: Plan Validation Layer */
+export { validateActionPlan } from './plan-validator';
+export type { PlanValidationResult } from './plan-validator';
