@@ -169,6 +169,19 @@ export type { LoopRunInput } from './repair-loop-orchestrator';
 export type { RepairLoopSession } from './repair-loop-session';
 export type { RepairRunOutcome, TerminationReason } from './repair-run-outcome';
 
+/** Gate-S24: Repair Run Verdict */
+export { deriveRepairRunVerdict } from './repair-run-verdict-mapper';
+export type { RepairRunVerdict, RepairRunVerdictStatus, RepairRunVerdictReasonCode } from './repair-run-verdict';
+
+/** Gate-S25: Operator Handoff */
+export { mapRepairOperatorHandoff } from './operator-handoff';
+export type {
+  RepairOperatorHandoff,
+  HandoffIntent,
+  NextAction,
+  MapRepairOperatorHandoffParams,
+} from './operator-handoff';
+
 /** Gate-S19: Event-Driven Repair State Machine Runtime */
 export { REPAIR_STATES, TERMINAL_STATES, isTerminalState } from './repair-state';
 export type { RepairState } from './repair-state';
