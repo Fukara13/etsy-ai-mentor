@@ -57,3 +57,20 @@ export type {
   JulesIntegrationResult,
   JulesMode,
 } from './jules-integration';
+
+/** Gate-S12: Orchestrator Bridge */
+export { runOrchestratorBridge } from './orchestrator-bridge';
+export { normalizeEvent } from './event-normalizer';
+export { resolveContext } from './context-resolver';
+export type {
+  CanonicalRepairEvent,
+  CanonicalEventType,
+  BridgeContext,
+  BridgeResult,
+  ActionPlanItem,
+  BridgeIdempotencyGuard,
+  RawCIFailureInput,
+} from './bridge-types';
+export type { BridgeInput } from './orchestrator-bridge';
+export type { RawEventInput, NormalizeResult } from './event-normalizer';
+export type { ContextResolverInput, ResolveContextResult } from './context-resolver';
