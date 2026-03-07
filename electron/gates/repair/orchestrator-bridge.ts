@@ -9,8 +9,8 @@ import type {
   BridgeResult,
   ActionPlanItem,
   CanonicalRepairEvent,
-  ContextResolverInput,
 } from './bridge-types';
+import type { ContextResolverInput } from './context-resolver';
 import type { RawEventInput } from './event-normalizer';
 import type { NormalizeOptions } from './event-normalizer';
 import { normalizeEvent } from './event-normalizer';

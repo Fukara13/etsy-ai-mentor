@@ -92,3 +92,9 @@ export type {
   ExecutionBoundaryStatus,
   ExecutionBoundaryResult,
 } from './execution-boundary';
+
+/** Gate-S14: Repair Observability Layer */
+export * from './repair-trace';
+export * from './trace-context';
+export * from './repair-logger';
+export * from './repair-telemetry';

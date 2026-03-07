@@ -67,14 +67,14 @@ describe('Gate-S13: forbidden/unknown action rejected', () => {
 
   it('unknown action type is rejected', () => {
     const result = toExecutableSteps({
-      items: [{ action: 'merge' } as ActionPlanItemS13],
+      items: [{ action: 'merge' } as unknown as ActionPlanItemS13],
     });
     expect(result.status).toBe('rejected');
     expect(result.reason).toContain('Unknown');
   });
 
   it('invalid plan structure is rejected', () => {
-    const result = toExecutableSteps(null as unknown as { items: unknown[] });
+    const result = toExecutableSteps(null as unknown as import('./action-plan').ActionPlan);
     expect(result.status).toBe('rejected');
     expect(result.reason).toContain('Invalid');
   });

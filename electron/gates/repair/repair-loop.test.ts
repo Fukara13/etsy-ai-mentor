@@ -31,7 +31,7 @@ describe('Gate-S10: CI FAIL enters Analyze state', () => {
   it('ciFailToAnalyze returns ANALYZE phase', () => {
     const state = ciFailToAnalyze();
     expect(state.phase).toBe('ANALYZE');
-    expect(state.ciFailed).toBe(true);
+    if (state.phase === 'ANALYZE') expect(state.ciFailed).toBe(true);
   });
 });
 
@@ -41,11 +41,11 @@ describe('Gate-S10: Analyzer -> Coach -> Jules happy path', () => {
     const coach = { ok: true, guidance: 'Reduce test scope' };
     const s1 = analyzerToCoach(analyzer);
     expect(s1.phase).toBe('COACH');
-    expect(s1.analyzer).toEqual(analyzer);
+    if (s1.phase === 'COACH') expect(s1.analyzer).toEqual(analyzer);
 
     const s2 = coachToJulesPending(coach);
     expect(s2.phase).toBe('JULES_PENDING');
-    expect(s2.coach).toEqual(coach);
+    if (s2.phase === 'JULES_PENDING') expect(s2.coach).toEqual(coach);
 
     const s3 = julesToGuardian('patch summary');
     expect(s3.phase).toBe('GUARDIAN_CHECK');
@@ -235,15 +235,17 @@ describe('Gate-S10: Jules freeze mode', () => {
     const julesResult = createJulesFrozenResult('Jules is frozen');
     expect(julesResult.status).toBe('skipped_due_to_freeze');
     expect(julesResult.patch).toBe(null);
-    expect(julesResult.reason).toBe('Jules is frozen');
+    if (julesResult.status === 'skipped_due_to_freeze') {
+      expect(julesResult.reason).toBe('Jules is frozen');
+    }
 
     const retry = initialRetryState();
     const frozenState = julesFrozen(julesResult, retry);
     expect(frozenState.phase).toBe('JULES_FROZEN');
-    expect(frozenState.phase === 'JULES_FROZEN' && frozenState.julesResult.patch).toBe(null);
-    expect(frozenState.phase === 'JULES_FROZEN' && frozenState.julesResult.status).toBe(
-      'skipped_due_to_freeze'
-    );
+    if (frozenState.phase === 'JULES_FROZEN') {
+      expect(frozenState.julesResult.patch).toBe(null);
+      expect(frozenState.julesResult.status).toBe('skipped_due_to_freeze');
+    }
 
     const humanState = julesFrozenToHuman(retry);
     expect(humanState.phase).toBe('HUMAN');

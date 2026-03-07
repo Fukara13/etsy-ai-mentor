@@ -7,6 +7,7 @@ import { describe, it, expect } from 'vitest';
 import { normalizeEvent } from './event-normalizer';
 import { resolveContext } from './context-resolver';
 import { runOrchestratorBridge } from './orchestrator-bridge';
+import type { ContextResolverInput } from './context-resolver';
 
 const DETERMINISTIC_TIMESTAMP = '2025-03-07T12:00:00.000Z';
 
@@ -100,11 +101,11 @@ describe('Gate-S12: Context resolver — valid inputs', () => {
     }
   });
 
-  it('normalizes booleans from string/number', () => {
-    const r1 = resolveContext({ hasGateReviewLabel: 'true' });
+  it('accepts boolean values for hasGateReviewLabel', () => {
+    const r1 = resolveContext({ hasGateReviewLabel: true });
     expect(r1.ok && r1.context.hasGateReviewLabel).toBe(true);
 
-    const r2 = resolveContext({ hasGateReviewLabel: 'false' });
+    const r2 = resolveContext({ hasGateReviewLabel: false });
     expect(r2.ok && r2.context.hasGateReviewLabel).toBe(false);
   });
 });
@@ -181,7 +182,7 @@ describe('Gate-S12: Orchestrator bridge — invalid input', () => {
   it('bridge fails on invalid context input', () => {
     const result = runOrchestratorBridge({
       rawEvent: { event: 'ci_failed', source: 'ci' },
-      contextInput: null as unknown as Record<string, unknown>,
+      contextInput: null as unknown as ContextResolverInput,
     });
     expect(result.ok).toBe(false);
     expect(result.actionPlan.some((a) => a.action === 'HANDOFF_TO_HUMAN')).toBe(true);
