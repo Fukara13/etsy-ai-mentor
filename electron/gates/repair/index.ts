@@ -193,6 +193,16 @@ export type {
   MapRepairExternalProjectionParams,
 } from './external-boundary';
 
+/** Gate-S27: GitHub Projection */
+export { mapGitHubProjection } from './github-projection';
+export type {
+  GitHubProjection,
+  GitHubProjectionSurface,
+  GitHubProjectionStatus,
+  GitHubProjectionConclusion,
+  GitHubProjectionMetadata,
+} from './github-projection';
+
 /** Gate-S19: Event-Driven Repair State Machine Runtime */
 export { REPAIR_STATES, TERMINAL_STATES, isTerminalState } from './repair-state';
 export type { RepairState } from './repair-state';
