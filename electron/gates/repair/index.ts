@@ -182,6 +182,17 @@ export type {
   MapRepairOperatorHandoffParams,
 } from './operator-handoff';
 
+/** Gate-S26: External System Boundary */
+export { mapRepairExternalProjection } from './external-boundary';
+export type {
+  RepairExternalProjection,
+  ProjectionTarget,
+  ProjectionStatus,
+  RecommendedAction,
+  ProjectionMetadata,
+  MapRepairExternalProjectionParams,
+} from './external-boundary';
+
 /** Gate-S19: Event-Driven Repair State Machine Runtime */
 export { REPAIR_STATES, TERMINAL_STATES, isTerminalState } from './repair-state';
 export type { RepairState } from './repair-state';
