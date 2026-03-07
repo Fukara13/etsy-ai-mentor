@@ -47,3 +47,13 @@ export type { GuardianInput } from './guardian';
 
 export { runEvaluator } from './evaluator';
 export type { EvaluatorInput } from './evaluator';
+
+export {
+  buildJulesPatchRequest,
+  integrateJules,
+} from './jules-integration';
+export type {
+  JulesPatchRequest,
+  JulesIntegrationResult,
+  JulesMode,
+} from './jules-integration';
