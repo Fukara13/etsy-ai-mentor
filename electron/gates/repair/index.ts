@@ -203,6 +203,14 @@ export type {
   GitHubProjectionMetadata,
 } from './github-projection';
 
+/** Gate-S29: GPT Analysis Layer */
+export {
+  analyzeRepairContext,
+  mapRepairContextToPrompt,
+  type GPTAnalysisInput,
+  type GPTAnalysisResult,
+} from './gpt-analysis';
+
 /** Gate-S19: Event-Driven Repair State Machine Runtime */
 export { REPAIR_STATES, TERMINAL_STATES, isTerminalState } from './repair-state';
 export type { RepairState } from './repair-state';
