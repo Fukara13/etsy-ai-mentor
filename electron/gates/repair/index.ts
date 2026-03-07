@@ -148,6 +148,19 @@ export {
   isTerminalRepairState,
 } from './repair-state-machine';
 
+/** Gate-S22: Actor Runtime / Repair Loop Integration */
+export { executeRepairStep } from './repair-step-executor';
+export { getActorForState } from './step-actor-dispatcher';
+export { normalizeActorResult } from './actor-result';
+export type {
+  RepairRuntimeContext,
+  ActorName,
+  ActorExecuteInput,
+  ActorRawOutput,
+} from './actor-runtime.types';
+export type { NormalizedActorResult } from './actor-result';
+export type { StepExecutionResult } from './repair-step-executor';
+
 /** Gate-S19: Event-Driven Repair State Machine Runtime */
 export { REPAIR_STATES, TERMINAL_STATES, isTerminalState } from './repair-state';
 export type { RepairState } from './repair-state';

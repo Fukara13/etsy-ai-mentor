@@ -42,8 +42,11 @@ describe('Gate-S19: valid state transitions — canonical path', () => {
     expect(transition('CI_RETRY', 'RETRY_LIMIT_REACHED')).toBe('EXHAUSTED');
   });
 
-  it('EXHAUSTED is self-terminal', () => {
-    expect(transition('EXHAUSTED', 'HUMAN_ESCALATION')).toBe('EXHAUSTED');
+  it('EXHAUSTED + HUMAN_ESCALATION -> HUMAN', () => {
+    expect(transition('EXHAUSTED', 'HUMAN_ESCALATION')).toBe('HUMAN');
+  });
+
+  it('EXHAUSTED + other event stays EXHAUSTED', () => {
     expect(transition('EXHAUSTED', 'CI_FAILURE_START')).toBe('EXHAUSTED');
   });
 

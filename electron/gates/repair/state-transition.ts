@@ -51,7 +51,7 @@ export function transition(
       return escalate();
 
     case 'EXHAUSTED':
-      return 'EXHAUSTED';
+      return event === 'HUMAN_ESCALATION' ? 'HUMAN' : 'EXHAUSTED';
 
     case 'HUMAN':
       return 'HUMAN';
