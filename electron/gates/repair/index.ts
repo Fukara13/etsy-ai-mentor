@@ -106,3 +106,6 @@ export { buildRepairDecision } from './repair-decision';
 export type { FailureClass, FailureSignal } from './failure-classifier';
 export type { RepairStrategy } from './repair-strategy';
 export type { RepairDecision } from './repair-decision';
+
+/** Gate-S16: Decision Integration Layer */
+export { decisionToActionPlan } from './decision-plan-adapter';
