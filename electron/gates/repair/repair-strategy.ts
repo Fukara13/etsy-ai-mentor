@@ -1,5 +1,6 @@
 /**
  * Gate-S15: Repair Strategy — Deterministic strategy selector.
+ * Gate-S30: Repair Strategy Layer — Re-exports diagnostic-to-strategy mapping.
  */
 
 import type { FailureClass } from './failure-classifier';
@@ -9,6 +10,15 @@ export type RepairStrategy =
   | 'patch_candidate'
   | 'human_escalation'
   | 'noop';
+
+/** Gate-S30: Map analysis to repair strategy output. */
+export { mapRepairStrategy } from './repair-strategy-mapper';
+export type { MapRepairStrategyInput } from './repair-strategy-mapper';
+export type {
+  RepairStrategyOutput,
+  RepairStrategyType,
+  RepairStrategyConfidence,
+} from './repair-strategy.types';
 
 /** Map failure class to repair strategy. */
 export function selectRepairStrategy(failureClass: FailureClass): RepairStrategy {

@@ -101,10 +101,16 @@ export * from './repair-telemetry'; /** Gate-S28 telemetry projection also expor
 
 /** Gate-S15: Repair Decision Intelligence Layer */
 export { classifyFailure } from './failure-classifier';
-export { selectRepairStrategy } from './repair-strategy';
+export { selectRepairStrategy, mapRepairStrategy } from './repair-strategy';
 export { buildRepairDecision } from './repair-decision';
 export type { FailureClass, FailureSignal } from './failure-classifier';
-export type { RepairStrategy } from './repair-strategy';
+export type {
+  RepairStrategy,
+  RepairStrategyOutput,
+  RepairStrategyType,
+  RepairStrategyConfidence,
+  MapRepairStrategyInput,
+} from './repair-strategy';
 export type { RepairDecision } from './repair-decision';
 
 /** Gate-S16: Decision Integration Layer */
