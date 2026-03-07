@@ -161,6 +161,14 @@ export type {
 export type { NormalizedActorResult } from './actor-result';
 export type { StepExecutionResult } from './repair-step-executor';
 
+/** Gate-S23: Bounded Repair Loop Orchestrator */
+export { runBoundedRepairLoop } from './repair-loop-orchestrator';
+export { createSession } from './repair-loop-session';
+export { shouldStop, DEFAULT_MAX_STEPS, CYCLE_SUSPICION_THRESHOLD } from './repair-loop-policy';
+export type { LoopRunInput } from './repair-loop-orchestrator';
+export type { RepairLoopSession } from './repair-loop-session';
+export type { RepairRunOutcome, TerminationReason } from './repair-run-outcome';
+
 /** Gate-S19: Event-Driven Repair State Machine Runtime */
 export { REPAIR_STATES, TERMINAL_STATES, isTerminalState } from './repair-state';
 export type { RepairState } from './repair-state';
