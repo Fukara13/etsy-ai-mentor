@@ -113,3 +113,11 @@ export { decisionToActionPlan } from './decision-plan-adapter';
 /** Gate-S17: Plan Validation Layer */
 export { validateActionPlan } from './plan-validator';
 export type { PlanValidationResult } from './plan-validator';
+
+/** Gate-S18: Plan Governance Layer */
+export { governActionPlan } from './plan-governor';
+export type {
+  GovernanceVerdict,
+  GovernanceReason,
+  PlanGovernanceResult,
+} from './plan-governor';
