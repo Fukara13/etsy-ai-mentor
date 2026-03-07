@@ -74,3 +74,21 @@ export type {
 export type { BridgeInput } from './orchestrator-bridge';
 export type { RawEventInput, NormalizeResult } from './event-normalizer';
 export type { ContextResolverInput, ResolveContextResult } from './context-resolver';
+
+/** Gate-S13: Controlled Execution Boundary */
+export { toExecutableSteps } from './execution-boundary';
+export type {
+  ActionPlanActionType,
+  ActionPlanItemS13,
+  ActionPlan,
+} from './action-plan';
+export type {
+  ExecutableStepKind,
+  KnownWorkflowKey,
+  WorkflowPayload,
+  ExecutableStep,
+} from './executable-step';
+export type {
+  ExecutionBoundaryStatus,
+  ExecutionBoundaryResult,
+} from './execution-boundary';
