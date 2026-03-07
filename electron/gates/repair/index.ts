@@ -98,3 +98,11 @@ export * from './repair-trace';
 export * from './trace-context';
 export * from './repair-logger';
 export * from './repair-telemetry';
+
+/** Gate-S15: Repair Decision Intelligence Layer */
+export { classifyFailure } from './failure-classifier';
+export { selectRepairStrategy } from './repair-strategy';
+export { buildRepairDecision } from './repair-decision';
+export type { FailureClass, FailureSignal } from './failure-classifier';
+export type { RepairStrategy } from './repair-strategy';
+export type { RepairDecision } from './repair-decision';
