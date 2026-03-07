@@ -97,7 +97,7 @@ export type {
 export * from './repair-trace';
 export * from './trace-context';
 export * from './repair-logger';
-export * from './repair-telemetry';
+export * from './repair-telemetry'; /** Gate-S28 telemetry projection also exported here */
 
 /** Gate-S15: Repair Decision Intelligence Layer */
 export { classifyFailure } from './failure-classifier';

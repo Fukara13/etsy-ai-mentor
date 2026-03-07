@@ -36,3 +36,13 @@ export function logBoundaryDecision(
 export function logRetryAttempt(traceId: string, attempt: number): void {
   repairLog(traceId, 'RETRY', 'RetryController', `retry_attempt ${attempt}`);
 }
+
+/** Gate-S28: Deterministic Telemetry Projection */
+export { mapRepairTelemetryEvent } from './repair-telemetry-mapper';
+export type { MapRepairTelemetryEventParams } from './repair-telemetry-mapper';
+export type {
+  RepairTelemetryEvent,
+  RepairTelemetryStatus,
+  RepairTelemetrySeverity,
+  RepairTelemetryMetadata,
+} from './repair-telemetry.types';
