@@ -1,9 +1,11 @@
 /**
  * DC-2: Minimal placeholder app for Desktop Control Center.
  * Displays shell status; calls preload ping; handles bridge failure.
+ * DC-3: Optional mock read-model placeholder (status from mockRepairRunView).
  */
 
 import './styles.css'
+import { mockRepairRunView } from '../shared/read-models'
 
 const APP_TITLE = 'Etsy AI Mentor — Desktop Control Center'
 const PHASE_LABEL = 'Desktop Shell Bootstrap'
@@ -25,6 +27,7 @@ function render(
         ? 'connected'
         : 'failed'
 
+  const mockStatus = mockRepairRunView.status
   root.innerHTML = `
     <div class="desktop-shell">
       <h1 class="desktop-shell__title">${escapeHtml(title)}</h1>
@@ -32,6 +35,7 @@ function render(
       <p class="desktop-shell__bridge desktop-shell__bridge--${bridgeStatus}">
         Bridge status: ${escapeHtml(statusText)}
       </p>
+      <p class="desktop-shell__mock">Mock run status: ${escapeHtml(mockStatus)}</p>
     </div>
   `
 }
