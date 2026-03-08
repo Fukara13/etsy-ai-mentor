@@ -7,6 +7,7 @@
     "dev": "npm run dev:renderer",
     "dev:renderer": "vite --port 5173 --strictPort",
     "dev:electron": "tsc -p tsconfig.electron.json && npx electron .",
+    "dev:desktop": "tsc -p tsconfig.electron.json && electron dist-electron/electron/desktop/main.js",
     "build": "vite build && tsc -p tsconfig.electron.json",
     "test": "vitest run",
     "preview": "vite preview",

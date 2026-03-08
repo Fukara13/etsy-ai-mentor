@@ -6,6 +6,12 @@ export default defineConfig({
   base: './',
   build: {
     outDir: 'dist',
+    rollupOptions: {
+      input: {
+        main: 'index.html',
+        desktop: 'index-desktop.html',
+      },
+    },
   },
   server: {
     port: 5173,
