@@ -1,0 +1,74 @@
+/**
+ * DC-8: Telemetry Dashboard styles.
+ * Read-only projection.
+ */
+
+.telemetry-dashboard {
+  margin-top: 1.5rem;
+}
+
+.telemetry-dashboard__title {
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0 0 1rem 0;
+  color: var(--dc-text-primary, #e2e8f0);
+}
+
+.telemetry-dashboard__loading,
+.telemetry-dashboard__empty {
+  margin: 0;
+  color: var(--dc-text-muted, #94a3b8);
+  font-size: 0.875rem;
+}
+
+.telemetry-dashboard__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1rem;
+}
+
+.telemetry-panel__row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 0.5rem 0;
+}
+
+.telemetry-panel__label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--dc-text-muted, #94a3b8);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.telemetry-panel__value {
+  font-size: 0.875rem;
+}
+
+.telemetry-panel__list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.telemetry-panel__list-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--dc-border, #334155);
+}
+
+.telemetry-panel__list-item:last-child {
+  border-bottom: none;
+}
+
+.telemetry-panel__failure-type {
+  font-size: 0.875rem;
+}
+
+.telemetry-panel__count {
+  font-size: 0.875rem;
+  font-weight: 600;
+}
