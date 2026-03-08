@@ -1,0 +1,43 @@
+/**
+ * DC-7: Analysis panel styles.
+ * Read-only reasoning surfaces.
+ */
+
+.analysis-panel__loading {
+  margin: 0;
+  color: var(--dc-text-muted);
+  font-size: 0.875rem;
+}
+
+.analysis-panel__row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 0.5rem 0;
+}
+
+.analysis-panel__label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--dc-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.analysis-panel__value {
+  font-size: 0.875rem;
+}
+
+.analysis-panel__section {
+  padding: 0.5rem 0;
+}
+
+.analysis-panel__list {
+  margin: 0.25rem 0 0 0;
+  padding-left: 1.25rem;
+  font-size: 0.875rem;
+}
+
+.analysis-panel__list--ordered {
+  list-style-type: decimal;
+}
