@@ -15,5 +15,6 @@
     "src/application/**/*.ts",
     "src/types.ts",
     "src/lib/schemas.ts"
-  ]
+  ],
+  "exclude": ["**/*.test.ts", "**/*.test.tsx", "node_modules"]
 }

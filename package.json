@@ -9,9 +9,25 @@
     "dev:electron": "tsc -p tsconfig.electron.json && npx electron .",
     "dev:desktop": "tsc -p tsconfig.electron.json && electron dist-electron/electron/desktop/main.js",
     "build": "vite build && tsc -p tsconfig.electron.json",
+    "desktop:build": "vite build && tsc -p tsconfig.electron.json",
+    "desktop:package": "npm run desktop:build && electron-builder",
+    "desktop:package:dir": "npm run desktop:build && electron-builder --dir",
     "test": "vitest run",
     "preview": "vite preview",
     "arch:snapshot": "node tools/arch-snapshot.mjs"
+  },
+  "build": {
+    "appId": "com.etsy-mentor.desktop",
+    "productName": "Etsy AI Mentor",
+    "directories": {
+      "output": "release"
+    },
+    "extraMetadata": {
+      "main": "dist-electron/electron/desktop/main.js"
+    },
+    "win": {
+      "signAndEditExecutable": false
+    }
   },
   "dependencies": {
     "openai": "^4.73.0",
@@ -21,11 +37,16 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",
     "@vitejs/plugin-react": "^4.3.3",
     "electron": "^33.4.11",
+    "electron-builder": "^25.1.8",
+    "jsdom": "^28.1.0",
     "typescript": "^5.6.3",
-    "vite": "^5.4.11"
+    "vite": "^5.4.11",
+    "vitest": "^4.0.18"
   }
 }
