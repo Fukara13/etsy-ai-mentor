@@ -1,10 +1,11 @@
 /**
  * DC-10: Allow-listed IPC channels for Desktop Control Center.
- * Read-only; no mutation channels. Single source of truth for security assertions.
+ * Read-only; no mutation channels. DC-12: check/install only; human confirms.
  */
 
 export const DESKTOP_ALLOWED_IPC_CHANNELS = [
   'desktop:health:ping',
+  'desktop:read:getAppVersion',
   'desktop:read:getRepairRunView',
   'desktop:read:getStateMachineView',
   'desktop:read:getFailureTimelineView',
@@ -12,6 +13,10 @@ export const DESKTOP_ALLOWED_IPC_CHANNELS = [
   'desktop:read:getRepairStrategyView',
   'desktop:read:getTelemetryView',
   'desktop:read:getDecisionView',
+  'desktop:updates:check',
+  'desktop:updates:install',
+  'desktop:updates:available',
+  'desktop:updates:downloaded',
 ] as const
 
 export type DesktopAllowedIpcChannel = (typeof DESKTOP_ALLOWED_IPC_CHANNELS)[number]

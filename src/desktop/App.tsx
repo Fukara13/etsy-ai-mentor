@@ -1,9 +1,10 @@
 /**
  * DC-5/DC-6/DC-7/DC-8/DC-9: Desktop Control Center — App shell + State Machine Viewer + Repair Run Timeline + Analysis Surfaces + Telemetry Dashboard + Human Decision Console.
+ * DC-12: Version footer; update status (human confirms install).
  * Read-only; no mutation actions.
  */
 
-import { AppShell } from './renderer/ui'
+import { AppShell, AppFooter } from './renderer/ui'
 import { StateMachineViewer } from './renderer/features/state-machine/StateMachineViewer'
 import { RepairRunTimeline } from './renderer/features/repair-timeline/repair-run-timeline'
 import { GPTAnalysisPanel } from './renderer/features/analysis/GPTAnalysisPanel'
@@ -43,6 +44,7 @@ export function App() {
       sidebarContent={sidebarContent}
       topbarTitle="Etsy AI Mentor — Desktop Control Center"
       mainContent={mainContent}
+      footerContent={<AppFooter />}
     />
   )
 }

@@ -1,12 +1,14 @@
 /**
  * DC-2/DC-4: Preload bridge for Desktop Control Center.
  * Read-only; no raw ipcRenderer exposed.
+ * DC-12: Version and update API (human confirms install).
  */
 
 import { contextBridge, ipcRenderer } from 'electron'
 
 const CHANNELS = {
   HEALTH_PING: 'desktop:health:ping',
+  GET_APP_VERSION: 'desktop:read:getAppVersion',
   GET_REPAIR_RUN_VIEW: 'desktop:read:getRepairRunView',
   GET_STATE_MACHINE_VIEW: 'desktop:read:getStateMachineView',
   GET_FAILURE_TIMELINE_VIEW: 'desktop:read:getFailureTimelineView',
@@ -14,11 +16,30 @@ const CHANNELS = {
   GET_REPAIR_STRATEGY_VIEW: 'desktop:read:getRepairStrategyView',
   GET_TELEMETRY_VIEW: 'desktop:read:getTelemetryView',
   GET_DECISION_VIEW: 'desktop:read:getDecisionView',
+  CHECK_FOR_UPDATES: 'desktop:updates:check',
+  INSTALL_UPDATE: 'desktop:updates:install',
+  UPDATE_AVAILABLE: 'desktop:updates:available',
+  UPDATE_DOWNLOADED: 'desktop:updates:downloaded',
 }
 
 const desktopApi = {
   system: {
     ping: (): Promise<{ ok: true; source: 'main' }> => ipcRenderer.invoke(CHANNELS.HEALTH_PING),
+    getVersion: (): Promise<string> => ipcRenderer.invoke(CHANNELS.GET_APP_VERSION),
+  },
+  updates: {
+    checkForUpdates: (): Promise<void> => ipcRenderer.invoke(CHANNELS.CHECK_FOR_UPDATES),
+    installUpdate: (): Promise<void> => ipcRenderer.invoke(CHANNELS.INSTALL_UPDATE),
+    onUpdateAvailable: (callback: () => void): (() => void) => {
+      const fn = () => callback()
+      ipcRenderer.on(CHANNELS.UPDATE_AVAILABLE, fn)
+      return () => ipcRenderer.removeListener(CHANNELS.UPDATE_AVAILABLE, fn)
+    },
+    onUpdateDownloaded: (callback: () => void): (() => void) => {
+      const fn = () => callback()
+      ipcRenderer.on(CHANNELS.UPDATE_DOWNLOADED, fn)
+      return () => ipcRenderer.removeListener(CHANNELS.UPDATE_DOWNLOADED, fn)
+    },
   },
   read: {
     getRepairRunView: () => ipcRenderer.invoke(CHANNELS.GET_REPAIR_RUN_VIEW),

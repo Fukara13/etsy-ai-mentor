@@ -1,12 +1,14 @@
 /**
  * DC-2: Desktop Control Center — main process entry.
  * Secure shell only; no GitHub, CI, repair engine, GPT, or external systems.
+ * DC-12: Update service (packaged only).
  */
 
 import { app } from 'electron'
 import path from 'path'
 import { createMainWindow } from './create-main-window'
 import { registerIpcHandlers } from '../ipc/ipc-registry'
+import { createUpdateService } from './update-service'
 
 let mainWindow: Electron.BrowserWindow | null = null
 
@@ -38,6 +40,9 @@ function createWindow(): void {
 app.whenReady().then(() => {
   registerIpcHandlers()
   createWindow()
+  if (app.isPackaged) {
+    createUpdateService(() => mainWindow)
+  }
 
   app.on('activate', () => {
     if (mainWindow === null) {

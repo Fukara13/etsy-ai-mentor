@@ -52,4 +52,17 @@ describe('preload security contract', () => {
     }
     expect(content).toContain('getDecisionView')
   })
+
+  it('preload system API includes getVersion (DC-12)', () => {
+    const content = readPreload()
+    expect(content).toContain('getVersion')
+  })
+
+  it('preload updates API is bounded (DC-12)', () => {
+    const content = readPreload()
+    expect(content).toContain('checkForUpdates')
+    expect(content).toContain('installUpdate')
+    expect(content).toContain('onUpdateAvailable')
+    expect(content).toContain('onUpdateDownloaded')
+  })
 })

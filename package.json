@@ -10,7 +10,7 @@
     "dev:desktop": "tsc -p tsconfig.electron.json && electron dist-electron/electron/desktop/main.js",
     "build": "vite build && tsc -p tsconfig.electron.json",
     "desktop:build": "vite build && tsc -p tsconfig.electron.json",
-    "desktop:package": "npm run desktop:build && electron-builder",
+    "desktop:package": "npm run desktop:build && electron-builder --publish never",
     "desktop:package:dir": "npm run desktop:build && electron-builder --dir",
     "test": "vitest run",
     "preview": "vite preview",
@@ -25,11 +25,21 @@
     "extraMetadata": {
       "main": "dist-electron/electron/desktop/main.js"
     },
+    "publish": {
+      "provider": "generic",
+      "url": "https://example.com/releases"
+    },
     "win": {
-      "signAndEditExecutable": false
+      "signAndEditExecutable": false,
+      "target": ["nsis"]
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
     }
   },
   "dependencies": {
+    "electron-updater": "^6.8.3",
     "openai": "^4.73.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",

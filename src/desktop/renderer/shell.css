@@ -57,6 +57,44 @@ html, body, #root {
   overflow-y: auto;
 }
 
+.dc-app-shell__footer {
+  padding: 0.5rem var(--dc-spacing);
+  font-size: 0.75rem;
+  color: var(--dc-text-muted);
+  background: var(--dc-bg-subtle);
+  border-top: 1px solid var(--dc-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.dc-app-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  width: 100%;
+}
+
+.dc-app-footer__version {
+  color: var(--dc-text-muted);
+}
+
+.dc-app-footer__restart {
+  padding: 0.25rem 0.5rem;
+  font-size: 0.75rem;
+  color: var(--dc-accent);
+  background: var(--dc-accent-subtle);
+  border: 1px solid var(--dc-accent);
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.dc-app-footer__restart:hover {
+  opacity: 0.9;
+}
+
 .dc-dashboard {
   display: flex;
   flex-direction: column;
