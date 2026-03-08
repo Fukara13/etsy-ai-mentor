@@ -1,0 +1,175 @@
+/**
+ * DC-5: App shell and shared UI foundation styles.
+ * Full-bleed dark layout for html/body/#root.
+ */
+
+html, body, #root {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #1a1a1a;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+}
+
+:root {
+  --dc-bg: #1a1a1a;
+  --dc-bg-subtle: #252525;
+  --dc-bg-card: #252525;
+  --dc-text: #e8e8e8;
+  --dc-text-muted: #a0a0a0;
+  --dc-border: #3a3a3a;
+  --dc-accent: #4a9eff;
+  --dc-accent-subtle: rgba(74, 158, 255, 0.15);
+  --dc-success: #4ade80;
+  --dc-warning: #facc15;
+  --dc-error: #f87171;
+  --dc-font: system-ui, -apple-system, sans-serif;
+  --dc-font-mono: ui-monospace, 'Cascadia Code', 'SF Mono', monospace;
+  --dc-sidebar-width: 200px;
+  --dc-spacing: 1rem;
+}
+
+.dc-app-shell {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  font-family: var(--dc-font);
+  background: var(--dc-bg);
+  color: var(--dc-text);
+}
+
+.dc-app-shell__main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.dc-app-shell__content {
+  flex: 1;
+  padding: var(--dc-spacing);
+  overflow-y: auto;
+}
+
+.dc-dashboard {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.dc-sidebar {
+  width: var(--dc-sidebar-width);
+  padding: var(--dc-spacing);
+  background: var(--dc-bg-subtle);
+  border-right: 1px solid var(--dc-border);
+}
+
+.dc-sidebar nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.dc-sidebar__link {
+  padding: 0.5rem 0.75rem;
+  font-size: 0.875rem;
+  color: var(--dc-text);
+  text-decoration: none;
+  border-radius: 6px;
+}
+
+.dc-sidebar__link:hover {
+  background: var(--dc-bg-card);
+}
+
+.dc-sidebar__link--active {
+  background: var(--dc-accent-subtle);
+  color: var(--dc-accent);
+}
+
+.dc-topbar {
+  padding: 1rem var(--dc-spacing);
+  background: var(--dc-bg-subtle);
+  border-bottom: 1px solid var(--dc-border);
+}
+
+.dc-topbar__title {
+  margin: 0;
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+
+.dc-card {
+  padding: 1rem;
+  background: var(--dc-bg-card);
+  border: 1px solid var(--dc-border);
+  border-radius: 8px;
+}
+
+.dc-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+}
+
+.dc-section-header__title {
+  margin: 0;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--dc-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.dc-status-badge {
+  display: inline-block;
+  padding: 0.2rem 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  border-radius: 4px;
+}
+
+.dc-status-badge--neutral {
+  background: var(--dc-bg-subtle);
+  color: var(--dc-text-muted);
+}
+
+.dc-status-badge--success {
+  background: rgba(74, 222, 128, 0.15);
+  color: var(--dc-success);
+}
+
+.dc-status-badge--warning {
+  background: rgba(250, 204, 21, 0.15);
+  color: var(--dc-warning);
+}
+
+.dc-status-badge--error {
+  background: rgba(248, 113, 113, 0.15);
+  color: var(--dc-error);
+}
+
+.dc-data-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.25rem 0;
+  font-size: 0.875rem;
+}
+
+.dc-data-row__label {
+  color: var(--dc-text-muted);
+}
+
+.dc-empty-state {
+  padding: 1.5rem;
+  text-align: center;
+  color: var(--dc-text-muted);
+  font-size: 0.875rem;
+}

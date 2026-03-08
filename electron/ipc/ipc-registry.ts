@@ -4,6 +4,7 @@
  */
 
 import { registerHealthCheckHandler } from './handlers/health-check'
+import { registerBackboneReadHandlers } from './handlers/backbone-read'
 
 let registered = false
 
@@ -11,4 +12,5 @@ export function registerIpcHandlers(): void {
   if (registered) return
   registered = true
   registerHealthCheckHandler()
+  registerBackboneReadHandlers()
 }

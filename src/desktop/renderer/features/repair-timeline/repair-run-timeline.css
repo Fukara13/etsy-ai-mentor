@@ -1,0 +1,74 @@
+/**
+ * DC-6: Repair Run Timeline styles.
+ */
+
+.rt-timeline__loading {
+  margin: 0;
+  color: var(--dc-text-muted);
+  font-size: 0.875rem;
+}
+
+.rt-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.rt-timeline__item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 0.5rem 0;
+  border-left: 2px solid var(--dc-border);
+  margin-left: 0.5rem;
+  padding-left: 1rem;
+  position: relative;
+}
+
+.rt-timeline__item::before {
+  content: '';
+  position: absolute;
+  left: -6px;
+  top: 0.75rem;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--dc-bg-subtle);
+}
+
+.rt-timeline__item--success::before {
+  background: var(--dc-success);
+}
+
+.rt-timeline__item--failed::before {
+  background: var(--dc-error);
+}
+
+.rt-timeline__item--running::before {
+  background: var(--dc-accent);
+  box-shadow: 0 0 0 2px var(--dc-accent-subtle);
+}
+
+.rt-timeline__icon {
+  font-size: 0.75rem;
+  color: var(--dc-text-muted);
+  min-width: 1rem;
+}
+
+.rt-timeline__item-content {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.rt-timeline__item-title {
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.rt-timeline__item-timestamp {
+  font-size: 0.75rem;
+  color: var(--dc-text-muted);
+  font-family: var(--dc-font-mono);
+}
