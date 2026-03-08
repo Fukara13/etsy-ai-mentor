@@ -77,6 +77,17 @@ export type BackboneRepairStrategy = {
   updated_at_unix: number
 }
 
+export type BackboneDecision = {
+  decision_id: string
+  trace_id: string
+  gpt_analysis_title?: string
+  gpt_analysis_body?: string
+  repair_strategy_title?: string
+  repair_strategy_body?: string
+  risk_level?: string
+  operator_prompt?: string
+}
+
 export type BackboneTelemetry = {
   telemetry_id: string
   trace_id: string

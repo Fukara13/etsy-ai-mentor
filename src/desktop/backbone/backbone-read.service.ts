@@ -10,6 +10,7 @@ import type {
   GPTAnalysisView,
   RepairStrategyView,
   TelemetryView,
+  DecisionView,
 } from '../../shared/read-models'
 import { createMockBackboneReadAdapter } from './backbone-read.adapter'
 import {
@@ -19,6 +20,7 @@ import {
   mapGPTAnalysisView,
   mapRepairStrategyView,
   mapTelemetryView,
+  mapDecisionView,
 } from './backbone-read.mapper'
 
 const adapter = createMockBackboneReadAdapter()
@@ -51,4 +53,9 @@ export async function getRepairStrategyView(): Promise<RepairStrategyView | null
 export async function getTelemetryView(): Promise<TelemetryView | null> {
   const raw = await adapter.getTelemetry()
   return raw ? mapTelemetryView(raw) : null
+}
+
+export async function getDecisionView(): Promise<DecisionView | null> {
+  const raw = await adapter.getDecision()
+  return raw ? mapDecisionView(raw) : null
 }

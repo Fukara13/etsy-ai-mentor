@@ -73,3 +73,15 @@ export type TelemetryView = {
   fromTime: number
   toTime: number
 }
+
+/** DC-9: Decision view for Human Decision Console. Read-only. */
+export type DecisionView = {
+  id: string
+  traceId: string
+  gptAnalysisTitle?: string
+  gptAnalysisBody?: string
+  repairStrategyTitle?: string
+  repairStrategyBody?: string
+  riskLevel?: string
+  operatorPrompt?: string
+}

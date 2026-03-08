@@ -12,6 +12,7 @@ import {
   getGPTAnalysisView,
   getRepairStrategyView,
   getTelemetryView,
+  getDecisionView,
 } from '../../../src/desktop/backbone'
 
 export function registerBackboneReadHandlers(): void {
@@ -21,4 +22,5 @@ export function registerBackboneReadHandlers(): void {
   ipcMain.handle(IPC_CHANNELS.GET_GPT_ANALYSIS_VIEW, () => getGPTAnalysisView())
   ipcMain.handle(IPC_CHANNELS.GET_REPAIR_STRATEGY_VIEW, () => getRepairStrategyView())
   ipcMain.handle(IPC_CHANNELS.GET_TELEMETRY_VIEW, () => getTelemetryView())
+  ipcMain.handle(IPC_CHANNELS.GET_DECISION_VIEW, () => getDecisionView())
 }

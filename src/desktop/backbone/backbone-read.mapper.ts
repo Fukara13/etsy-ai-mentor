@@ -11,6 +11,7 @@ import type {
   GPTAnalysisView,
   RepairStrategyView,
   TelemetryView,
+  DecisionView,
 } from '../../shared/read-models'
 import type {
   BackboneRepairRun,
@@ -19,6 +20,7 @@ import type {
   BackboneGPTAnalysis,
   BackboneRepairStrategy,
   BackboneTelemetry,
+  BackboneDecision,
 } from './backbone-read.types'
 
 const STATUS_MAP: Record<string, ViewStatus> = {
@@ -130,5 +132,18 @@ export function mapTelemetryView(raw: BackboneTelemetry): TelemetryView {
     runCount: raw.run_count,
     fromTime: raw.range_start_unix,
     toTime: raw.range_end_unix,
+  }
+}
+
+export function mapDecisionView(raw: BackboneDecision): DecisionView {
+  return {
+    id: raw.decision_id,
+    traceId: raw.trace_id,
+    gptAnalysisTitle: raw.gpt_analysis_title,
+    gptAnalysisBody: raw.gpt_analysis_body,
+    repairStrategyTitle: raw.repair_strategy_title,
+    repairStrategyBody: raw.repair_strategy_body,
+    riskLevel: raw.risk_level,
+    operatorPrompt: raw.operator_prompt,
   }
 }

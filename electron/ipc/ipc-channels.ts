@@ -11,6 +11,7 @@ export const IPC_CHANNELS = {
   GET_GPT_ANALYSIS_VIEW: 'desktop:read:getGPTAnalysisView',
   GET_REPAIR_STRATEGY_VIEW: 'desktop:read:getRepairStrategyView',
   GET_TELEMETRY_VIEW: 'desktop:read:getTelemetryView',
+  GET_DECISION_VIEW: 'desktop:read:getDecisionView',
 } as const
 
 export type IpcChannel = (typeof IPC_CHANNELS)[keyof typeof IPC_CHANNELS]

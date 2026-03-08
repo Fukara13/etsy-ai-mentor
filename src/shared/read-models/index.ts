@@ -10,6 +10,7 @@ export type {
   GPTAnalysisView,
   RepairStrategyView,
   TelemetryView,
+  DecisionView,
 } from './contracts'
 
 export type {

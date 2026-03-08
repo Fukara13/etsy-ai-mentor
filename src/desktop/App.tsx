@@ -1,5 +1,5 @@
 /**
- * DC-5/DC-6/DC-7/DC-8: Desktop Control Center — App shell + State Machine Viewer + Repair Run Timeline + Analysis Surfaces + Telemetry Dashboard.
+ * DC-5/DC-6/DC-7/DC-8/DC-9: Desktop Control Center — App shell + State Machine Viewer + Repair Run Timeline + Analysis Surfaces + Telemetry Dashboard + Human Decision Console.
  * Read-only; no mutation actions.
  */
 
@@ -9,12 +9,14 @@ import { RepairRunTimeline } from './renderer/features/repair-timeline/repair-ru
 import { GPTAnalysisPanel } from './renderer/features/analysis/GPTAnalysisPanel'
 import { RepairStrategyPanel } from './renderer/features/analysis/RepairStrategyPanel'
 import { TelemetryDashboard } from './renderer/features/telemetry/TelemetryDashboard'
+import { DecisionConsolePanel } from './renderer/features/decision/DecisionConsolePanel'
 import './styles.css'
 import './renderer/shell.css'
 import './renderer/features/state-machine/state-machine-viewer.css'
 import './renderer/features/repair-timeline/repair-run-timeline.css'
 import './renderer/features/analysis/analysis-panel.css'
 import './renderer/features/telemetry/telemetry-dashboard.css'
+import './renderer/features/decision/decision-console.css'
 
 export function App() {
   const sidebarContent = (
@@ -32,6 +34,7 @@ export function App() {
       <GPTAnalysisPanel />
       <RepairStrategyPanel />
       <TelemetryDashboard />
+      <DecisionConsolePanel />
     </div>
   )
 

@@ -1,17 +1,19 @@
 /**
- * DC-2: Window factory for Desktop Control Center.
+ * DC-2/DC-10: Window factory for Desktop Control Center.
  * Secure webPreferences; no unnecessary permissions.
+ * Hardened: navigation policy, production DevTools, explicit boundaries.
  */
 
-import { BrowserWindow } from 'electron'
+import { app, BrowserWindow } from 'electron'
 import path from 'path'
+import { isAllowedAppNavigation } from './navigation-policy'
 
 const WINDOW_TITLE = 'Etsy AI Mentor — Desktop Control Center'
 const DEFAULT_WIDTH = 1024
 const DEFAULT_HEIGHT = 768
 
-/** DevTools only in development; disable in production. */
-const DEVTOOLS_OPEN = !process.env.NODE_ENV || process.env.NODE_ENV === 'development'
+/** DevTools: only when unpackaged (development). Never in production build. */
+const DEVTOOLS_OPEN = !app.isPackaged
 
 export function createMainWindow(preloadPath: string): BrowserWindow {
   const win = new BrowserWindow({
@@ -24,17 +26,29 @@ export function createMainWindow(preloadPath: string): BrowserWindow {
       contextIsolation: true,
       sandbox: true,
       webSecurity: true,
+      allowRunningInsecureContent: false,
     },
     show: false,
   })
 
+  setupNavigationPolicy(win)
   if (DEVTOOLS_OPEN) {
     win.webContents.openDevTools({ mode: 'detach' })
   }
-
   win.once('ready-to-show', () => {
     win.show()
   })
 
   return win
+}
+
+/** DC-10: Block arbitrary navigation and window opening. */
+function setupNavigationPolicy(win: BrowserWindow): void {
+  win.webContents.setWindowOpenHandler(() => ({ action: 'deny' }))
+
+  win.webContents.on('will-navigate', (event, url) => {
+    if (!isAllowedAppNavigation(url, app.isPackaged)) {
+      event.preventDefault()
+    }
+  })
 }

@@ -11,6 +11,7 @@ import type {
   BackboneGPTAnalysis,
   BackboneRepairStrategy,
   BackboneTelemetry,
+  BackboneDecision,
 } from './backbone-read.types'
 
 export interface BackboneReadAdapter {
@@ -20,6 +21,7 @@ export interface BackboneReadAdapter {
   getGPTAnalysis(): Promise<BackboneGPTAnalysis | null>
   getRepairStrategy(): Promise<BackboneRepairStrategy | null>
   getTelemetry(): Promise<BackboneTelemetry | null>
+  getDecision(): Promise<BackboneDecision | null>
 }
 
 const mockBackboneRepairRun: BackboneRepairRun = {
@@ -114,6 +116,19 @@ const mockBackboneTelemetry: BackboneTelemetry = {
   range_end_unix: 1709900060,
 }
 
+const mockBackboneDecision: BackboneDecision = {
+  decision_id: 'dec_bb_1',
+  trace_id: 'trace_bb_1',
+  gpt_analysis_title: 'Root Cause',
+  gpt_analysis_body:
+    'The failure appears related to a missing dependency in the repair step.',
+  repair_strategy_title: 'Recommended Strategy',
+  repair_strategy_body:
+    'Update the dependency definition and rerun validation in a controlled review flow.',
+  risk_level: 'MEDIUM',
+  operator_prompt: 'Review the AI recommendation before deciding the next manual step.',
+}
+
 export function createMockBackboneReadAdapter(): BackboneReadAdapter {
   return {
     async getRepairRun() {
@@ -133,6 +148,9 @@ export function createMockBackboneReadAdapter(): BackboneReadAdapter {
     },
     async getTelemetry() {
       return mockBackboneTelemetry
+    },
+    async getDecision() {
+      return mockBackboneDecision
     },
   }
 }

@@ -13,6 +13,7 @@ const CHANNELS = {
   GET_GPT_ANALYSIS_VIEW: 'desktop:read:getGPTAnalysisView',
   GET_REPAIR_STRATEGY_VIEW: 'desktop:read:getRepairStrategyView',
   GET_TELEMETRY_VIEW: 'desktop:read:getTelemetryView',
+  GET_DECISION_VIEW: 'desktop:read:getDecisionView',
 }
 
 const desktopApi = {
@@ -26,6 +27,7 @@ const desktopApi = {
     getGPTAnalysisView: () => ipcRenderer.invoke(CHANNELS.GET_GPT_ANALYSIS_VIEW),
     getRepairStrategyView: () => ipcRenderer.invoke(CHANNELS.GET_REPAIR_STRATEGY_VIEW),
     getTelemetryView: () => ipcRenderer.invoke(CHANNELS.GET_TELEMETRY_VIEW),
+    getDecisionView: () => ipcRenderer.invoke(CHANNELS.GET_DECISION_VIEW),
   },
 }
 

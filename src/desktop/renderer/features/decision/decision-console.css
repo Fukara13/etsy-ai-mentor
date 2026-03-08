@@ -1,0 +1,141 @@
+/**
+ * DC-9: Human Decision Console styles.
+ * Read-only; local UI state only.
+ */
+
+.decision-console__loading,
+.decision-console__empty {
+  margin: 0;
+  color: var(--dc-text-muted, #94a3b8);
+  font-size: 0.875rem;
+}
+
+.decision-console {
+  margin-top: 1rem;
+}
+
+.decision-console__subtitle {
+  font-size: 0.875rem;
+  font-weight: 600;
+  margin: 0 0 1rem 0;
+  color: var(--dc-text-primary, #e2e8f0);
+}
+
+.decision-console__section {
+  margin-bottom: 1rem;
+}
+
+.decision-console__section-title {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--dc-text-muted, #94a3b8);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin: 0 0 0.25rem 0;
+}
+
+.decision-console__section-body {
+  font-size: 0.875rem;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.decision-console__risk-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.decision-console__risk-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--dc-text-muted, #94a3b8);
+  text-transform: uppercase;
+}
+
+.decision-console__risk-badge {
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+}
+
+.decision-console__risk-badge--low {
+  background: rgba(34, 197, 94, 0.2);
+  color: #22c55e;
+}
+
+.decision-console__risk-badge--medium {
+  background: rgba(234, 179, 8, 0.2);
+  color: #eab308;
+}
+
+.decision-console__risk-badge--high {
+  background: rgba(239, 68, 68, 0.2);
+  color: #ef4444;
+}
+
+.decision-console__risk-badge--unknown {
+  background: rgba(148, 163, 184, 0.2);
+  color: #94a3b8;
+}
+
+.decision-console__prompt {
+  font-size: 0.875rem;
+  margin: 0 0 1rem 0;
+  color: var(--dc-text-primary, #e2e8f0);
+}
+
+.decision-console__options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.decision-console__option {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--dc-border, #334155);
+  border-radius: 6px;
+  background: transparent;
+  color: var(--dc-text-primary, #e2e8f0);
+  font: inherit;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.decision-console__option:hover {
+  border-color: #64748b;
+  background: rgba(100, 116, 139, 0.1);
+}
+
+.decision-console__option:focus {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+.decision-console__option--selected {
+  border-color: #3b82f6;
+  background: rgba(59, 130, 246, 0.1);
+}
+
+.decision-console__option-label {
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+
+.decision-console__option-desc {
+  font-size: 0.75rem;
+  color: var(--dc-text-muted, #94a3b8);
+  margin-top: 0.25rem;
+}
+
+.decision-console__helper {
+  font-size: 0.75rem;
+  color: var(--dc-text-muted, #94a3b8);
+  margin: 1rem 0 0 0;
+}

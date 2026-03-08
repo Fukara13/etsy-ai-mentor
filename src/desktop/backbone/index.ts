@@ -9,6 +9,7 @@ export type {
   BackboneGPTAnalysis,
   BackboneRepairStrategy,
   BackboneTelemetry,
+  BackboneDecision,
 } from './backbone-read.types'
 
 export type { BackboneReadAdapter } from './backbone-read.adapter'
@@ -21,6 +22,7 @@ export {
   mapGPTAnalysisView,
   mapRepairStrategyView,
   mapTelemetryView,
+  mapDecisionView,
 } from './backbone-read.mapper'
 
 export {
@@ -30,4 +32,5 @@ export {
   getGPTAnalysisView,
   getRepairStrategyView,
   getTelemetryView,
+  getDecisionView,
 } from './backbone-read.service'
