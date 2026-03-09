@@ -1,0 +1,18 @@
+/**
+ * HM-5: Registry wiring for real hero modules.
+ */
+
+import type { HeroRegistry } from '../core/hero.registry'
+import { ciFailureHero } from './ci-failure.hero'
+import { reviewHero } from './review.hero'
+import { analysisHero } from './analysis.hero'
+import { escalationHero } from './escalation.hero'
+
+export function registerAllHeroes(registry: HeroRegistry): void {
+  registry.register(ciFailureHero)
+  registry.register(reviewHero)
+  registry.register(analysisHero)
+  registry.register(escalationHero)
+}
+
+export { ciFailureHero, reviewHero, analysisHero, escalationHero }
