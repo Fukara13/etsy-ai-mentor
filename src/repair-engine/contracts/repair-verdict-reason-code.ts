@@ -1,0 +1,16 @@
+/**
+ * RE-5: Deterministic reason codes for verdict generation.
+ */
+
+export const REPAIR_VERDICT_REASON_CODES = [
+  'NO_STRATEGY_CANDIDATES',
+  'MULTIPLE_STRATEGIES_PRESENT',
+  'MANUAL_STRATEGY_PRESENT',
+  'ITEM_NOT_PROCESSING',
+  'ITEM_ALREADY_TERMINAL',
+  'HIGH_RISK_ESCALATION',
+  'READY_FOR_STRATEGY_REVIEW',
+  'INSUFFICIENT_INPUT_SIGNAL',
+] as const
+
+export type RepairVerdictReasonCode = (typeof REPAIR_VERDICT_REASON_CODES)[number]
