@@ -7,12 +7,14 @@ import { ciFailureHero } from './ci-failure.hero'
 import { reviewHero } from './review.hero'
 import { analysisHero } from './analysis.hero'
 import { escalationHero } from './escalation.hero'
+import { repairHero } from './repair.hero'
 
 export function registerAllHeroes(registry: HeroRegistry): void {
   registry.register(ciFailureHero)
   registry.register(reviewHero)
   registry.register(analysisHero)
   registry.register(escalationHero)
+  registry.register(repairHero)
 }
 
-export { ciFailureHero, reviewHero, analysisHero, escalationHero }
+export { ciFailureHero, reviewHero, analysisHero, escalationHero, repairHero }
