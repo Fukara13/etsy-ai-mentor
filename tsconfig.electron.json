@@ -11,10 +11,7 @@
     "forceConsistentCasingInFileNames": true
   },
   "include": [
-    "electron/**/*.ts",
-    "src/application/**/*.ts",
-    "src/types.ts",
-    "src/lib/schemas.ts"
+    "electron/**/*.ts"
   ],
   "exclude": ["**/*.test.ts", "**/*.test.tsx", "node_modules"]
 }
