@@ -26,5 +26,6 @@ export type RepairOperatorDecision = {
   readonly riskLevel: 'low' | 'medium' | 'high'
   readonly confidence: number
   readonly recommendedStrategyType?: string
+  readonly reasonCodes?: readonly string[]
   readonly actions: readonly RepairOperatorAction[]
 }

@@ -35,6 +35,7 @@ export class RepairVerdictRouter {
       confidence: evaluation.confidence,
       recommendedStrategyType:
         recommendedStrategyType != null ? String(recommendedStrategyType) : undefined,
+      reasonCodes: [...evaluation.reasonCodes],
     }
 
     switch (verdict) {
