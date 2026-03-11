@@ -1,5 +1,6 @@
 export type RepairRunStatus =
   | 'running'
   | 'completed'
-  | 'escalated';
+  | 'escalated'
+  | 'aborted';
 
