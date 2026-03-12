@@ -1,6 +1,7 @@
 /**
  * Confidence integration: derives ConfidenceScore from verdict context.
- * Pure, deterministic. Uses FR-4 confidence model.
+ * TH-1.2: Also attaches canonical error type to verdict context.
+ * Pure, deterministic. Uses FR-4 confidence and error classifier models.
  */
 
 import {
@@ -10,6 +11,8 @@ import {
 } from '../contracts/confidence';
 import type { RepairStrategyType } from '../contracts/repair-strategy-type';
 import type { RepairVerdictDecision } from '../contracts/repair-verdict-decision';
+import { classifyError } from '../contracts/error/error-classifier';
+import { ErrorType } from '../contracts/error/error-type';
 
 export type VerdictContext = {
   readonly verdict: RepairVerdictDecision;
@@ -56,3 +59,20 @@ export function deriveConfidenceForVerdictContext(ctx: VerdictContext): Confiden
   const factors = buildFactors(ctx);
   return buildConfidenceScore(factors);
 }
+
+export type VerdictErrorContext = VerdictContext & {
+  readonly errorType: ErrorType;
+};
+
+export function attachErrorTypeToVerdictContext(
+  context: VerdictContext,
+  rawErrorMessage: string
+): VerdictErrorContext {
+  const errorType = classifyError({ message: rawErrorMessage });
+
+  return {
+    ...context,
+    errorType,
+  };
+}
+

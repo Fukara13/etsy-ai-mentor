@@ -6,8 +6,11 @@ import { describe, it, expect } from 'vitest';
 
 import {
   deriveConfidenceForVerdictContext,
+  attachErrorTypeToVerdictContext,
   type VerdictContext,
+  type VerdictErrorContext,
 } from './derive-confidence-for-verdict-context';
+import { ErrorType } from '../contracts/error/error-type';
 
 function makeContext(overrides: Partial<VerdictContext>): VerdictContext {
   return {
@@ -96,3 +99,55 @@ describe('deriveConfidenceForVerdictContext', () => {
     expect(a.value).toBe(b.value);
   });
 });
+
+describe('attachErrorTypeToVerdictContext', () => {
+  function makeErrorContext(overrides: Partial<VerdictContext> = {}): VerdictContext {
+    return makeContext({
+      verdict: 'manual_investigation',
+      strategyCount: 1,
+      hasManualInvestigation: true,
+      dominantStrategyType: 'manual_investigation',
+      ...overrides,
+    });
+  }
+
+  it('attaches canonical MODULE_NOT_FOUND error type from raw message', () => {
+    const ctx = makeErrorContext();
+
+    const result: VerdictErrorContext = attachErrorTypeToVerdictContext(
+      ctx,
+      'Module not found: some-module'
+    );
+
+    expect(result.errorType).toBe(ErrorType.MODULE_NOT_FOUND);
+    expect(result.verdict).toBe(ctx.verdict);
+  });
+
+  it('attaches UNKNOWN when message does not match any pattern', () => {
+    const ctx = makeErrorContext();
+
+    const result = attachErrorTypeToVerdictContext(ctx, 'something entirely unrelated');
+
+    expect(result.errorType).toBe(ErrorType.UNKNOWN);
+  });
+
+  it('does not mutate the input context', () => {
+    const ctx = makeErrorContext();
+    const snapshot = JSON.parse(JSON.stringify(ctx));
+
+    attachErrorTypeToVerdictContext(ctx, 'Module not found: x');
+
+    expect(ctx).toEqual(snapshot);
+  });
+
+  it('produces deterministic output for same input', () => {
+    const ctx = makeErrorContext();
+
+    const a = attachErrorTypeToVerdictContext(ctx, 'dependency resolution failed');
+    const b = attachErrorTypeToVerdictContext(ctx, 'dependency resolution failed');
+
+    expect(a).toEqual(b);
+    expect(a.errorType).toBe(b.errorType);
+  });
+});
+
