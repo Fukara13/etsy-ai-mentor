@@ -2,6 +2,8 @@
  * RE-6: Operator-facing decision model.
  */
 
+import type { ConfidenceLevel } from '../contracts/confidence/confidence-level'
+
 export const REPAIR_OPERATOR_ACTION_TYPES = [
   'apply_strategy',
   'investigate_manually',
@@ -25,6 +27,7 @@ export type RepairOperatorDecision = {
   readonly summary: string
   readonly riskLevel: 'low' | 'medium' | 'high'
   readonly confidence: number
+  readonly confidenceLevel?: ConfidenceLevel
   readonly recommendedStrategyType?: string
   readonly reasonCodes?: readonly string[]
   readonly actions: readonly RepairOperatorAction[]

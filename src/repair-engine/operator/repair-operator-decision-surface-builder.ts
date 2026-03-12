@@ -56,6 +56,7 @@ export function buildRepairOperatorDecisionSurface(
     actions,
     riskLevel: decision.riskLevel,
     confidence: decision.confidence,
+    confidenceLevel: decision.confidenceLevel,
     reasonCodes,
     operatorGuidance,
   }

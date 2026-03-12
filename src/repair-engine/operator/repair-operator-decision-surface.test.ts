@@ -105,6 +105,12 @@ describe('buildRepairOperatorDecisionSurface', () => {
     expect(surface.confidence).toBe(0.92)
   })
 
+  it('propagates confidenceLevel when present', () => {
+    const decision = makeDecision({ confidence: 0.75, confidenceLevel: 'high' })
+    const surface = buildRepairOperatorDecisionSurface(decision)
+    expect(surface.confidenceLevel).toBe('high')
+  })
+
   it('risk level remains unchanged', () => {
     const decision = makeDecision({ riskLevel: 'high' })
     const surface = buildRepairOperatorDecisionSurface(decision)

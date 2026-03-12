@@ -3,6 +3,7 @@
  */
 
 import type { RepairOperatorActionType } from '../routing/repair-operator-decision'
+import type { ConfidenceLevel } from '../contracts/confidence/confidence-level'
 
 export type RepairOperatorDecisionSurface = {
   readonly headline: string
@@ -18,6 +19,7 @@ export type RepairOperatorDecisionSurface = {
   }[]
   readonly riskLevel: 'low' | 'medium' | 'high'
   readonly confidence: number
+  readonly confidenceLevel?: ConfidenceLevel
   readonly reasonCodes: readonly string[]
   readonly operatorGuidance: readonly string[]
 }

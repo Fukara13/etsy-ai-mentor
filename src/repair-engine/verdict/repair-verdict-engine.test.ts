@@ -109,6 +109,7 @@ describe('evaluateRepairItemForVerdict', () => {
     expect(result.evaluation.dominantStrategyType).toBe('configuration_fix')
     expect(result.recommendedStrategyType).toBe('configuration_fix')
     expect(result.evaluation.reasonCodes).toContain('READY_FOR_STRATEGY_REVIEW')
+    expect(result.evaluation.confidenceLevel).toBe('high')
   })
 
   it('returns manual_investigation when processing item has multiple strategy candidates', () => {
@@ -154,6 +155,18 @@ describe('evaluateRepairItemForVerdict', () => {
     expect(singleResult.recommendedStrategyType).toBe('configuration_fix')
     expect(multiResult.verdict).toBe('manual_investigation')
     expect(multiResult.recommendedStrategyType).toBeNull()
+  })
+
+  it('propagates confidence and confidenceLevel from FR-4 derivation', () => {
+    const single = makeItem({
+      status: 'processing',
+      strategyCandidates: makeSingleConfigCandidate(),
+    })
+    const result = evaluateRepairItemForVerdict({ item: single })
+    expect(typeof result.evaluation.confidence).toBe('number')
+    expect(result.evaluation.confidence).toBeGreaterThanOrEqual(0)
+    expect(result.evaluation.confidence).toBeLessThanOrEqual(1)
+    expect(['low', 'medium', 'high']).toContain(result.evaluation.confidenceLevel)
   })
 
   it('does not mutate the input item', () => {

@@ -33,6 +33,7 @@ export class RepairVerdictRouter {
       summary: evaluation.summary,
       riskLevel: evaluation.riskLevel,
       confidence: evaluation.confidence,
+      confidenceLevel: evaluation.confidenceLevel,
       recommendedStrategyType:
         recommendedStrategyType != null ? String(recommendedStrategyType) : undefined,
       reasonCodes: [...evaluation.reasonCodes],
