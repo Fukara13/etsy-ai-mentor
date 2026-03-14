@@ -6,9 +6,8 @@
 
 import type { RepairRunOutcome } from '../gates/repair/repair-run-outcome'
 import type { RepairOperatorHandoff } from '../gates/repair/operator-handoff.types'
-import { runBoundedRepairLoop } from '../gates/repair/repair-loop-orchestrator'
-import { deriveRepairRunVerdict } from '../gates/repair/repair-run-verdict-mapper'
-import { mapRepairOperatorHandoff } from '../gates/repair/operator-handoff-mapper'
+import type { ElectronRepairBridgeResult } from '../runtime/repair-engine-bridge'
+import { runElectronRepairBridge } from '../runtime/repair-engine-bridge'
 import type {
   RepairRunView,
   StateMachineView,
@@ -40,30 +39,30 @@ import {
 /** Seeded demo session ID for deterministic demo runs. */
 const DEMO_SESSION_ID = 'dc102_demo_1'
 
-let cachedOutcome: RepairRunOutcome | null = null
-let cachedHandoff: RepairOperatorHandoff | null = null
+let cachedBridgeResult: ElectronRepairBridgeResult | null = null
 
-/** Runs demo loop once per process; caches outcome for consistency across views. */
-function getDemoOutcome(): RepairRunOutcome {
-  if (!cachedOutcome) {
-    cachedOutcome = runBoundedRepairLoop({
-    initialState: 'ANALYZE',
-    retryCount: 0,
-    maxRetries: 3,
-    maxSteps: 20,
-    sessionId: DEMO_SESSION_ID,
-  })
+const DEMO_INPUT = {
+  initialState: 'ANALYZE' as const,
+  retryCount: 0,
+  maxRetries: 3,
+  maxSteps: 20,
+  sessionId: DEMO_SESSION_ID,
+}
+
+function getCachedBridgeResult(): ElectronRepairBridgeResult {
+  if (!cachedBridgeResult) {
+    cachedBridgeResult = runElectronRepairBridge(DEMO_INPUT)
   }
-  return cachedOutcome
+  return cachedBridgeResult
+}
+
+/** Runs repair via canonical orchestrator bridge; caches outcome for consistency across views. */
+function getDemoOutcome(): RepairRunOutcome {
+  return getCachedBridgeResult().outcome
 }
 
 function getDemoHandoff(): RepairOperatorHandoff {
-  if (!cachedHandoff) {
-    const outcome = getDemoOutcome()
-    const verdict = deriveRepairRunVerdict(outcome)
-    cachedHandoff = mapRepairOperatorHandoff({ verdict, outcome })
-  }
-  return cachedHandoff
+  return getCachedBridgeResult().handoff
 }
 
 function isoToUnix(iso: string): number {
