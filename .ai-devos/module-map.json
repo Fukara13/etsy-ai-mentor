@@ -1,0 +1,2245 @@
+{
+  "source": {
+    "repoScanPath": ".ai-devos/repo-scan.json",
+    "dependencyGraphPath": ".ai-devos/dependency-graph.json"
+  },
+  "summary": {
+    "totalFiles": 345,
+    "mappedFiles": 345,
+    "unassignedFiles": 0,
+    "moduleCount": 15,
+    "crossModuleEdgeCount": 4
+  },
+  "modules": [
+    {
+      "id": "archive-legacy-etsy-mentor",
+      "name": "archive/legacy-etsy-mentor",
+      "kind": "unknown",
+      "rootPaths": [
+        "archive/legacy-etsy-mentor"
+      ],
+      "fileCount": 24
+    },
+    {
+      "id": "electron-desktop",
+      "name": "electron/desktop",
+      "kind": "feature",
+      "rootPaths": [
+        "electron/desktop"
+      ],
+      "fileCount": 10
+    },
+    {
+      "id": "electron-gates",
+      "name": "electron/gates",
+      "kind": "feature",
+      "rootPaths": [
+        "electron/gates"
+      ],
+      "fileCount": 64
+    },
+    {
+      "id": "electron-ipc",
+      "name": "electron/ipc",
+      "kind": "feature",
+      "rootPaths": [
+        "electron/ipc"
+      ],
+      "fileCount": 4
+    },
+    {
+      "id": "src-desktop",
+      "name": "src/desktop",
+      "kind": "feature",
+      "rootPaths": [
+        "src/desktop"
+      ],
+      "fileCount": 45
+    },
+    {
+      "id": "src-github",
+      "name": "src/github",
+      "kind": "feature",
+      "rootPaths": [
+        "src/github"
+      ],
+      "fileCount": 19
+    },
+    {
+      "id": "src-governance",
+      "name": "src/governance",
+      "kind": "feature",
+      "rootPaths": [
+        "src/governance"
+      ],
+      "fileCount": 22
+    },
+    {
+      "id": "src-heroes",
+      "name": "src/heroes",
+      "kind": "feature",
+      "rootPaths": [
+        "src/heroes"
+      ],
+      "fileCount": 45
+    },
+    {
+      "id": "src-operator",
+      "name": "src/operator",
+      "kind": "entrypoint",
+      "rootPaths": [
+        "src/operator"
+      ],
+      "fileCount": 4
+    },
+    {
+      "id": "src-repair-engine",
+      "name": "src/repair-engine",
+      "kind": "feature",
+      "rootPaths": [
+        "src/repair-engine"
+      ],
+      "fileCount": 94
+    },
+    {
+      "id": "src-shared",
+      "name": "src/shared",
+      "kind": "shared",
+      "rootPaths": [
+        "src/shared"
+      ],
+      "fileCount": 5
+    },
+    {
+      "id": "tools-arch-snapshot.mjs",
+      "name": "tools/arch-snapshot.mjs",
+      "kind": "entrypoint",
+      "rootPaths": [
+        "tools/arch-snapshot.mjs"
+      ],
+      "fileCount": 1
+    },
+    {
+      "id": "tools-project-understanding",
+      "name": "tools/project-understanding",
+      "kind": "entrypoint",
+      "rootPaths": [
+        "tools/project-understanding"
+      ],
+      "fileCount": 6
+    },
+    {
+      "id": "vite.config.ts",
+      "name": "vite.config.ts",
+      "kind": "unknown",
+      "rootPaths": [
+        "vite.config.ts"
+      ],
+      "fileCount": 1
+    },
+    {
+      "id": "vitest.config.ts",
+      "name": "vitest.config.ts",
+      "kind": "unknown",
+      "rootPaths": [
+        "vitest.config.ts"
+      ],
+      "fileCount": 1
+    }
+  ],
+  "fileMappings": [
+    {
+      "filePath": "archive/legacy-etsy-mentor/electron/db.ts",
+      "moduleId": "archive-legacy-etsy-mentor",
+      "classification": "mapped",
+      "reason": "root: archive/legacy-etsy-mentor"
+    },
+    {
+      "filePath": "archive/legacy-etsy-mentor/electron/gates/persistence.ts",
+      "moduleId": "archive-legacy-etsy-mentor",
+      "classification": "mapped",
+      "reason": "root: archive/legacy-etsy-mentor"
+    },
+    {
+      "filePath": "archive/legacy-etsy-mentor/electron/gates/store.ts",
+      "moduleId": "archive-legacy-etsy-mentor",
+      "classification": "mapped",
+      "reason": "root: archive/legacy-etsy-mentor"
+    },
+    {
+      "filePath": "archive/legacy-etsy-mentor/electron/main.ts",
+      "moduleId": "archive-legacy-etsy-mentor",
+      "classification": "mapped",
+      "reason": "root: archive/legacy-etsy-mentor"
+    },
+    {
+      "filePath": "archive/legacy-etsy-mentor/electron/openai.ts",
+      "moduleId": "archive-legacy-etsy-mentor",
+      "classification": "mapped",
+      "reason": "root: archive/legacy-etsy-mentor"
+    },
+    {
+      "filePath": "archive/legacy-etsy-mentor/electron/preload.ts",
+      "moduleId": "archive-legacy-etsy-mentor",
+      "classification": "mapped",
+      "reason": "root: archive/legacy-etsy-mentor"
+    },
+    {
+      "filePath": "archive/legacy-etsy-mentor/electron/schemas.ts",
+      "moduleId": "archive-legacy-etsy-mentor",
+      "classification": "mapped",
+      "reason": "root: archive/legacy-etsy-mentor"
+    },
+    {
+      "filePath": "archive/legacy-etsy-mentor/src/App.tsx",
+      "moduleId": "archive-legacy-etsy-mentor",
+      "classification": "mapped",
+      "reason": "root: archive/legacy-etsy-mentor"
+    },
+    {
+      "filePath": "archive/legacy-etsy-mentor/src/application/AppServices.ts",
+      "moduleId": "archive-legacy-etsy-mentor",
+      "classification": "mapped",
+      "reason": "root: archive/legacy-etsy-mentor"
+    },
+    {
+      "filePath": "archive/legacy-etsy-mentor/src/application/services/CaptureService.ts",
+      "moduleId": "archive-legacy-etsy-mentor",
+      "classification": "mapped",
+      "reason": "root: archive/legacy-etsy-mentor"
+    },
+    {
+      "filePath": "archive/legacy-etsy-mentor/src/application/services/GateService.ts",
+      "moduleId": "archive-legacy-etsy-mentor",
+      "classification": "mapped",
+      "reason": "root: archive/legacy-etsy-mentor"
+    },
+    {
+      "filePath": "archive/legacy-etsy-mentor/src/application/services/SessionService.ts",
+      "moduleId": "archive-legacy-etsy-mentor",
+      "classification": "mapped",
+      "reason": "root: archive/legacy-etsy-mentor"
+    },
+    {
+      "filePath": "archive/legacy-etsy-mentor/src/application/services/StoreService.ts",
+      "moduleId": "archive-legacy-etsy-mentor",
+      "classification": "mapped",
+      "reason": "root: archive/legacy-etsy-mentor"
+    },
+    {
+      "filePath": "archive/legacy-etsy-mentor/src/components/BrowserPane.tsx",
+      "moduleId": "archive-legacy-etsy-mentor",
+      "classification": "mapped",
+      "reason": "root: archive/legacy-etsy-mentor"
+    },
+    {
+      "filePath": "archive/legacy-etsy-mentor/src/components/ErrorBoundary.tsx",
+      "moduleId": "archive-legacy-etsy-mentor",
+      "classification": "mapped",
+      "reason": "root: archive/legacy-etsy-mentor"
+    },
+    {
+      "filePath": "archive/legacy-etsy-mentor/src/components/MentorPanel.tsx",
+      "moduleId": "archive-legacy-etsy-mentor",
+      "classification": "mapped",
+      "reason": "root: archive/legacy-etsy-mentor"
+    },
+    {
+      "filePath": "archive/legacy-etsy-mentor/src/components/Sidebar.tsx",
+      "moduleId": "archive-legacy-etsy-mentor",
+      "classification": "mapped",
+      "reason": "root: archive/legacy-etsy-mentor"
+    },
+    {
+      "filePath": "archive/legacy-etsy-mentor/src/components/StoreCard.tsx",
+      "moduleId": "archive-legacy-etsy-mentor",
+      "classification": "mapped",
+      "reason": "root: archive/legacy-etsy-mentor"
+    },
+    {
+      "filePath": "archive/legacy-etsy-mentor/src/lib/schemas.ts",
+      "moduleId": "archive-legacy-etsy-mentor",
+      "classification": "mapped",
+      "reason": "root: archive/legacy-etsy-mentor"
+    },
+    {
+      "filePath": "archive/legacy-etsy-mentor/src/main.tsx",
+      "moduleId": "archive-legacy-etsy-mentor",
+      "classification": "mapped",
+      "reason": "root: archive/legacy-etsy-mentor"
+    },
+    {
+      "filePath": "archive/legacy-etsy-mentor/src/screens/BrowserSession.tsx",
+      "moduleId": "archive-legacy-etsy-mentor",
+      "classification": "mapped",
+      "reason": "root: archive/legacy-etsy-mentor"
+    },
+    {
+      "filePath": "archive/legacy-etsy-mentor/src/screens/Home.tsx",
+      "moduleId": "archive-legacy-etsy-mentor",
+      "classification": "mapped",
+      "reason": "root: archive/legacy-etsy-mentor"
+    },
+    {
+      "filePath": "archive/legacy-etsy-mentor/src/screens/PortfolioDashboard.tsx",
+      "moduleId": "archive-legacy-etsy-mentor",
+      "classification": "mapped",
+      "reason": "root: archive/legacy-etsy-mentor"
+    },
+    {
+      "filePath": "archive/legacy-etsy-mentor/src/screens/Settings.tsx",
+      "moduleId": "archive-legacy-etsy-mentor",
+      "classification": "mapped",
+      "reason": "root: archive/legacy-etsy-mentor"
+    },
+    {
+      "filePath": "electron/desktop/allowed-ipc-channels.test.ts",
+      "moduleId": "electron-desktop",
+      "classification": "mapped",
+      "reason": "root: electron/desktop"
+    },
+    {
+      "filePath": "electron/desktop/create-main-window.ts",
+      "moduleId": "electron-desktop",
+      "classification": "mapped",
+      "reason": "root: electron/desktop"
+    },
+    {
+      "filePath": "electron/desktop/engine-backed-provider.test.ts",
+      "moduleId": "electron-desktop",
+      "classification": "mapped",
+      "reason": "root: electron/desktop"
+    },
+    {
+      "filePath": "electron/desktop/engine-backed-provider.ts",
+      "moduleId": "electron-desktop",
+      "classification": "mapped",
+      "reason": "root: electron/desktop"
+    },
+    {
+      "filePath": "electron/desktop/main.ts",
+      "moduleId": "electron-desktop",
+      "classification": "mapped",
+      "reason": "root: electron/desktop"
+    },
+    {
+      "filePath": "electron/desktop/navigation-policy.test.ts",
+      "moduleId": "electron-desktop",
+      "classification": "mapped",
+      "reason": "root: electron/desktop"
+    },
+    {
+      "filePath": "electron/desktop/preload/desktop-api.ts",
+      "moduleId": "electron-desktop",
+      "classification": "mapped",
+      "reason": "root: electron/desktop"
+    },
+    {
+      "filePath": "electron/desktop/preload/preload-security.test.ts",
+      "moduleId": "electron-desktop",
+      "classification": "mapped",
+      "reason": "root: electron/desktop"
+    },
+    {
+      "filePath": "electron/desktop/preload/preload.ts",
+      "moduleId": "electron-desktop",
+      "classification": "mapped",
+      "reason": "root: electron/desktop"
+    },
+    {
+      "filePath": "electron/desktop/update-service.ts",
+      "moduleId": "electron-desktop",
+      "classification": "mapped",
+      "reason": "root: electron/desktop"
+    },
+    {
+      "filePath": "electron/gates/repair/actor-dispatcher.test.ts",
+      "moduleId": "electron-gates",
+      "classification": "mapped",
+      "reason": "root: electron/gates"
+    },
+    {
+      "filePath": "electron/gates/repair/actor-dispatcher.ts",
+      "moduleId": "electron-gates",
+      "classification": "mapped",
+      "reason": "root: electron/gates"
+    },
+    {
+      "filePath": "electron/gates/repair/actor-result.ts",
+      "moduleId": "electron-gates",
+      "classification": "mapped",
+      "reason": "root: electron/gates"
+    },
+    {
+      "filePath": "electron/gates/repair/actor-runtime.ts",
+      "moduleId": "electron-gates",
+      "classification": "mapped",
+      "reason": "root: electron/gates"
+    },
+    {
+      "filePath": "electron/gates/repair/actor-runtime.types.ts",
+      "moduleId": "electron-gates",
+      "classification": "mapped",
+      "reason": "root: electron/gates"
+    },
+    {
+      "filePath": "electron/gates/repair/bridge-types.ts",
+      "moduleId": "electron-gates",
+      "classification": "mapped",
+      "reason": "root: electron/gates"
+    },
+    {
+      "filePath": "electron/gates/repair/context-resolver.ts",
+      "moduleId": "electron-gates",
+      "classification": "mapped",
+      "reason": "root: electron/gates"
+    },
+    {
+      "filePath": "electron/gates/repair/decision-plan-adapter.test.ts",
+      "moduleId": "electron-gates",
+      "classification": "mapped",
+      "reason": "root: electron/gates"
+    },
+    {
+      "filePath": "electron/gates/repair/decision-plan-adapter.ts",
+      "moduleId": "electron-gates",
+      "classification": "mapped",
+      "reason": "root: electron/gates"
+    },
+    {
+      "filePath": "electron/gates/repair/evaluator.ts",
+      "moduleId": "electron-gates",
+      "classification": "mapped",
+      "reason": "root: electron/gates"
+    },
+    {
+      "filePath": "electron/gates/repair/event-normalizer.ts",
+      "moduleId": "electron-gates",
+      "classification": "mapped",
+      "reason": "root: electron/gates"
+    },
+    {
+      "filePath": "electron/gates/repair/execution-boundary.test.ts",
+      "moduleId": "electron-gates",
+      "classification": "mapped",
+      "reason": "root: electron/gates"
+    },
+    {
+      "filePath": "electron/gates/repair/execution-boundary.ts",
+      "moduleId": "electron-gates",
+      "classification": "mapped",
+      "reason": "root: electron/gates"
+    },
+    {
+      "filePath": "electron/gates/repair/external-boundary-mapper.ts",
+      "moduleId": "electron-gates",
+      "classification": "mapped",
+      "reason": "root: electron/gates"
+    },
+    {
+      "filePath": "electron/gates/repair/external-boundary.test.ts",
+      "moduleId": "electron-gates",
+      "classification": "mapped",
+      "reason": "root: electron/gates"
+    },
+    {
+      "filePath": "electron/gates/repair/external-boundary.ts",
+      "moduleId": "electron-gates",
+      "classification": "mapped",
+      "reason": "root: electron/gates"
+    },
+    {
+      "filePath": "electron/gates/repair/github-projection-mapper.ts",
+      "moduleId": "electron-gates",
+      "classification": "mapped",
+      "reason": "root: electron/gates"
+    },
+    {
+      "filePath": "electron/gates/repair/github-projection.test.ts",
+      "moduleId": "electron-gates",
+      "classification": "mapped",
+      "reason": "root: electron/gates"
+    },
+    {
+      "filePath": "electron/gates/repair/github-projection.ts",
+      "moduleId": "electron-gates",
+      "classification": "mapped",
+      "reason": "root: electron/gates"
+    },
+    {
+      "filePath": "electron/gates/repair/gpt-analysis-mapper.ts",
+      "moduleId": "electron-gates",
+      "classification": "mapped",
+      "reason": "root: electron/gates"
+    },
+    {
+      "filePath": "electron/gates/repair/gpt-analysis.test.ts",
+      "moduleId": "electron-gates",
+      "classification": "mapped",
+      "reason": "root: electron/gates"
+    },
+    {
+      "filePath": "electron/gates/repair/gpt-analysis.ts",
+      "moduleId": "electron-gates",
+      "classification": "mapped",
+      "reason": "root: electron/gates"
+    },
+    {
+      "filePath": "electron/gates/repair/guardian.ts",
+      "moduleId": "electron-gates",
+      "classification": "mapped",
+      "reason": "root: electron/gates"
+    },
+    {
+      "filePath": "electron/gates/repair/index.ts",
+      "moduleId": "electron-gates",
+      "classification": "mapped",
+      "reason": "root: electron/gates"
+    },
+    {
+      "filePath": "electron/gates/repair/jules-integration.test.ts",
+      "moduleId": "electron-gates",
+      "classification": "mapped",
+      "reason": "root: electron/gates"
+    },
+    {
+      "filePath": "electron/gates/repair/jules-integration.ts",
+      "moduleId": "electron-gates",
+      "classification": "mapped",
+      "reason": "root: electron/gates"
+    },
+    {
+      "filePath": "electron/gates/repair/operator-handoff-mapper.ts",
+      "moduleId": "electron-gates",
+      "classification": "mapped",
+      "reason": "root: electron/gates"
+    },
+    {
+      "filePath": "electron/gates/repair/operator-handoff.test.ts",
+      "moduleId": "electron-gates",
+      "classification": "mapped",
+      "reason": "root: electron/gates"
+    },
+    {
+      "filePath": "electron/gates/repair/operator-handoff.ts",
+      "moduleId": "electron-gates",
+      "classification": "mapped",
+      "reason": "root: electron/gates"
+    },
+    {
+      "filePath": "electron/gates/repair/operator-handoff.types.ts",
+      "moduleId": "electron-gates",
+      "classification": "mapped",
+      "reason": "root: electron/gates"
+    },
+    {
+      "filePath": "electron/gates/repair/orchestrator-bridge.test.ts",
+      "moduleId": "electron-gates",
+      "classification": "mapped",
+      "reason": "root: electron/gates"
+    },
+    {
+      "filePath": "electron/gates/repair/orchestrator-bridge.ts",
+      "moduleId": "electron-gates",
+      "classification": "mapped",
+      "reason": "root: electron/gates"
+    },
+    {
+      "filePath": "electron/gates/repair/plan-governor.test.ts",
+      "moduleId": "electron-gates",
+      "classification": "mapped",
+      "reason": "root: electron/gates"
+    },
+    {
+      "filePath": "electron/gates/repair/plan-governor.ts",
+      "moduleId": "electron-gates",
+      "classification": "mapped",
+      "reason": "root: electron/gates"
+    },
+    {
+      "filePath": "electron/gates/repair/plan-validator.test.ts",
+      "moduleId": "electron-gates",
+      "classification": "mapped",
+      "reason": "root: electron/gates"
+    },
+    {
+      "filePath": "electron/gates/repair/plan-validator.ts",
+      "moduleId": "electron-gates",
+      "classification": "mapped",
+      "reason": "root: electron/gates"
+    },
+    {
+      "filePath": "electron/gates/repair/repair-decision.test.ts",
+      "moduleId": "electron-gates",
+      "classification": "mapped",
+      "reason": "root: electron/gates"
+    },
+    {
+      "filePath": "electron/gates/repair/repair-decision.ts",
+      "moduleId": "electron-gates",
+      "classification": "mapped",
+      "reason": "root: electron/gates"
+    },
+    {
+      "filePath": "electron/gates/repair/repair-loop-orchestrator.test.ts",
+      "moduleId": "electron-gates",
+      "classification": "mapped",
+      "reason": "root: electron/gates"
+    },
+    {
+      "filePath": "electron/gates/repair/repair-loop-orchestrator.ts",
+      "moduleId": "electron-gates",
+      "classification": "mapped",
+      "reason": "root: electron/gates"
+    },
+    {
+      "filePath": "electron/gates/repair/repair-loop-policy.ts",
+      "moduleId": "electron-gates",
+      "classification": "mapped",
+      "reason": "root: electron/gates"
+    },
+    {
+      "filePath": "electron/gates/repair/repair-loop-session.ts",
+      "moduleId": "electron-gates",
+      "classification": "mapped",
+      "reason": "root: electron/gates"
+    },
+    {
+      "filePath": "electron/gates/repair/repair-loop.test.ts",
+      "moduleId": "electron-gates",
+      "classification": "mapped",
+      "reason": "root: electron/gates"
+    },
+    {
+      "filePath": "electron/gates/repair/repair-run-outcome.ts",
+      "moduleId": "electron-gates",
+      "classification": "mapped",
+      "reason": "root: electron/gates"
+    },
+    {
+      "filePath": "electron/gates/repair/repair-run-verdict-mapper.ts",
+      "moduleId": "electron-gates",
+      "classification": "mapped",
+      "reason": "root: electron/gates"
+    },
+    {
+      "filePath": "electron/gates/repair/repair-run-verdict.test.ts",
+      "moduleId": "electron-gates",
+      "classification": "mapped",
+      "reason": "root: electron/gates"
+    },
+    {
+      "filePath": "electron/gates/repair/repair-state-machine.test.ts",
+      "moduleId": "electron-gates",
+      "classification": "mapped",
+      "reason": "root: electron/gates"
+    },
+    {
+      "filePath": "electron/gates/repair/repair-step-executor.test.ts",
+      "moduleId": "electron-gates",
+      "classification": "mapped",
+      "reason": "root: electron/gates"
+    },
+    {
+      "filePath": "electron/gates/repair/repair-step-executor.ts",
+      "moduleId": "electron-gates",
+      "classification": "mapped",
+      "reason": "root: electron/gates"
+    },
+    {
+      "filePath": "electron/gates/repair/repair-strategy-mapper.ts",
+      "moduleId": "electron-gates",
+      "classification": "mapped",
+      "reason": "root: electron/gates"
+    },
+    {
+      "filePath": "electron/gates/repair/repair-strategy.test.ts",
+      "moduleId": "electron-gates",
+      "classification": "mapped",
+      "reason": "root: electron/gates"
+    },
+    {
+      "filePath": "electron/gates/repair/repair-strategy.ts",
+      "moduleId": "electron-gates",
+      "classification": "mapped",
+      "reason": "root: electron/gates"
+    },
+    {
+      "filePath": "electron/gates/repair/repair-telemetry-mapper.ts",
+      "moduleId": "electron-gates",
+      "classification": "mapped",
+      "reason": "root: electron/gates"
+    },
+    {
+      "filePath": "electron/gates/repair/repair-telemetry.test.ts",
+      "moduleId": "electron-gates",
+      "classification": "mapped",
+      "reason": "root: electron/gates"
+    },
+    {
+      "filePath": "electron/gates/repair/repair-telemetry.ts",
+      "moduleId": "electron-gates",
+      "classification": "mapped",
+      "reason": "root: electron/gates"
+    },
+    {
+      "filePath": "electron/gates/repair/retry-controller.ts",
+      "moduleId": "electron-gates",
+      "classification": "mapped",
+      "reason": "root: electron/gates"
+    },
+    {
+      "filePath": "electron/gates/repair/safety-guard.test.ts",
+      "moduleId": "electron-gates",
+      "classification": "mapped",
+      "reason": "root: electron/gates"
+    },
+    {
+      "filePath": "electron/gates/repair/safety-guard.ts",
+      "moduleId": "electron-gates",
+      "classification": "mapped",
+      "reason": "root: electron/gates"
+    },
+    {
+      "filePath": "electron/gates/repair/state-machine-runner.test.ts",
+      "moduleId": "electron-gates",
+      "classification": "mapped",
+      "reason": "root: electron/gates"
+    },
+    {
+      "filePath": "electron/gates/repair/state-machine-runner.ts",
+      "moduleId": "electron-gates",
+      "classification": "mapped",
+      "reason": "root: electron/gates"
+    },
+    {
+      "filePath": "electron/gates/repair/state-machine.ts",
+      "moduleId": "electron-gates",
+      "classification": "mapped",
+      "reason": "root: electron/gates"
+    },
+    {
+      "filePath": "electron/gates/repair/state-transition.test.ts",
+      "moduleId": "electron-gates",
+      "classification": "mapped",
+      "reason": "root: electron/gates"
+    },
+    {
+      "filePath": "electron/gates/repair/state-transition.ts",
+      "moduleId": "electron-gates",
+      "classification": "mapped",
+      "reason": "root: electron/gates"
+    },
+    {
+      "filePath": "electron/gates/repair/step-actor-dispatcher.ts",
+      "moduleId": "electron-gates",
+      "classification": "mapped",
+      "reason": "root: electron/gates"
+    },
+    {
+      "filePath": "electron/ipc/handlers/backbone-read.ts",
+      "moduleId": "electron-ipc",
+      "classification": "mapped",
+      "reason": "root: electron/ipc"
+    },
+    {
+      "filePath": "electron/ipc/handlers/health-check.ts",
+      "moduleId": "electron-ipc",
+      "classification": "mapped",
+      "reason": "root: electron/ipc"
+    },
+    {
+      "filePath": "electron/ipc/handlers/version-handler.ts",
+      "moduleId": "electron-ipc",
+      "classification": "mapped",
+      "reason": "root: electron/ipc"
+    },
+    {
+      "filePath": "electron/ipc/ipc-registry.ts",
+      "moduleId": "electron-ipc",
+      "classification": "mapped",
+      "reason": "root: electron/ipc"
+    },
+    {
+      "filePath": "src/desktop/analysis/analysis-view.mapper.test.ts",
+      "moduleId": "src-desktop",
+      "classification": "mapped",
+      "reason": "root: src/desktop"
+    },
+    {
+      "filePath": "src/desktop/analysis/analysis-view.mapper.ts",
+      "moduleId": "src-desktop",
+      "classification": "mapped",
+      "reason": "root: src/desktop"
+    },
+    {
+      "filePath": "src/desktop/app.ts",
+      "moduleId": "src-desktop",
+      "classification": "mapped",
+      "reason": "root: src/desktop"
+    },
+    {
+      "filePath": "src/desktop/App.tsx",
+      "moduleId": "src-desktop",
+      "classification": "mapped",
+      "reason": "root: src/desktop"
+    },
+    {
+      "filePath": "src/desktop/backbone/backbone-read.adapter.ts",
+      "moduleId": "src-desktop",
+      "classification": "mapped",
+      "reason": "root: src/desktop"
+    },
+    {
+      "filePath": "src/desktop/backbone/backbone-read.mapper.test.ts",
+      "moduleId": "src-desktop",
+      "classification": "mapped",
+      "reason": "root: src/desktop"
+    },
+    {
+      "filePath": "src/desktop/backbone/backbone-read.mapper.ts",
+      "moduleId": "src-desktop",
+      "classification": "mapped",
+      "reason": "root: src/desktop"
+    },
+    {
+      "filePath": "src/desktop/backbone/backbone-read.service.ts",
+      "moduleId": "src-desktop",
+      "classification": "mapped",
+      "reason": "root: src/desktop"
+    },
+    {
+      "filePath": "src/desktop/backbone/index.ts",
+      "moduleId": "src-desktop",
+      "classification": "mapped",
+      "reason": "root: src/desktop"
+    },
+    {
+      "filePath": "src/desktop/decision/decision-view.mapper.test.ts",
+      "moduleId": "src-desktop",
+      "classification": "mapped",
+      "reason": "root: src/desktop"
+    },
+    {
+      "filePath": "src/desktop/decision/decision-view.mapper.ts",
+      "moduleId": "src-desktop",
+      "classification": "mapped",
+      "reason": "root: src/desktop"
+    },
+    {
+      "filePath": "src/desktop/main.ts",
+      "moduleId": "src-desktop",
+      "classification": "mapped",
+      "reason": "root: src/desktop"
+    },
+    {
+      "filePath": "src/desktop/main.tsx",
+      "moduleId": "src-desktop",
+      "classification": "mapped",
+      "reason": "root: src/desktop"
+    },
+    {
+      "filePath": "src/desktop/renderer/features/analysis/GPTAnalysisPanel.test.tsx",
+      "moduleId": "src-desktop",
+      "classification": "mapped",
+      "reason": "root: src/desktop"
+    },
+    {
+      "filePath": "src/desktop/renderer/features/analysis/GPTAnalysisPanel.tsx",
+      "moduleId": "src-desktop",
+      "classification": "mapped",
+      "reason": "root: src/desktop"
+    },
+    {
+      "filePath": "src/desktop/renderer/features/analysis/RepairStrategyPanel.test.tsx",
+      "moduleId": "src-desktop",
+      "classification": "mapped",
+      "reason": "root: src/desktop"
+    },
+    {
+      "filePath": "src/desktop/renderer/features/analysis/RepairStrategyPanel.tsx",
+      "moduleId": "src-desktop",
+      "classification": "mapped",
+      "reason": "root: src/desktop"
+    },
+    {
+      "filePath": "src/desktop/renderer/features/decision/DecisionConsolePanel.test.tsx",
+      "moduleId": "src-desktop",
+      "classification": "mapped",
+      "reason": "root: src/desktop"
+    },
+    {
+      "filePath": "src/desktop/renderer/features/decision/DecisionConsolePanel.tsx",
+      "moduleId": "src-desktop",
+      "classification": "mapped",
+      "reason": "root: src/desktop"
+    },
+    {
+      "filePath": "src/desktop/renderer/features/repair-timeline/repair-run-timeline-item.tsx",
+      "moduleId": "src-desktop",
+      "classification": "mapped",
+      "reason": "root: src/desktop"
+    },
+    {
+      "filePath": "src/desktop/renderer/features/repair-timeline/repair-run-timeline-mapper.ts",
+      "moduleId": "src-desktop",
+      "classification": "mapped",
+      "reason": "root: src/desktop"
+    },
+    {
+      "filePath": "src/desktop/renderer/features/repair-timeline/repair-run-timeline.test.ts",
+      "moduleId": "src-desktop",
+      "classification": "mapped",
+      "reason": "root: src/desktop"
+    },
+    {
+      "filePath": "src/desktop/renderer/features/repair-timeline/repair-run-timeline.tsx",
+      "moduleId": "src-desktop",
+      "classification": "mapped",
+      "reason": "root: src/desktop"
+    },
+    {
+      "filePath": "src/desktop/renderer/features/state-machine/state-machine-utils.test.ts",
+      "moduleId": "src-desktop",
+      "classification": "mapped",
+      "reason": "root: src/desktop"
+    },
+    {
+      "filePath": "src/desktop/renderer/features/state-machine/state-machine-utils.ts",
+      "moduleId": "src-desktop",
+      "classification": "mapped",
+      "reason": "root: src/desktop"
+    },
+    {
+      "filePath": "src/desktop/renderer/features/state-machine/StateMachineCurrentState.tsx",
+      "moduleId": "src-desktop",
+      "classification": "mapped",
+      "reason": "root: src/desktop"
+    },
+    {
+      "filePath": "src/desktop/renderer/features/state-machine/StateMachineGraph.tsx",
+      "moduleId": "src-desktop",
+      "classification": "mapped",
+      "reason": "root: src/desktop"
+    },
+    {
+      "filePath": "src/desktop/renderer/features/state-machine/StateMachineHistory.tsx",
+      "moduleId": "src-desktop",
+      "classification": "mapped",
+      "reason": "root: src/desktop"
+    },
+    {
+      "filePath": "src/desktop/renderer/features/state-machine/StateMachineProgress.tsx",
+      "moduleId": "src-desktop",
+      "classification": "mapped",
+      "reason": "root: src/desktop"
+    },
+    {
+      "filePath": "src/desktop/renderer/features/state-machine/StateMachineViewer.test.tsx",
+      "moduleId": "src-desktop",
+      "classification": "mapped",
+      "reason": "root: src/desktop"
+    },
+    {
+      "filePath": "src/desktop/renderer/features/state-machine/StateMachineViewer.tsx",
+      "moduleId": "src-desktop",
+      "classification": "mapped",
+      "reason": "root: src/desktop"
+    },
+    {
+      "filePath": "src/desktop/renderer/features/telemetry/FailureTypesPanel.tsx",
+      "moduleId": "src-desktop",
+      "classification": "mapped",
+      "reason": "root: src/desktop"
+    },
+    {
+      "filePath": "src/desktop/renderer/features/telemetry/RepairTimingPanel.tsx",
+      "moduleId": "src-desktop",
+      "classification": "mapped",
+      "reason": "root: src/desktop"
+    },
+    {
+      "filePath": "src/desktop/renderer/features/telemetry/RetryStatsPanel.tsx",
+      "moduleId": "src-desktop",
+      "classification": "mapped",
+      "reason": "root: src/desktop"
+    },
+    {
+      "filePath": "src/desktop/renderer/features/telemetry/SystemHealthPanel.tsx",
+      "moduleId": "src-desktop",
+      "classification": "mapped",
+      "reason": "root: src/desktop"
+    },
+    {
+      "filePath": "src/desktop/renderer/features/telemetry/TelemetryDashboard.test.tsx",
+      "moduleId": "src-desktop",
+      "classification": "mapped",
+      "reason": "root: src/desktop"
+    },
+    {
+      "filePath": "src/desktop/renderer/features/telemetry/TelemetryDashboard.tsx",
+      "moduleId": "src-desktop",
+      "classification": "mapped",
+      "reason": "root: src/desktop"
+    },
+    {
+      "filePath": "src/desktop/renderer/ui/AppFooter.tsx",
+      "moduleId": "src-desktop",
+      "classification": "mapped",
+      "reason": "root: src/desktop"
+    },
+    {
+      "filePath": "src/desktop/renderer/ui/AppShell.tsx",
+      "moduleId": "src-desktop",
+      "classification": "mapped",
+      "reason": "root: src/desktop"
+    },
+    {
+      "filePath": "src/desktop/renderer/ui/Card.tsx",
+      "moduleId": "src-desktop",
+      "classification": "mapped",
+      "reason": "root: src/desktop"
+    },
+    {
+      "filePath": "src/desktop/renderer/ui/index.ts",
+      "moduleId": "src-desktop",
+      "classification": "mapped",
+      "reason": "root: src/desktop"
+    },
+    {
+      "filePath": "src/desktop/renderer/ui/SectionHeader.tsx",
+      "moduleId": "src-desktop",
+      "classification": "mapped",
+      "reason": "root: src/desktop"
+    },
+    {
+      "filePath": "src/desktop/renderer/ui/Sidebar.tsx",
+      "moduleId": "src-desktop",
+      "classification": "mapped",
+      "reason": "root: src/desktop"
+    },
+    {
+      "filePath": "src/desktop/telemetry/telemetry-view.mapper.test.ts",
+      "moduleId": "src-desktop",
+      "classification": "mapped",
+      "reason": "root: src/desktop"
+    },
+    {
+      "filePath": "src/desktop/telemetry/telemetry-view.mapper.ts",
+      "moduleId": "src-desktop",
+      "classification": "mapped",
+      "reason": "root: src/desktop"
+    },
+    {
+      "filePath": "src/github/event-intake/github-backbone-event.ts",
+      "moduleId": "src-github",
+      "classification": "mapped",
+      "reason": "root: src/github"
+    },
+    {
+      "filePath": "src/github/event-intake/index.ts",
+      "moduleId": "src-github",
+      "classification": "mapped",
+      "reason": "root: src/github"
+    },
+    {
+      "filePath": "src/github/event-intake/normalize-github-event.test.ts",
+      "moduleId": "src-github",
+      "classification": "mapped",
+      "reason": "root: src/github"
+    },
+    {
+      "filePath": "src/github/event-intake/normalize-github-event.ts",
+      "moduleId": "src-github",
+      "classification": "mapped",
+      "reason": "root: src/github"
+    },
+    {
+      "filePath": "src/github/intake-bridge/derive-github-repair-intake.test.ts",
+      "moduleId": "src-github",
+      "classification": "mapped",
+      "reason": "root: src/github"
+    },
+    {
+      "filePath": "src/github/intake-bridge/derive-github-repair-intake.ts",
+      "moduleId": "src-github",
+      "classification": "mapped",
+      "reason": "root: src/github"
+    },
+    {
+      "filePath": "src/github/intake-bridge/github-repair-intake-event.ts",
+      "moduleId": "src-github",
+      "classification": "mapped",
+      "reason": "root: src/github"
+    },
+    {
+      "filePath": "src/github/intake-bridge/github-repair-intake-input.ts",
+      "moduleId": "src-github",
+      "classification": "mapped",
+      "reason": "root: src/github"
+    },
+    {
+      "filePath": "src/github/intake-bridge/index.ts",
+      "moduleId": "src-github",
+      "classification": "mapped",
+      "reason": "root: src/github"
+    },
+    {
+      "filePath": "src/github/pr-inspection/index.ts",
+      "moduleId": "src-github",
+      "classification": "mapped",
+      "reason": "root: src/github"
+    },
+    {
+      "filePath": "src/github/pr-inspection/inspect-pull-request.test.ts",
+      "moduleId": "src-github",
+      "classification": "mapped",
+      "reason": "root: src/github"
+    },
+    {
+      "filePath": "src/github/pr-inspection/inspect-pull-request.ts",
+      "moduleId": "src-github",
+      "classification": "mapped",
+      "reason": "root: src/github"
+    },
+    {
+      "filePath": "src/github/pr-inspection/pr-file-change.ts",
+      "moduleId": "src-github",
+      "classification": "mapped",
+      "reason": "root: src/github"
+    },
+    {
+      "filePath": "src/github/pr-inspection/pull-request-inspection-result.ts",
+      "moduleId": "src-github",
+      "classification": "mapped",
+      "reason": "root: src/github"
+    },
+    {
+      "filePath": "src/github/pr-intelligence/derive-pr-intelligence.test.ts",
+      "moduleId": "src-github",
+      "classification": "mapped",
+      "reason": "root: src/github"
+    },
+    {
+      "filePath": "src/github/pr-intelligence/derive-pr-intelligence.ts",
+      "moduleId": "src-github",
+      "classification": "mapped",
+      "reason": "root: src/github"
+    },
+    {
+      "filePath": "src/github/pr-intelligence/index.ts",
+      "moduleId": "src-github",
+      "classification": "mapped",
+      "reason": "root: src/github"
+    },
+    {
+      "filePath": "src/github/pr-intelligence/pr-intelligence-input.ts",
+      "moduleId": "src-github",
+      "classification": "mapped",
+      "reason": "root: src/github"
+    },
+    {
+      "filePath": "src/github/pr-intelligence/pr-intelligence-result.ts",
+      "moduleId": "src-github",
+      "classification": "mapped",
+      "reason": "root: src/github"
+    },
+    {
+      "filePath": "src/governance/authority/authority-decision-model.ts",
+      "moduleId": "src-governance",
+      "classification": "mapped",
+      "reason": "root: src/governance"
+    },
+    {
+      "filePath": "src/governance/authority/derive-authority-decision.test.ts",
+      "moduleId": "src-governance",
+      "classification": "mapped",
+      "reason": "root: src/governance"
+    },
+    {
+      "filePath": "src/governance/authority/derive-authority-decision.ts",
+      "moduleId": "src-governance",
+      "classification": "mapped",
+      "reason": "root: src/governance"
+    },
+    {
+      "filePath": "src/governance/authority/index.ts",
+      "moduleId": "src-governance",
+      "classification": "mapped",
+      "reason": "root: src/governance"
+    },
+    {
+      "filePath": "src/governance/index.ts",
+      "moduleId": "src-governance",
+      "classification": "mapped",
+      "reason": "root: src/governance"
+    },
+    {
+      "filePath": "src/governance/policy-integration/derive-governance-gate.test.ts",
+      "moduleId": "src-governance",
+      "classification": "mapped",
+      "reason": "root: src/governance"
+    },
+    {
+      "filePath": "src/governance/policy-integration/derive-governance-gate.ts",
+      "moduleId": "src-governance",
+      "classification": "mapped",
+      "reason": "root: src/governance"
+    },
+    {
+      "filePath": "src/governance/policy-integration/governance-gate-result.ts",
+      "moduleId": "src-governance",
+      "classification": "mapped",
+      "reason": "root: src/governance"
+    },
+    {
+      "filePath": "src/governance/policy-integration/index.ts",
+      "moduleId": "src-governance",
+      "classification": "mapped",
+      "reason": "root: src/governance"
+    },
+    {
+      "filePath": "src/governance/risk/classify-risk.test.ts",
+      "moduleId": "src-governance",
+      "classification": "mapped",
+      "reason": "root: src/governance"
+    },
+    {
+      "filePath": "src/governance/risk/classify-risk.ts",
+      "moduleId": "src-governance",
+      "classification": "mapped",
+      "reason": "root: src/governance"
+    },
+    {
+      "filePath": "src/governance/risk/index.ts",
+      "moduleId": "src-governance",
+      "classification": "mapped",
+      "reason": "root: src/governance"
+    },
+    {
+      "filePath": "src/governance/risk/risk-classification.ts",
+      "moduleId": "src-governance",
+      "classification": "mapped",
+      "reason": "root: src/governance"
+    },
+    {
+      "filePath": "src/governance/security-policy/evaluate-security-policy.test.ts",
+      "moduleId": "src-governance",
+      "classification": "mapped",
+      "reason": "root: src/governance"
+    },
+    {
+      "filePath": "src/governance/security-policy/evaluate-security-policy.ts",
+      "moduleId": "src-governance",
+      "classification": "mapped",
+      "reason": "root: src/governance"
+    },
+    {
+      "filePath": "src/governance/security-policy/index.ts",
+      "moduleId": "src-governance",
+      "classification": "mapped",
+      "reason": "root: src/governance"
+    },
+    {
+      "filePath": "src/governance/security-policy/security-policy-result.ts",
+      "moduleId": "src-governance",
+      "classification": "mapped",
+      "reason": "root: src/governance"
+    },
+    {
+      "filePath": "src/governance/security-policy/security-policy-rule.ts",
+      "moduleId": "src-governance",
+      "classification": "mapped",
+      "reason": "root: src/governance"
+    },
+    {
+      "filePath": "src/governance/zones/classify-zone.test.ts",
+      "moduleId": "src-governance",
+      "classification": "mapped",
+      "reason": "root: src/governance"
+    },
+    {
+      "filePath": "src/governance/zones/classify-zone.ts",
+      "moduleId": "src-governance",
+      "classification": "mapped",
+      "reason": "root: src/governance"
+    },
+    {
+      "filePath": "src/governance/zones/index.ts",
+      "moduleId": "src-governance",
+      "classification": "mapped",
+      "reason": "root: src/governance"
+    },
+    {
+      "filePath": "src/governance/zones/zone-classification.ts",
+      "moduleId": "src-governance",
+      "classification": "mapped",
+      "reason": "root: src/governance"
+    },
+    {
+      "filePath": "src/heroes/contracts/hero-advice-mapper.ts",
+      "moduleId": "src-heroes",
+      "classification": "mapped",
+      "reason": "root: src/heroes"
+    },
+    {
+      "filePath": "src/heroes/contracts/hero-advice.ts",
+      "moduleId": "src-heroes",
+      "classification": "mapped",
+      "reason": "root: src/heroes"
+    },
+    {
+      "filePath": "src/heroes/core/hero.executor.test.ts",
+      "moduleId": "src-heroes",
+      "classification": "mapped",
+      "reason": "root: src/heroes"
+    },
+    {
+      "filePath": "src/heroes/core/hero.executor.ts",
+      "moduleId": "src-heroes",
+      "classification": "mapped",
+      "reason": "root: src/heroes"
+    },
+    {
+      "filePath": "src/heroes/core/hero.registry.test.ts",
+      "moduleId": "src-heroes",
+      "classification": "mapped",
+      "reason": "root: src/heroes"
+    },
+    {
+      "filePath": "src/heroes/core/hero.registry.ts",
+      "moduleId": "src-heroes",
+      "classification": "mapped",
+      "reason": "root: src/heroes"
+    },
+    {
+      "filePath": "src/heroes/decision/decision.frame.mapper.test.ts",
+      "moduleId": "src-heroes",
+      "classification": "mapped",
+      "reason": "root: src/heroes"
+    },
+    {
+      "filePath": "src/heroes/decision/decision.frame.mapper.ts",
+      "moduleId": "src-heroes",
+      "classification": "mapped",
+      "reason": "root: src/heroes"
+    },
+    {
+      "filePath": "src/heroes/decision/decision.frame.ts",
+      "moduleId": "src-heroes",
+      "classification": "mapped",
+      "reason": "root: src/heroes"
+    },
+    {
+      "filePath": "src/heroes/decision/decision.option.ts",
+      "moduleId": "src-heroes",
+      "classification": "mapped",
+      "reason": "root: src/heroes"
+    },
+    {
+      "filePath": "src/heroes/heroes/analysis.hero.test.ts",
+      "moduleId": "src-heroes",
+      "classification": "mapped",
+      "reason": "root: src/heroes"
+    },
+    {
+      "filePath": "src/heroes/heroes/analysis.hero.ts",
+      "moduleId": "src-heroes",
+      "classification": "mapped",
+      "reason": "root: src/heroes"
+    },
+    {
+      "filePath": "src/heroes/heroes/ci-failure.hero.test.ts",
+      "moduleId": "src-heroes",
+      "classification": "mapped",
+      "reason": "root: src/heroes"
+    },
+    {
+      "filePath": "src/heroes/heroes/ci-failure.hero.ts",
+      "moduleId": "src-heroes",
+      "classification": "mapped",
+      "reason": "root: src/heroes"
+    },
+    {
+      "filePath": "src/heroes/heroes/dependency.hero.test.ts",
+      "moduleId": "src-heroes",
+      "classification": "mapped",
+      "reason": "root: src/heroes"
+    },
+    {
+      "filePath": "src/heroes/heroes/dependency.hero.ts",
+      "moduleId": "src-heroes",
+      "classification": "mapped",
+      "reason": "root: src/heroes"
+    },
+    {
+      "filePath": "src/heroes/heroes/escalation.hero.test.ts",
+      "moduleId": "src-heroes",
+      "classification": "mapped",
+      "reason": "root: src/heroes"
+    },
+    {
+      "filePath": "src/heroes/heroes/escalation.hero.ts",
+      "moduleId": "src-heroes",
+      "classification": "mapped",
+      "reason": "root: src/heroes"
+    },
+    {
+      "filePath": "src/heroes/heroes/index.ts",
+      "moduleId": "src-heroes",
+      "classification": "mapped",
+      "reason": "root: src/heroes"
+    },
+    {
+      "filePath": "src/heroes/heroes/refactor.hero.test.ts",
+      "moduleId": "src-heroes",
+      "classification": "mapped",
+      "reason": "root: src/heroes"
+    },
+    {
+      "filePath": "src/heroes/heroes/refactor.hero.ts",
+      "moduleId": "src-heroes",
+      "classification": "mapped",
+      "reason": "root: src/heroes"
+    },
+    {
+      "filePath": "src/heroes/heroes/registry-integration.test.ts",
+      "moduleId": "src-heroes",
+      "classification": "mapped",
+      "reason": "root: src/heroes"
+    },
+    {
+      "filePath": "src/heroes/heroes/repair.hero.test.ts",
+      "moduleId": "src-heroes",
+      "classification": "mapped",
+      "reason": "root: src/heroes"
+    },
+    {
+      "filePath": "src/heroes/heroes/repair.hero.ts",
+      "moduleId": "src-heroes",
+      "classification": "mapped",
+      "reason": "root: src/heroes"
+    },
+    {
+      "filePath": "src/heroes/heroes/review.hero.test.ts",
+      "moduleId": "src-heroes",
+      "classification": "mapped",
+      "reason": "root: src/heroes"
+    },
+    {
+      "filePath": "src/heroes/heroes/review.hero.ts",
+      "moduleId": "src-heroes",
+      "classification": "mapped",
+      "reason": "root: src/heroes"
+    },
+    {
+      "filePath": "src/heroes/heroes/security.hero.test.ts",
+      "moduleId": "src-heroes",
+      "classification": "mapped",
+      "reason": "root: src/heroes"
+    },
+    {
+      "filePath": "src/heroes/heroes/security.hero.ts",
+      "moduleId": "src-heroes",
+      "classification": "mapped",
+      "reason": "root: src/heroes"
+    },
+    {
+      "filePath": "src/heroes/orchestration/hero.execution-plan.ts",
+      "moduleId": "src-heroes",
+      "classification": "mapped",
+      "reason": "root: src/heroes"
+    },
+    {
+      "filePath": "src/heroes/orchestration/hero.orchestration-result.ts",
+      "moduleId": "src-heroes",
+      "classification": "mapped",
+      "reason": "root: src/heroes"
+    },
+    {
+      "filePath": "src/heroes/orchestration/hero.orchestrator.test.ts",
+      "moduleId": "src-heroes",
+      "classification": "mapped",
+      "reason": "root: src/heroes"
+    },
+    {
+      "filePath": "src/heroes/orchestration/hero.orchestrator.ts",
+      "moduleId": "src-heroes",
+      "classification": "mapped",
+      "reason": "root: src/heroes"
+    },
+    {
+      "filePath": "src/heroes/orchestration/hero.plan-resolver.ts",
+      "moduleId": "src-heroes",
+      "classification": "mapped",
+      "reason": "root: src/heroes"
+    },
+    {
+      "filePath": "src/heroes/pipeline/hero.pipeline-result.ts",
+      "moduleId": "src-heroes",
+      "classification": "mapped",
+      "reason": "root: src/heroes"
+    },
+    {
+      "filePath": "src/heroes/pipeline/hero.pipeline.test.ts",
+      "moduleId": "src-heroes",
+      "classification": "mapped",
+      "reason": "root: src/heroes"
+    },
+    {
+      "filePath": "src/heroes/pipeline/hero.pipeline.ts",
+      "moduleId": "src-heroes",
+      "classification": "mapped",
+      "reason": "root: src/heroes"
+    },
+    {
+      "filePath": "src/heroes/projection/hero.projection-mapper.test.ts",
+      "moduleId": "src-heroes",
+      "classification": "mapped",
+      "reason": "root: src/heroes"
+    },
+    {
+      "filePath": "src/heroes/projection/hero.projection-mapper.ts",
+      "moduleId": "src-heroes",
+      "classification": "mapped",
+      "reason": "root: src/heroes"
+    },
+    {
+      "filePath": "src/heroes/projection/hero.read-model.ts",
+      "moduleId": "src-heroes",
+      "classification": "mapped",
+      "reason": "root: src/heroes"
+    },
+    {
+      "filePath": "src/heroes/runtime/hero.execution-result.ts",
+      "moduleId": "src-heroes",
+      "classification": "mapped",
+      "reason": "root: src/heroes"
+    },
+    {
+      "filePath": "src/heroes/runtime/hero.runtime.test.ts",
+      "moduleId": "src-heroes",
+      "classification": "mapped",
+      "reason": "root: src/heroes"
+    },
+    {
+      "filePath": "src/heroes/runtime/hero.runtime.ts",
+      "moduleId": "src-heroes",
+      "classification": "mapped",
+      "reason": "root: src/heroes"
+    },
+    {
+      "filePath": "src/heroes/selection/hero.selection-result.ts",
+      "moduleId": "src-heroes",
+      "classification": "mapped",
+      "reason": "root: src/heroes"
+    },
+    {
+      "filePath": "src/heroes/selection/hero.selector.test.ts",
+      "moduleId": "src-heroes",
+      "classification": "mapped",
+      "reason": "root: src/heroes"
+    },
+    {
+      "filePath": "src/heroes/selection/hero.selector.ts",
+      "moduleId": "src-heroes",
+      "classification": "mapped",
+      "reason": "root: src/heroes"
+    },
+    {
+      "filePath": "src/operator/playbooks/index.ts",
+      "moduleId": "src-operator",
+      "classification": "mapped",
+      "reason": "root: src/operator"
+    },
+    {
+      "filePath": "src/operator/playbooks/operator-playbook-resolver.test.ts",
+      "moduleId": "src-operator",
+      "classification": "mapped",
+      "reason": "root: src/operator"
+    },
+    {
+      "filePath": "src/operator/playbooks/operator-playbook-resolver.ts",
+      "moduleId": "src-operator",
+      "classification": "mapped",
+      "reason": "root: src/operator"
+    },
+    {
+      "filePath": "src/operator/playbooks/operator-playbook.ts",
+      "moduleId": "src-operator",
+      "classification": "mapped",
+      "reason": "root: src/operator"
+    },
+    {
+      "filePath": "src/repair-engine/audit/repair-audit-trail-recorder.test.ts",
+      "moduleId": "src-repair-engine",
+      "classification": "mapped",
+      "reason": "root: src/repair-engine"
+    },
+    {
+      "filePath": "src/repair-engine/audit/repair-audit-trail-recorder.ts",
+      "moduleId": "src-repair-engine",
+      "classification": "mapped",
+      "reason": "root: src/repair-engine"
+    },
+    {
+      "filePath": "src/repair-engine/confidence/derive-confidence-from-signals.test.ts",
+      "moduleId": "src-repair-engine",
+      "classification": "mapped",
+      "reason": "root: src/repair-engine"
+    },
+    {
+      "filePath": "src/repair-engine/confidence/derive-confidence-from-signals.ts",
+      "moduleId": "src-repair-engine",
+      "classification": "mapped",
+      "reason": "root: src/repair-engine"
+    },
+    {
+      "filePath": "src/repair-engine/confidence/index.ts",
+      "moduleId": "src-repair-engine",
+      "classification": "mapped",
+      "reason": "root: src/repair-engine"
+    },
+    {
+      "filePath": "src/repair-engine/contracts/confidence/confidence-factor-input.ts",
+      "moduleId": "src-repair-engine",
+      "classification": "mapped",
+      "reason": "root: src/repair-engine"
+    },
+    {
+      "filePath": "src/repair-engine/contracts/confidence/confidence-score-builder.test.ts",
+      "moduleId": "src-repair-engine",
+      "classification": "mapped",
+      "reason": "root: src/repair-engine"
+    },
+    {
+      "filePath": "src/repair-engine/contracts/confidence/confidence-score-builder.ts",
+      "moduleId": "src-repair-engine",
+      "classification": "mapped",
+      "reason": "root: src/repair-engine"
+    },
+    {
+      "filePath": "src/repair-engine/contracts/confidence/confidence-score.ts",
+      "moduleId": "src-repair-engine",
+      "classification": "mapped",
+      "reason": "root: src/repair-engine"
+    },
+    {
+      "filePath": "src/repair-engine/contracts/confidence/index.ts",
+      "moduleId": "src-repair-engine",
+      "classification": "mapped",
+      "reason": "root: src/repair-engine"
+    },
+    {
+      "filePath": "src/repair-engine/contracts/error-taxonomy/error-taxonomy-builder.test.ts",
+      "moduleId": "src-repair-engine",
+      "classification": "mapped",
+      "reason": "root: src/repair-engine"
+    },
+    {
+      "filePath": "src/repair-engine/contracts/error-taxonomy/error-taxonomy-builder.ts",
+      "moduleId": "src-repair-engine",
+      "classification": "mapped",
+      "reason": "root: src/repair-engine"
+    },
+    {
+      "filePath": "src/repair-engine/contracts/error-taxonomy/error-taxonomy-contract.ts",
+      "moduleId": "src-repair-engine",
+      "classification": "mapped",
+      "reason": "root: src/repair-engine"
+    },
+    {
+      "filePath": "src/repair-engine/contracts/error-taxonomy/index.ts",
+      "moduleId": "src-repair-engine",
+      "classification": "mapped",
+      "reason": "root: src/repair-engine"
+    },
+    {
+      "filePath": "src/repair-engine/contracts/error/error-classifier.test.ts",
+      "moduleId": "src-repair-engine",
+      "classification": "mapped",
+      "reason": "root: src/repair-engine"
+    },
+    {
+      "filePath": "src/repair-engine/contracts/error/error-classifier.ts",
+      "moduleId": "src-repair-engine",
+      "classification": "mapped",
+      "reason": "root: src/repair-engine"
+    },
+    {
+      "filePath": "src/repair-engine/contracts/errors/index.ts",
+      "moduleId": "src-repair-engine",
+      "classification": "mapped",
+      "reason": "root: src/repair-engine"
+    },
+    {
+      "filePath": "src/repair-engine/contracts/errors/repair-engine-error.test.ts",
+      "moduleId": "src-repair-engine",
+      "classification": "mapped",
+      "reason": "root: src/repair-engine"
+    },
+    {
+      "filePath": "src/repair-engine/contracts/errors/repair-engine-error.ts",
+      "moduleId": "src-repair-engine",
+      "classification": "mapped",
+      "reason": "root: src/repair-engine"
+    },
+    {
+      "filePath": "src/repair-engine/contracts/event-log/event-log-builder.test.ts",
+      "moduleId": "src-repair-engine",
+      "classification": "mapped",
+      "reason": "root: src/repair-engine"
+    },
+    {
+      "filePath": "src/repair-engine/contracts/event-log/event-log-builder.ts",
+      "moduleId": "src-repair-engine",
+      "classification": "mapped",
+      "reason": "root: src/repair-engine"
+    },
+    {
+      "filePath": "src/repair-engine/contracts/event-log/event-log-entry-input.ts",
+      "moduleId": "src-repair-engine",
+      "classification": "mapped",
+      "reason": "root: src/repair-engine"
+    },
+    {
+      "filePath": "src/repair-engine/contracts/event-log/event-log-entry.ts",
+      "moduleId": "src-repair-engine",
+      "classification": "mapped",
+      "reason": "root: src/repair-engine"
+    },
+    {
+      "filePath": "src/repair-engine/contracts/event-log/event-log.ts",
+      "moduleId": "src-repair-engine",
+      "classification": "mapped",
+      "reason": "root: src/repair-engine"
+    },
+    {
+      "filePath": "src/repair-engine/contracts/event-log/index.ts",
+      "moduleId": "src-repair-engine",
+      "classification": "mapped",
+      "reason": "root: src/repair-engine"
+    },
+    {
+      "filePath": "src/repair-engine/contracts/execution/execution-contract-builder.test.ts",
+      "moduleId": "src-repair-engine",
+      "classification": "mapped",
+      "reason": "root: src/repair-engine"
+    },
+    {
+      "filePath": "src/repair-engine/contracts/execution/execution-contract-builder.ts",
+      "moduleId": "src-repair-engine",
+      "classification": "mapped",
+      "reason": "root: src/repair-engine"
+    },
+    {
+      "filePath": "src/repair-engine/contracts/execution/execution-contract.ts",
+      "moduleId": "src-repair-engine",
+      "classification": "mapped",
+      "reason": "root: src/repair-engine"
+    },
+    {
+      "filePath": "src/repair-engine/contracts/execution/execution-result-builder.test.ts",
+      "moduleId": "src-repair-engine",
+      "classification": "mapped",
+      "reason": "root: src/repair-engine"
+    },
+    {
+      "filePath": "src/repair-engine/contracts/execution/execution-result-builder.ts",
+      "moduleId": "src-repair-engine",
+      "classification": "mapped",
+      "reason": "root: src/repair-engine"
+    },
+    {
+      "filePath": "src/repair-engine/contracts/execution/execution-result.ts",
+      "moduleId": "src-repair-engine",
+      "classification": "mapped",
+      "reason": "root: src/repair-engine"
+    },
+    {
+      "filePath": "src/repair-engine/contracts/execution/index.ts",
+      "moduleId": "src-repair-engine",
+      "classification": "mapped",
+      "reason": "root: src/repair-engine"
+    },
+    {
+      "filePath": "src/repair-engine/contracts/repair-engine-evaluation.ts",
+      "moduleId": "src-repair-engine",
+      "classification": "mapped",
+      "reason": "root: src/repair-engine"
+    },
+    {
+      "filePath": "src/repair-engine/contracts/repair-engine-event-intake-result.ts",
+      "moduleId": "src-repair-engine",
+      "classification": "mapped",
+      "reason": "root: src/repair-engine"
+    },
+    {
+      "filePath": "src/repair-engine/contracts/repair-engine-event.ts",
+      "moduleId": "src-repair-engine",
+      "classification": "mapped",
+      "reason": "root: src/repair-engine"
+    },
+    {
+      "filePath": "src/repair-engine/contracts/repair-evaluation-input.ts",
+      "moduleId": "src-repair-engine",
+      "classification": "mapped",
+      "reason": "root: src/repair-engine"
+    },
+    {
+      "filePath": "src/repair-engine/contracts/repair-evaluation.ts",
+      "moduleId": "src-repair-engine",
+      "classification": "mapped",
+      "reason": "root: src/repair-engine"
+    },
+    {
+      "filePath": "src/repair-engine/contracts/repair-strategy-candidate.ts",
+      "moduleId": "src-repair-engine",
+      "classification": "mapped",
+      "reason": "root: src/repair-engine"
+    },
+    {
+      "filePath": "src/repair-engine/contracts/repair-strategy.ts",
+      "moduleId": "src-repair-engine",
+      "classification": "mapped",
+      "reason": "root: src/repair-engine"
+    },
+    {
+      "filePath": "src/repair-engine/contracts/repair-transition.ts",
+      "moduleId": "src-repair-engine",
+      "classification": "mapped",
+      "reason": "root: src/repair-engine"
+    },
+    {
+      "filePath": "src/repair-engine/contracts/repair-verdict-result.ts",
+      "moduleId": "src-repair-engine",
+      "classification": "mapped",
+      "reason": "root: src/repair-engine"
+    },
+    {
+      "filePath": "src/repair-engine/intake/repair-engine-event-intake.test.ts",
+      "moduleId": "src-repair-engine",
+      "classification": "mapped",
+      "reason": "root: src/repair-engine"
+    },
+    {
+      "filePath": "src/repair-engine/intake/repair-engine-event-intake.ts",
+      "moduleId": "src-repair-engine",
+      "classification": "mapped",
+      "reason": "root: src/repair-engine"
+    },
+    {
+      "filePath": "src/repair-engine/observability/incident-history-summary-builder.test.ts",
+      "moduleId": "src-repair-engine",
+      "classification": "mapped",
+      "reason": "root: src/repair-engine"
+    },
+    {
+      "filePath": "src/repair-engine/observability/incident-history-summary-builder.ts",
+      "moduleId": "src-repair-engine",
+      "classification": "mapped",
+      "reason": "root: src/repair-engine"
+    },
+    {
+      "filePath": "src/repair-engine/observability/incident-history-summary.ts",
+      "moduleId": "src-repair-engine",
+      "classification": "mapped",
+      "reason": "root: src/repair-engine"
+    },
+    {
+      "filePath": "src/repair-engine/observability/incident-summary-builder.test.ts",
+      "moduleId": "src-repair-engine",
+      "classification": "mapped",
+      "reason": "root: src/repair-engine"
+    },
+    {
+      "filePath": "src/repair-engine/observability/incident-summary-builder.ts",
+      "moduleId": "src-repair-engine",
+      "classification": "mapped",
+      "reason": "root: src/repair-engine"
+    },
+    {
+      "filePath": "src/repair-engine/observability/incident-summary.ts",
+      "moduleId": "src-repair-engine",
+      "classification": "mapped",
+      "reason": "root: src/repair-engine"
+    },
+    {
+      "filePath": "src/repair-engine/observability/index.ts",
+      "moduleId": "src-repair-engine",
+      "classification": "mapped",
+      "reason": "root: src/repair-engine"
+    },
+    {
+      "filePath": "src/repair-engine/observability/repair-run-list-item-builder.test.ts",
+      "moduleId": "src-repair-engine",
+      "classification": "mapped",
+      "reason": "root: src/repair-engine"
+    },
+    {
+      "filePath": "src/repair-engine/observability/repair-run-list-item-builder.ts",
+      "moduleId": "src-repair-engine",
+      "classification": "mapped",
+      "reason": "root: src/repair-engine"
+    },
+    {
+      "filePath": "src/repair-engine/observability/repair-run-list-item.ts",
+      "moduleId": "src-repair-engine",
+      "classification": "mapped",
+      "reason": "root: src/repair-engine"
+    },
+    {
+      "filePath": "src/repair-engine/observability/repair-run-summary-builder.test.ts",
+      "moduleId": "src-repair-engine",
+      "classification": "mapped",
+      "reason": "root: src/repair-engine"
+    },
+    {
+      "filePath": "src/repair-engine/observability/repair-run-summary-builder.ts",
+      "moduleId": "src-repair-engine",
+      "classification": "mapped",
+      "reason": "root: src/repair-engine"
+    },
+    {
+      "filePath": "src/repair-engine/observability/repair-run-summary.ts",
+      "moduleId": "src-repair-engine",
+      "classification": "mapped",
+      "reason": "root: src/repair-engine"
+    },
+    {
+      "filePath": "src/repair-engine/operator-decision/repair-operator-decision-engine.test.ts",
+      "moduleId": "src-repair-engine",
+      "classification": "mapped",
+      "reason": "root: src/repair-engine"
+    },
+    {
+      "filePath": "src/repair-engine/operator-decision/repair-operator-decision-engine.ts",
+      "moduleId": "src-repair-engine",
+      "classification": "mapped",
+      "reason": "root: src/repair-engine"
+    },
+    {
+      "filePath": "src/repair-engine/operator/repair-operator-decision-surface-builder.ts",
+      "moduleId": "src-repair-engine",
+      "classification": "mapped",
+      "reason": "root: src/repair-engine"
+    },
+    {
+      "filePath": "src/repair-engine/operator/repair-operator-decision-surface.test.ts",
+      "moduleId": "src-repair-engine",
+      "classification": "mapped",
+      "reason": "root: src/repair-engine"
+    },
+    {
+      "filePath": "src/repair-engine/operator/repair-operator-decision-surface.ts",
+      "moduleId": "src-repair-engine",
+      "classification": "mapped",
+      "reason": "root: src/repair-engine"
+    },
+    {
+      "filePath": "src/repair-engine/queue-entry/github-intake-to-repair-queue-entry.test.ts",
+      "moduleId": "src-repair-engine",
+      "classification": "mapped",
+      "reason": "root: src/repair-engine"
+    },
+    {
+      "filePath": "src/repair-engine/queue-entry/github-intake-to-repair-queue-entry.ts",
+      "moduleId": "src-repair-engine",
+      "classification": "mapped",
+      "reason": "root: src/repair-engine"
+    },
+    {
+      "filePath": "src/repair-engine/queue-entry/index.ts",
+      "moduleId": "src-repair-engine",
+      "classification": "mapped",
+      "reason": "root: src/repair-engine"
+    },
+    {
+      "filePath": "src/repair-engine/queue-entry/repair-queue-entry.ts",
+      "moduleId": "src-repair-engine",
+      "classification": "mapped",
+      "reason": "root: src/repair-engine"
+    },
+    {
+      "filePath": "src/repair-engine/queue/repair-item.ts",
+      "moduleId": "src-repair-engine",
+      "classification": "mapped",
+      "reason": "root: src/repair-engine"
+    },
+    {
+      "filePath": "src/repair-engine/queue/repair-queue-result.ts",
+      "moduleId": "src-repair-engine",
+      "classification": "mapped",
+      "reason": "root: src/repair-engine"
+    },
+    {
+      "filePath": "src/repair-engine/queue/repair-queue.test.ts",
+      "moduleId": "src-repair-engine",
+      "classification": "mapped",
+      "reason": "root: src/repair-engine"
+    },
+    {
+      "filePath": "src/repair-engine/queue/repair-queue.ts",
+      "moduleId": "src-repair-engine",
+      "classification": "mapped",
+      "reason": "root: src/repair-engine"
+    },
+    {
+      "filePath": "src/repair-engine/routing/repair-operator-decision.ts",
+      "moduleId": "src-repair-engine",
+      "classification": "mapped",
+      "reason": "root: src/repair-engine"
+    },
+    {
+      "filePath": "src/repair-engine/routing/repair-verdict-router.test.ts",
+      "moduleId": "src-repair-engine",
+      "classification": "mapped",
+      "reason": "root: src/repair-engine"
+    },
+    {
+      "filePath": "src/repair-engine/routing/repair-verdict-router.ts",
+      "moduleId": "src-repair-engine",
+      "classification": "mapped",
+      "reason": "root: src/repair-engine"
+    },
+    {
+      "filePath": "src/repair-engine/run/index.ts",
+      "moduleId": "src-repair-engine",
+      "classification": "mapped",
+      "reason": "root: src/repair-engine"
+    },
+    {
+      "filePath": "src/repair-engine/run/repair-run-builder.test.ts",
+      "moduleId": "src-repair-engine",
+      "classification": "mapped",
+      "reason": "root: src/repair-engine"
+    },
+    {
+      "filePath": "src/repair-engine/run/repair-run-builder.ts",
+      "moduleId": "src-repair-engine",
+      "classification": "mapped",
+      "reason": "root: src/repair-engine"
+    },
+    {
+      "filePath": "src/repair-engine/run/repair-run-event-log-builder.test.ts",
+      "moduleId": "src-repair-engine",
+      "classification": "mapped",
+      "reason": "root: src/repair-engine"
+    },
+    {
+      "filePath": "src/repair-engine/run/repair-run-event-log-builder.ts",
+      "moduleId": "src-repair-engine",
+      "classification": "mapped",
+      "reason": "root: src/repair-engine"
+    },
+    {
+      "filePath": "src/repair-engine/run/repair-run-lifecycle.test.ts",
+      "moduleId": "src-repair-engine",
+      "classification": "mapped",
+      "reason": "root: src/repair-engine"
+    },
+    {
+      "filePath": "src/repair-engine/run/repair-run-lifecycle.ts",
+      "moduleId": "src-repair-engine",
+      "classification": "mapped",
+      "reason": "root: src/repair-engine"
+    },
+    {
+      "filePath": "src/repair-engine/run/repair-run.ts",
+      "moduleId": "src-repair-engine",
+      "classification": "mapped",
+      "reason": "root: src/repair-engine"
+    },
+    {
+      "filePath": "src/repair-engine/state-machine/repair-state-machine.test.ts",
+      "moduleId": "src-repair-engine",
+      "classification": "mapped",
+      "reason": "root: src/repair-engine"
+    },
+    {
+      "filePath": "src/repair-engine/state-machine/repair-state-machine.ts",
+      "moduleId": "src-repair-engine",
+      "classification": "mapped",
+      "reason": "root: src/repair-engine"
+    },
+    {
+      "filePath": "src/repair-engine/strategy/repair-strategy-catalog.ts",
+      "moduleId": "src-repair-engine",
+      "classification": "mapped",
+      "reason": "root: src/repair-engine"
+    },
+    {
+      "filePath": "src/repair-engine/strategy/repair-strategy-selector.test.ts",
+      "moduleId": "src-repair-engine",
+      "classification": "mapped",
+      "reason": "root: src/repair-engine"
+    },
+    {
+      "filePath": "src/repair-engine/strategy/repair-strategy-selector.ts",
+      "moduleId": "src-repair-engine",
+      "classification": "mapped",
+      "reason": "root: src/repair-engine"
+    },
+    {
+      "filePath": "src/repair-engine/timeline/incident-timeline-builder.test.ts",
+      "moduleId": "src-repair-engine",
+      "classification": "mapped",
+      "reason": "root: src/repair-engine"
+    },
+    {
+      "filePath": "src/repair-engine/timeline/incident-timeline-builder.ts",
+      "moduleId": "src-repair-engine",
+      "classification": "mapped",
+      "reason": "root: src/repair-engine"
+    },
+    {
+      "filePath": "src/repair-engine/timeline/incident-timeline-entry.ts",
+      "moduleId": "src-repair-engine",
+      "classification": "mapped",
+      "reason": "root: src/repair-engine"
+    },
+    {
+      "filePath": "src/repair-engine/timeline/incident-timeline.ts",
+      "moduleId": "src-repair-engine",
+      "classification": "mapped",
+      "reason": "root: src/repair-engine"
+    },
+    {
+      "filePath": "src/repair-engine/timeline/index.ts",
+      "moduleId": "src-repair-engine",
+      "classification": "mapped",
+      "reason": "root: src/repair-engine"
+    },
+    {
+      "filePath": "src/repair-engine/verdict/derive-confidence-for-verdict-context.test.ts",
+      "moduleId": "src-repair-engine",
+      "classification": "mapped",
+      "reason": "root: src/repair-engine"
+    },
+    {
+      "filePath": "src/repair-engine/verdict/derive-confidence-for-verdict-context.ts",
+      "moduleId": "src-repair-engine",
+      "classification": "mapped",
+      "reason": "root: src/repair-engine"
+    },
+    {
+      "filePath": "src/repair-engine/verdict/repair-verdict-engine.test.ts",
+      "moduleId": "src-repair-engine",
+      "classification": "mapped",
+      "reason": "root: src/repair-engine"
+    },
+    {
+      "filePath": "src/repair-engine/verdict/repair-verdict-engine.ts",
+      "moduleId": "src-repair-engine",
+      "classification": "mapped",
+      "reason": "root: src/repair-engine"
+    },
+    {
+      "filePath": "src/shared/deterministic.test.ts",
+      "moduleId": "src-shared",
+      "classification": "shared",
+      "reason": "shared module"
+    },
+    {
+      "filePath": "src/shared/read-models/contracts.ts",
+      "moduleId": "src-shared",
+      "classification": "shared",
+      "reason": "shared module"
+    },
+    {
+      "filePath": "src/shared/read-models/index.ts",
+      "moduleId": "src-shared",
+      "classification": "shared",
+      "reason": "shared module"
+    },
+    {
+      "filePath": "src/shared/read-models/mocks.ts",
+      "moduleId": "src-shared",
+      "classification": "shared",
+      "reason": "shared module"
+    },
+    {
+      "filePath": "src/shared/read-models/read-models.test.ts",
+      "moduleId": "src-shared",
+      "classification": "shared",
+      "reason": "shared module"
+    },
+    {
+      "filePath": "tools/arch-snapshot.mjs",
+      "moduleId": "tools-arch-snapshot.mjs",
+      "classification": "mapped",
+      "reason": "root: tools/arch-snapshot.mjs"
+    },
+    {
+      "filePath": "tools/project-understanding/dependency-graph.mjs",
+      "moduleId": "tools-project-understanding",
+      "classification": "mapped",
+      "reason": "root: tools/project-understanding"
+    },
+    {
+      "filePath": "tools/project-understanding/dependency-graph.test.mjs",
+      "moduleId": "tools-project-understanding",
+      "classification": "mapped",
+      "reason": "root: tools/project-understanding"
+    },
+    {
+      "filePath": "tools/project-understanding/lib/dependency-graph/build-dependency-graph.mjs",
+      "moduleId": "tools-project-understanding",
+      "classification": "mapped",
+      "reason": "root: tools/project-understanding"
+    },
+    {
+      "filePath": "tools/project-understanding/lib/dependency-graph/collect-source-files.mjs",
+      "moduleId": "tools-project-understanding",
+      "classification": "mapped",
+      "reason": "root: tools/project-understanding"
+    },
+    {
+      "filePath": "tools/project-understanding/lib/dependency-graph/extract-dependencies.mjs",
+      "moduleId": "tools-project-understanding",
+      "classification": "mapped",
+      "reason": "root: tools/project-understanding"
+    },
+    {
+      "filePath": "tools/project-understanding/repo-scanner.mjs",
+      "moduleId": "tools-project-understanding",
+      "classification": "mapped",
+      "reason": "root: tools/project-understanding"
+    },
+    {
+      "filePath": "vite.config.ts",
+      "moduleId": "vite.config.ts",
+      "classification": "mapped",
+      "reason": "root: vite.config.ts"
+    },
+    {
+      "filePath": "vitest.config.ts",
+      "moduleId": "vitest.config.ts",
+      "classification": "mapped",
+      "reason": "root: vitest.config.ts"
+    }
+  ],
+  "crossModuleEdges": [
+    {
+      "fromModuleId": "electron-desktop",
+      "toModuleId": "electron-gates",
+      "edgeCount": 5
+    },
+    {
+      "fromModuleId": "electron-desktop",
+      "toModuleId": "electron-ipc",
+      "edgeCount": 1
+    },
+    {
+      "fromModuleId": "electron-ipc",
+      "toModuleId": "electron-desktop",
+      "edgeCount": 1
+    },
+    {
+      "fromModuleId": "src-operator",
+      "toModuleId": "src-repair-engine",
+      "edgeCount": 2
+    }
+  ],
+  "unassignedFiles": []
+}
