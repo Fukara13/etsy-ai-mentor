@@ -7,6 +7,7 @@ import { mapElectronInputToOrchestratorInput } from './map-electron-input-to-orc
 import { mapOrchestratorResultToElectronResult } from './map-orchestrator-result-to-electron-result';
 import { runElectronRepairBridge } from './run-electron-repair-bridge';
 import { runBoundedRepairLoop } from '../../gates/repair/repair-loop-orchestrator';
+import { bindGovernanceRuntime } from '../../../src/repair-engine/governance-runtime';
 import type { ElectronRepairBridgeInput } from './map-electron-input-to-orchestrator-input';
 import { orchestrateRepairEngine } from '../../../src/repair-engine/orchestrator';
 
@@ -60,7 +61,8 @@ describe('RE-10: mapOrchestratorResultToElectronResult', () => {
   it('produces outcome with correct shape', () => {
     const orchInput = mapElectronInputToOrchestratorInput(makeInput());
     const orchResult = orchestrateRepairEngine(orchInput);
-    const result = mapOrchestratorResultToElectronResult(orchResult);
+    const boundResult = bindGovernanceRuntime(orchResult);
+    const result = mapOrchestratorResultToElectronResult(boundResult);
 
     expect(result.outcome).toBeDefined();
     expect(result.outcome.sessionId).toBe('test-session-1');
@@ -77,7 +79,8 @@ describe('RE-10: mapOrchestratorResultToElectronResult', () => {
   it('preserves operator review and escalation signals', () => {
     const orchInput = mapElectronInputToOrchestratorInput(makeInput());
     const orchResult = orchestrateRepairEngine(orchInput);
-    const result = mapOrchestratorResultToElectronResult(orchResult);
+    const boundResult = bindGovernanceRuntime(orchResult);
+    const result = mapOrchestratorResultToElectronResult(boundResult);
 
     expect(typeof result.requiresOperatorReview).toBe('boolean');
     expect(typeof result.isEscalated).toBe('boolean');
@@ -118,6 +121,15 @@ describe('RE-10: runElectronRepairBridge', () => {
     const result = runElectronRepairBridge(makeInput());
     expect(result.handoff.requiresHuman).toBe(result.outcome.requiresHuman);
     expect(result.handoff.finalState).toBe(result.outcome.finalState);
+  });
+
+  it('bridge projection carries governance fields (RE-11)', () => {
+    const result = runElectronRepairBridge(makeInput());
+    expect(result.governance).toBeDefined();
+    expect(result.governance.decision).toBeDefined();
+    expect(typeof result.governance.executionAllowed).toBe('boolean');
+    expect(typeof result.governance.requiresOperatorReview).toBe('boolean');
+    expect(typeof result.governance.requiresEscalation).toBe('boolean');
   });
 
   it('legacy wrapper delegates to bridge', () => {

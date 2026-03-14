@@ -1,15 +1,22 @@
 /**
  * RE-10: Maps RepairEngineOrchestratorResult to Electron-facing runtime result.
- * Preserves status, routing, operator review, escalation, trace.
+ * RE-11: Projects governance (Electron does not derive; receives canonical output).
  * Pure, deterministic, machine-readable.
  */
 
-import type { RepairEngineOrchestratorResult } from '../../../src/repair-engine/orchestrator';
+import type { GovernanceBoundOrchestratorResult } from '../../../src/repair-engine/governance-runtime';
 import type { RepairRunOutcome, TerminationReason } from '../../gates/repair/repair-run-outcome';
 import type { RepairOperatorHandoff } from '../../gates/repair/operator-handoff.types';
 import type { RepairState } from '../../gates/repair/repair-state';
 import { deriveRepairRunVerdict } from '../../gates/repair/repair-run-verdict-mapper';
 import { mapRepairOperatorHandoff } from '../../gates/repair/operator-handoff-mapper';
+
+export type ElectronGovernanceProjection = {
+  readonly decision: string;
+  readonly executionAllowed: boolean;
+  readonly requiresOperatorReview: boolean;
+  readonly requiresEscalation: boolean;
+};
 
 export type ElectronRepairBridgeResult = {
   readonly outcome: RepairRunOutcome;
@@ -19,6 +26,7 @@ export type ElectronRepairBridgeResult = {
   readonly isEscalated: boolean;
   readonly routingSummary: string;
   readonly traceStageCount: number;
+  readonly governance: ElectronGovernanceProjection;
 };
 
 function routingToFinalState(routing: RepairEngineOrchestratorResult['routing']): RepairState {
@@ -33,10 +41,10 @@ function routingToTerminationReason(routing: RepairEngineOrchestratorResult['rou
 }
 
 /**
- * Maps orchestrator result to Electron runtime result.
+ * Maps governance-bound orchestrator result to Electron runtime result.
  */
 export function mapOrchestratorResultToElectronResult(
-  result: RepairEngineOrchestratorResult
+  result: GovernanceBoundOrchestratorResult
 ): ElectronRepairBridgeResult {
   const { run, routing, status, trace } = result;
   const finalState = routingToFinalState(routing);
@@ -62,6 +70,13 @@ export function mapOrchestratorResultToElectronResult(
   const verdict = deriveRepairRunVerdict(outcome);
   const handoff = mapRepairOperatorHandoff({ verdict, outcome });
 
+  const governance: ElectronGovernanceProjection = Object.freeze({
+    decision: result.governance.decision,
+    executionAllowed: result.governance.executionAllowed,
+    requiresOperatorReview: result.governance.requiresOperatorReview,
+    requiresEscalation: result.governance.requiresEscalation,
+  });
+
   return Object.freeze({
     outcome,
     handoff,
@@ -70,5 +85,6 @@ export function mapOrchestratorResultToElectronResult(
     isEscalated: routing.isEscalated,
     routingSummary: `${routing.finalChannel}: ${routing.reason}`,
     traceStageCount: trace.length,
+    governance,
   });
 }
