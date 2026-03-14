@@ -1,0 +1,400 @@
+{
+  "version": 1,
+  "generatedFrom": {
+    "dependencyGraph": ".ai-devos/dependency-graph.json",
+    "moduleMap": ".ai-devos/module-map.json",
+    "architectureSummary": ".ai-devos/architecture-summary.json"
+  },
+  "summary": {
+    "totalModules": 15,
+    "hotspotCount": 2,
+    "maxScore": 72,
+    "averageScore": 25.53
+  },
+  "weights": {
+    "inboundDependencyWeight": 1,
+    "outboundDependencyWeight": 1,
+    "circularDependencyWeight": 1,
+    "lowTestDensityWeight": 1,
+    "moduleSizeWeight": 1,
+    "crossModuleInteractionWeight": 1
+  },
+  "thresholds": {
+    "highRiskMin": 70,
+    "mediumRiskMin": 40
+  },
+  "hotspots": [
+    {
+      "module": "electron/gates",
+      "score": 72,
+      "riskLevel": "HIGH",
+      "factors": {
+        "inboundDependencies": 5,
+        "outboundDependencies": 0,
+        "circularDependencySignals": 1,
+        "testDensity": 0.263,
+        "moduleFileCount": 64,
+        "crossModuleInteractions": 5
+      },
+      "factorScores": {
+        "inboundDependencyScore": 20,
+        "outboundDependencyScore": 0,
+        "circularDependencyScore": 20,
+        "lowTestDensityScore": 11,
+        "moduleSizeScore": 10,
+        "crossModuleInteractionScore": 11
+      },
+      "reasons": [
+        "high inbound dependency count",
+        "participates in circular dependency signals",
+        "large module by file count",
+        "frequent cross-module interaction surface"
+      ],
+      "rank": 1
+    },
+    {
+      "module": "electron/desktop",
+      "score": 67,
+      "riskLevel": "MEDIUM",
+      "factors": {
+        "inboundDependencies": 1,
+        "outboundDependencies": 6,
+        "circularDependencySignals": 1,
+        "testDensity": 0.263,
+        "moduleFileCount": 10,
+        "crossModuleInteractions": 7
+      },
+      "factorScores": {
+        "inboundDependencyScore": 4,
+        "outboundDependencyScore": 15,
+        "circularDependencyScore": 20,
+        "lowTestDensityScore": 11,
+        "moduleSizeScore": 2,
+        "crossModuleInteractionScore": 15
+      },
+      "reasons": [
+        "high outbound dependency count",
+        "participates in circular dependency signals",
+        "frequent cross-module interaction surface"
+      ],
+      "rank": 2
+    },
+    {
+      "module": "src/repair-engine",
+      "score": 38,
+      "riskLevel": "LOW",
+      "factors": {
+        "inboundDependencies": 2,
+        "outboundDependencies": 0,
+        "circularDependencySignals": 0,
+        "testDensity": 0.263,
+        "moduleFileCount": 94,
+        "crossModuleInteractions": 2
+      },
+      "factorScores": {
+        "inboundDependencyScore": 8,
+        "outboundDependencyScore": 0,
+        "circularDependencyScore": 0,
+        "lowTestDensityScore": 11,
+        "moduleSizeScore": 15,
+        "crossModuleInteractionScore": 4
+      },
+      "reasons": [
+        "large module by file count"
+      ],
+      "rank": 3
+    },
+    {
+      "module": "electron/ipc",
+      "score": 27,
+      "riskLevel": "LOW",
+      "factors": {
+        "inboundDependencies": 1,
+        "outboundDependencies": 1,
+        "circularDependencySignals": 0,
+        "testDensity": 0,
+        "moduleFileCount": 4,
+        "crossModuleInteractions": 2
+      },
+      "factorScores": {
+        "inboundDependencyScore": 4,
+        "outboundDependencyScore": 3,
+        "circularDependencyScore": 0,
+        "lowTestDensityScore": 15,
+        "moduleSizeScore": 1,
+        "crossModuleInteractionScore": 4
+      },
+      "reasons": [
+        "below-average test density"
+      ],
+      "rank": 4
+    },
+    {
+      "module": "src/operator",
+      "score": 21,
+      "riskLevel": "LOW",
+      "factors": {
+        "inboundDependencies": 0,
+        "outboundDependencies": 2,
+        "circularDependencySignals": 0,
+        "testDensity": 0.263,
+        "moduleFileCount": 4,
+        "crossModuleInteractions": 2
+      },
+      "factorScores": {
+        "inboundDependencyScore": 0,
+        "outboundDependencyScore": 5,
+        "circularDependencyScore": 0,
+        "lowTestDensityScore": 11,
+        "moduleSizeScore": 1,
+        "crossModuleInteractionScore": 4
+      },
+      "reasons": [],
+      "rank": 5
+    },
+    {
+      "module": "archive/legacy-etsy-mentor",
+      "score": 19,
+      "riskLevel": "LOW",
+      "factors": {
+        "inboundDependencies": 0,
+        "outboundDependencies": 0,
+        "circularDependencySignals": 0,
+        "testDensity": 0,
+        "moduleFileCount": 24,
+        "crossModuleInteractions": 0
+      },
+      "factorScores": {
+        "inboundDependencyScore": 0,
+        "outboundDependencyScore": 0,
+        "circularDependencyScore": 0,
+        "lowTestDensityScore": 15,
+        "moduleSizeScore": 4,
+        "crossModuleInteractionScore": 0
+      },
+      "reasons": [
+        "below-average test density"
+      ],
+      "rank": 6
+    },
+    {
+      "module": "src/desktop",
+      "score": 18,
+      "riskLevel": "LOW",
+      "factors": {
+        "inboundDependencies": 0,
+        "outboundDependencies": 0,
+        "circularDependencySignals": 0,
+        "testDensity": 0.263,
+        "moduleFileCount": 45,
+        "crossModuleInteractions": 0
+      },
+      "factorScores": {
+        "inboundDependencyScore": 0,
+        "outboundDependencyScore": 0,
+        "circularDependencyScore": 0,
+        "lowTestDensityScore": 11,
+        "moduleSizeScore": 7,
+        "crossModuleInteractionScore": 0
+      },
+      "reasons": [
+        "large module by file count"
+      ],
+      "rank": 7
+    },
+    {
+      "module": "src/heroes",
+      "score": 18,
+      "riskLevel": "LOW",
+      "factors": {
+        "inboundDependencies": 0,
+        "outboundDependencies": 0,
+        "circularDependencySignals": 0,
+        "testDensity": 0.263,
+        "moduleFileCount": 45,
+        "crossModuleInteractions": 0
+      },
+      "factorScores": {
+        "inboundDependencyScore": 0,
+        "outboundDependencyScore": 0,
+        "circularDependencyScore": 0,
+        "lowTestDensityScore": 11,
+        "moduleSizeScore": 7,
+        "crossModuleInteractionScore": 0
+      },
+      "reasons": [
+        "large module by file count"
+      ],
+      "rank": 8
+    },
+    {
+      "module": "tools/project-understanding",
+      "score": 17,
+      "riskLevel": "LOW",
+      "factors": {
+        "inboundDependencies": 0,
+        "outboundDependencies": 0,
+        "circularDependencySignals": 0,
+        "testDensity": 0,
+        "moduleFileCount": 14,
+        "crossModuleInteractions": 0
+      },
+      "factorScores": {
+        "inboundDependencyScore": 0,
+        "outboundDependencyScore": 0,
+        "circularDependencyScore": 0,
+        "lowTestDensityScore": 15,
+        "moduleSizeScore": 2,
+        "crossModuleInteractionScore": 0
+      },
+      "reasons": [
+        "below-average test density"
+      ],
+      "rank": 9
+    },
+    {
+      "module": "src/governance",
+      "score": 15,
+      "riskLevel": "LOW",
+      "factors": {
+        "inboundDependencies": 0,
+        "outboundDependencies": 0,
+        "circularDependencySignals": 0,
+        "testDensity": 0.263,
+        "moduleFileCount": 22,
+        "crossModuleInteractions": 0
+      },
+      "factorScores": {
+        "inboundDependencyScore": 0,
+        "outboundDependencyScore": 0,
+        "circularDependencyScore": 0,
+        "lowTestDensityScore": 11,
+        "moduleSizeScore": 4,
+        "crossModuleInteractionScore": 0
+      },
+      "reasons": [],
+      "rank": 10
+    },
+    {
+      "module": "tools/arch-snapshot.mjs",
+      "score": 15,
+      "riskLevel": "LOW",
+      "factors": {
+        "inboundDependencies": 0,
+        "outboundDependencies": 0,
+        "circularDependencySignals": 0,
+        "testDensity": 0,
+        "moduleFileCount": 1,
+        "crossModuleInteractions": 0
+      },
+      "factorScores": {
+        "inboundDependencyScore": 0,
+        "outboundDependencyScore": 0,
+        "circularDependencyScore": 0,
+        "lowTestDensityScore": 15,
+        "moduleSizeScore": 0,
+        "crossModuleInteractionScore": 0
+      },
+      "reasons": [
+        "below-average test density"
+      ],
+      "rank": 11
+    },
+    {
+      "module": "vite.config.ts",
+      "score": 15,
+      "riskLevel": "LOW",
+      "factors": {
+        "inboundDependencies": 0,
+        "outboundDependencies": 0,
+        "circularDependencySignals": 0,
+        "testDensity": 0,
+        "moduleFileCount": 1,
+        "crossModuleInteractions": 0
+      },
+      "factorScores": {
+        "inboundDependencyScore": 0,
+        "outboundDependencyScore": 0,
+        "circularDependencyScore": 0,
+        "lowTestDensityScore": 15,
+        "moduleSizeScore": 0,
+        "crossModuleInteractionScore": 0
+      },
+      "reasons": [
+        "below-average test density"
+      ],
+      "rank": 12
+    },
+    {
+      "module": "vitest.config.ts",
+      "score": 15,
+      "riskLevel": "LOW",
+      "factors": {
+        "inboundDependencies": 0,
+        "outboundDependencies": 0,
+        "circularDependencySignals": 0,
+        "testDensity": 0,
+        "moduleFileCount": 1,
+        "crossModuleInteractions": 0
+      },
+      "factorScores": {
+        "inboundDependencyScore": 0,
+        "outboundDependencyScore": 0,
+        "circularDependencyScore": 0,
+        "lowTestDensityScore": 15,
+        "moduleSizeScore": 0,
+        "crossModuleInteractionScore": 0
+      },
+      "reasons": [
+        "below-average test density"
+      ],
+      "rank": 13
+    },
+    {
+      "module": "src/github",
+      "score": 14,
+      "riskLevel": "LOW",
+      "factors": {
+        "inboundDependencies": 0,
+        "outboundDependencies": 0,
+        "circularDependencySignals": 0,
+        "testDensity": 0.263,
+        "moduleFileCount": 19,
+        "crossModuleInteractions": 0
+      },
+      "factorScores": {
+        "inboundDependencyScore": 0,
+        "outboundDependencyScore": 0,
+        "circularDependencyScore": 0,
+        "lowTestDensityScore": 11,
+        "moduleSizeScore": 3,
+        "crossModuleInteractionScore": 0
+      },
+      "reasons": [],
+      "rank": 14
+    },
+    {
+      "module": "src/shared",
+      "score": 12,
+      "riskLevel": "LOW",
+      "factors": {
+        "inboundDependencies": 0,
+        "outboundDependencies": 0,
+        "circularDependencySignals": 0,
+        "testDensity": 0.263,
+        "moduleFileCount": 5,
+        "crossModuleInteractions": 0
+      },
+      "factorScores": {
+        "inboundDependencyScore": 0,
+        "outboundDependencyScore": 0,
+        "circularDependencyScore": 0,
+        "lowTestDensityScore": 11,
+        "moduleSizeScore": 1,
+        "crossModuleInteractionScore": 0
+      },
+      "reasons": [],
+      "rank": 15
+    }
+  ]
+}

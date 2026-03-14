@@ -21,7 +21,9 @@
     "ai-devos:architecture-summary": "node tools/project-understanding/architecture-summary.mjs",
     "test:project-understanding": "node tools/project-understanding/dependency-graph.test.mjs",
     "test:module-mapping": "node tools/project-understanding/module-mapping.test.mjs",
-    "test:architecture-summary": "node tools/project-understanding/architecture-summary.test.mjs"
+    "test:architecture-summary": "node tools/project-understanding/architecture-summary.test.mjs",
+    "test:risk-hotspots": "node tools/project-understanding/risk-hotspots.test.mjs",
+    "ai-devos:risk-hotspots": "node tools/project-understanding/risk-hotspots.mjs"
   },
   "build": {
     "appId": "com.etsy-mentor.desktop",
