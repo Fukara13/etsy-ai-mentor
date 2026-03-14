@@ -2,10 +2,10 @@
   "generatedAt": "deterministic",
   "root": ".",
   "summary": {
-    "sourceFileCount": 451,
-    "internalModuleCount": 320,
-    "externalPackageCount": 18,
-    "edgeCount": 1020
+    "sourceFileCount": 469,
+    "internalModuleCount": 334,
+    "externalPackageCount": 19,
+    "edgeCount": 1064
   },
   "modules": {
     "archive/legacy-etsy-mentor/electron/db.ts": {
@@ -2793,6 +2793,34 @@
         "url"
       ]
     },
+    "tools/project-understanding/architecture-summary.mjs": {
+      "internal": [
+        "tools/project-understanding/lib/architecture-summary/build-architecture-summary.mjs"
+      ],
+      "external": [
+        "fs",
+        "path",
+        "url"
+      ]
+    },
+    "tools/project-understanding/architecture-summary.test.mjs": {
+      "internal": [
+        "tools/project-understanding/lib/architecture-summary/build-architecture-summary.mjs",
+        "tools/project-understanding/lib/architecture-summary/collect-architecture-signals.mjs",
+        "tools/project-understanding/lib/architecture-summary/infer-cross-module-interactions.mjs",
+        "tools/project-understanding/lib/architecture-summary/infer-entrypoints.mjs",
+        "tools/project-understanding/lib/architecture-summary/infer-infrastructure.mjs",
+        "tools/project-understanding/lib/architecture-summary/infer-layers.mjs",
+        "tools/project-understanding/lib/architecture-summary/infer-repository-identity.mjs",
+        "tools/project-understanding/lib/architecture-summary/infer-test-topology.mjs"
+      ],
+      "external": [
+        "assert",
+        "fs",
+        "path",
+        "url"
+      ]
+    },
     "tools/project-understanding/dependency-graph.mjs": {
       "internal": [
         "tools/project-understanding/lib/dependency-graph/build-dependency-graph.mjs"
@@ -2824,6 +2852,18 @@
         "url"
       ]
     },
+    "tools/project-understanding/lib/architecture-summary/build-architecture-summary.mjs": {
+      "internal": [
+        "tools/project-understanding/lib/architecture-summary/collect-architecture-signals.mjs",
+        "tools/project-understanding/lib/architecture-summary/infer-cross-module-interactions.mjs",
+        "tools/project-understanding/lib/architecture-summary/infer-entrypoints.mjs",
+        "tools/project-understanding/lib/architecture-summary/infer-infrastructure.mjs",
+        "tools/project-understanding/lib/architecture-summary/infer-layers.mjs",
+        "tools/project-understanding/lib/architecture-summary/infer-repository-identity.mjs",
+        "tools/project-understanding/lib/architecture-summary/infer-test-topology.mjs"
+      ],
+      "external": []
+    },
     "tools/project-understanding/lib/dependency-graph/build-dependency-graph.mjs": {
       "internal": [
         "tools/project-understanding/lib/dependency-graph/collect-source-files.mjs",
@@ -2854,6 +2894,54 @@
         "x"
       ]
     },
+    "tools/project-understanding/lib/module-mapping/classify-module-domain.mjs": {
+      "internal": [
+        "tools/project-understanding/lib/module-mapping/normalize-module-name.mjs"
+      ],
+      "external": []
+    },
+    "tools/project-understanding/lib/module-mapping/derive-module-map.mjs": {
+      "internal": [
+        "tools/project-understanding/lib/module-mapping/build-cross-module-edges.mjs",
+        "tools/project-understanding/lib/module-mapping/classify-module-domain.mjs",
+        "tools/project-understanding/lib/module-mapping/infer-module-boundaries.mjs",
+        "tools/project-understanding/lib/module-mapping/sort-module-map.mjs"
+      ],
+      "external": []
+    },
+    "tools/project-understanding/lib/module-mapping/infer-module-boundaries.mjs": {
+      "internal": [
+        "tools/project-understanding/lib/module-mapping/classify-module-domain.mjs",
+        "tools/project-understanding/lib/module-mapping/normalize-module-name.mjs"
+      ],
+      "external": []
+    },
+    "tools/project-understanding/module-mapping.mjs": {
+      "internal": [
+        "tools/project-understanding/lib/module-mapping/derive-module-map.mjs"
+      ],
+      "external": [
+        "fs",
+        "path",
+        "url"
+      ]
+    },
+    "tools/project-understanding/module-mapping.test.mjs": {
+      "internal": [
+        "tools/project-understanding/lib/module-mapping/build-cross-module-edges.mjs",
+        "tools/project-understanding/lib/module-mapping/classify-module-domain.mjs",
+        "tools/project-understanding/lib/module-mapping/derive-module-map.mjs",
+        "tools/project-understanding/lib/module-mapping/infer-module-boundaries.mjs",
+        "tools/project-understanding/lib/module-mapping/normalize-module-name.mjs"
+      ],
+      "external": [
+        "assert",
+        "child_process",
+        "fs",
+        "path",
+        "url"
+      ]
+    },
     "tools/project-understanding/repo-scanner.mjs": {
       "internal": [],
       "external": [
@@ -2880,6 +2968,7 @@
     "@testing-library/react",
     "@vitejs/plugin-react",
     "assert",
+    "child_process",
     "electron",
     "electron-updater",
     "fs",

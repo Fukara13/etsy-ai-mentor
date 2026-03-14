@@ -18,8 +18,10 @@
     "repo:scan": "node tools/project-understanding/repo-scanner.mjs",
     "project:dependency-graph": "node tools/project-understanding/dependency-graph.mjs",
     "project:module-mapping": "node tools/project-understanding/module-mapping.mjs",
+    "ai-devos:architecture-summary": "node tools/project-understanding/architecture-summary.mjs",
     "test:project-understanding": "node tools/project-understanding/dependency-graph.test.mjs",
-    "test:module-mapping": "node tools/project-understanding/module-mapping.test.mjs"
+    "test:module-mapping": "node tools/project-understanding/module-mapping.test.mjs",
+    "test:architecture-summary": "node tools/project-understanding/architecture-summary.test.mjs"
   },
   "build": {
     "appId": "com.etsy-mentor.desktop",

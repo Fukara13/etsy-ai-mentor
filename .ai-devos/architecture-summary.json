@@ -1,0 +1,312 @@
+{
+  "repositoryIdentity": {
+    "name": "etsy-mentor",
+    "primaryLanguage": "typescript",
+    "packageManager": "npm",
+    "frameworkSignals": [
+      "electron",
+      "react",
+      "vite",
+      "vitest"
+    ]
+  },
+  "modules": {
+    "totalModules": 15,
+    "modules": [
+      {
+        "name": "archive/legacy-etsy-mentor",
+        "fileCount": 24,
+        "role": "unknown"
+      },
+      {
+        "name": "electron/desktop",
+        "fileCount": 10,
+        "role": "domain"
+      },
+      {
+        "name": "electron/gates",
+        "fileCount": 64,
+        "role": "domain"
+      },
+      {
+        "name": "electron/ipc",
+        "fileCount": 4,
+        "role": "domain"
+      },
+      {
+        "name": "src/desktop",
+        "fileCount": 45,
+        "role": "domain"
+      },
+      {
+        "name": "src/github",
+        "fileCount": 19,
+        "role": "domain"
+      },
+      {
+        "name": "src/governance",
+        "fileCount": 22,
+        "role": "domain"
+      },
+      {
+        "name": "src/heroes",
+        "fileCount": 45,
+        "role": "domain"
+      },
+      {
+        "name": "src/operator",
+        "fileCount": 4,
+        "role": "interface"
+      },
+      {
+        "name": "src/repair-engine",
+        "fileCount": 94,
+        "role": "domain"
+      },
+      {
+        "name": "src/shared",
+        "fileCount": 5,
+        "role": "infrastructure"
+      },
+      {
+        "name": "tools/arch-snapshot.mjs",
+        "fileCount": 1,
+        "role": "interface"
+      },
+      {
+        "name": "tools/project-understanding",
+        "fileCount": 14,
+        "role": "interface"
+      },
+      {
+        "name": "vite.config.ts",
+        "fileCount": 1,
+        "role": "unknown"
+      },
+      {
+        "name": "vitest.config.ts",
+        "fileCount": 1,
+        "role": "test"
+      }
+    ]
+  },
+  "layers": {
+    "detectedLayers": [
+      "domain",
+      "infrastructure",
+      "interface",
+      "test",
+      "unknown"
+    ],
+    "layerAssignments": [
+      {
+        "module": "archive/legacy-etsy-mentor",
+        "layer": "unknown"
+      },
+      {
+        "module": "electron/desktop",
+        "layer": "domain"
+      },
+      {
+        "module": "electron/gates",
+        "layer": "domain"
+      },
+      {
+        "module": "electron/ipc",
+        "layer": "domain"
+      },
+      {
+        "module": "src/desktop",
+        "layer": "domain"
+      },
+      {
+        "module": "src/github",
+        "layer": "domain"
+      },
+      {
+        "module": "src/governance",
+        "layer": "domain"
+      },
+      {
+        "module": "src/heroes",
+        "layer": "domain"
+      },
+      {
+        "module": "src/operator",
+        "layer": "interface"
+      },
+      {
+        "module": "src/repair-engine",
+        "layer": "domain"
+      },
+      {
+        "module": "src/shared",
+        "layer": "infrastructure"
+      },
+      {
+        "module": "tools/arch-snapshot.mjs",
+        "layer": "interface"
+      },
+      {
+        "module": "tools/project-understanding",
+        "layer": "interface"
+      },
+      {
+        "module": "vite.config.ts",
+        "layer": "unknown"
+      },
+      {
+        "module": "vitest.config.ts",
+        "layer": "test"
+      }
+    ]
+  },
+  "entrypoints": [
+    {
+      "path": "archive/legacy-etsy-mentor/electron/main.ts",
+      "type": "server"
+    },
+    {
+      "path": "archive/legacy-etsy-mentor/src/main.tsx",
+      "type": "server"
+    },
+    {
+      "path": "electron/desktop/main.ts",
+      "type": "server"
+    },
+    {
+      "path": "src/desktop/main.ts",
+      "type": "server"
+    },
+    {
+      "path": "src/desktop/main.tsx",
+      "type": "server"
+    },
+    {
+      "path": "src/operator/playbooks/index.ts",
+      "type": "script"
+    },
+    {
+      "path": "src/operator/playbooks/operator-playbook-resolver.test.ts",
+      "type": "script"
+    },
+    {
+      "path": "src/operator/playbooks/operator-playbook-resolver.ts",
+      "type": "script"
+    },
+    {
+      "path": "src/operator/playbooks/operator-playbook.ts",
+      "type": "script"
+    },
+    {
+      "path": "tools/arch-snapshot.mjs",
+      "type": "cli"
+    },
+    {
+      "path": "tools/project-understanding/architecture-summary.mjs",
+      "type": "cli"
+    },
+    {
+      "path": "tools/project-understanding/architecture-summary.test.mjs",
+      "type": "cli"
+    },
+    {
+      "path": "tools/project-understanding/dependency-graph.mjs",
+      "type": "cli"
+    },
+    {
+      "path": "tools/project-understanding/dependency-graph.test.mjs",
+      "type": "cli"
+    },
+    {
+      "path": "tools/project-understanding/lib/architecture-summary/build-architecture-summary.mjs",
+      "type": "cli"
+    },
+    {
+      "path": "tools/project-understanding/lib/dependency-graph/build-dependency-graph.mjs",
+      "type": "cli"
+    },
+    {
+      "path": "tools/project-understanding/lib/dependency-graph/collect-source-files.mjs",
+      "type": "cli"
+    },
+    {
+      "path": "tools/project-understanding/lib/dependency-graph/extract-dependencies.mjs",
+      "type": "cli"
+    },
+    {
+      "path": "tools/project-understanding/lib/module-mapping/classify-module-domain.mjs",
+      "type": "cli"
+    },
+    {
+      "path": "tools/project-understanding/lib/module-mapping/derive-module-map.mjs",
+      "type": "cli"
+    },
+    {
+      "path": "tools/project-understanding/lib/module-mapping/infer-module-boundaries.mjs",
+      "type": "cli"
+    },
+    {
+      "path": "tools/project-understanding/module-mapping.mjs",
+      "type": "cli"
+    },
+    {
+      "path": "tools/project-understanding/module-mapping.test.mjs",
+      "type": "cli"
+    },
+    {
+      "path": "tools/project-understanding/repo-scanner.mjs",
+      "type": "cli"
+    }
+  ],
+  "testTopology": {
+    "testFiles": 93,
+    "testModules": [
+      "electron/desktop",
+      "electron/gates",
+      "src/desktop",
+      "src/github",
+      "src/governance",
+      "src/heroes",
+      "src/operator",
+      "src/repair-engine",
+      "src/shared"
+    ],
+    "testDensity": 0.263
+  },
+  "infrastructure": {
+    "hasGitHubWorkflows": true,
+    "hasDocker": false,
+    "hasLint": false,
+    "hasFormatter": false
+  },
+  "crossModuleInteractions": [
+    {
+      "from": "electron/desktop",
+      "to": "electron/gates",
+      "edgeCount": 5
+    },
+    {
+      "from": "electron/desktop",
+      "to": "electron/ipc",
+      "edgeCount": 1
+    },
+    {
+      "from": "electron/ipc",
+      "to": "electron/desktop",
+      "edgeCount": 1
+    },
+    {
+      "from": "src/operator",
+      "to": "src/repair-engine",
+      "edgeCount": 2
+    }
+  ],
+  "signals": {
+    "circularDependencySignals": 1,
+    "highCouplingModules": [
+      "electron/desktop",
+      "electron/gates"
+    ]
+  }
+}

@@ -4,8 +4,8 @@
     "dependencyGraphPath": ".ai-devos/dependency-graph.json"
   },
   "summary": {
-    "totalFiles": 345,
-    "mappedFiles": 345,
+    "totalFiles": 353,
+    "mappedFiles": 353,
     "unassignedFiles": 0,
     "moduleCount": 15,
     "crossModuleEdgeCount": 4
@@ -126,7 +126,7 @@
       "rootPaths": [
         "tools/project-understanding"
       ],
-      "fileCount": 6
+      "fileCount": 14
     },
     {
       "id": "vite.config.ts",
@@ -2171,6 +2171,18 @@
       "reason": "root: tools/arch-snapshot.mjs"
     },
     {
+      "filePath": "tools/project-understanding/architecture-summary.mjs",
+      "moduleId": "tools-project-understanding",
+      "classification": "mapped",
+      "reason": "root: tools/project-understanding"
+    },
+    {
+      "filePath": "tools/project-understanding/architecture-summary.test.mjs",
+      "moduleId": "tools-project-understanding",
+      "classification": "mapped",
+      "reason": "root: tools/project-understanding"
+    },
+    {
       "filePath": "tools/project-understanding/dependency-graph.mjs",
       "moduleId": "tools-project-understanding",
       "classification": "mapped",
@@ -2178,6 +2190,12 @@
     },
     {
       "filePath": "tools/project-understanding/dependency-graph.test.mjs",
+      "moduleId": "tools-project-understanding",
+      "classification": "mapped",
+      "reason": "root: tools/project-understanding"
+    },
+    {
+      "filePath": "tools/project-understanding/lib/architecture-summary/build-architecture-summary.mjs",
       "moduleId": "tools-project-understanding",
       "classification": "mapped",
       "reason": "root: tools/project-understanding"
@@ -2196,6 +2214,36 @@
     },
     {
       "filePath": "tools/project-understanding/lib/dependency-graph/extract-dependencies.mjs",
+      "moduleId": "tools-project-understanding",
+      "classification": "mapped",
+      "reason": "root: tools/project-understanding"
+    },
+    {
+      "filePath": "tools/project-understanding/lib/module-mapping/classify-module-domain.mjs",
+      "moduleId": "tools-project-understanding",
+      "classification": "mapped",
+      "reason": "root: tools/project-understanding"
+    },
+    {
+      "filePath": "tools/project-understanding/lib/module-mapping/derive-module-map.mjs",
+      "moduleId": "tools-project-understanding",
+      "classification": "mapped",
+      "reason": "root: tools/project-understanding"
+    },
+    {
+      "filePath": "tools/project-understanding/lib/module-mapping/infer-module-boundaries.mjs",
+      "moduleId": "tools-project-understanding",
+      "classification": "mapped",
+      "reason": "root: tools/project-understanding"
+    },
+    {
+      "filePath": "tools/project-understanding/module-mapping.mjs",
+      "moduleId": "tools-project-understanding",
+      "classification": "mapped",
+      "reason": "root: tools/project-understanding"
+    },
+    {
+      "filePath": "tools/project-understanding/module-mapping.test.mjs",
       "moduleId": "tools-project-understanding",
       "classification": "mapped",
       "reason": "root: tools/project-understanding"
