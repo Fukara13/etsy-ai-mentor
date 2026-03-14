@@ -17,6 +17,7 @@ export const DESKTOP_ALLOWED_IPC_CHANNELS = [
   'desktop:updates:install',
   'desktop:updates:available',
   'desktop:updates:downloaded',
+  'desktop:repair:triggerRun',
 ] as const
 
 export type DesktopAllowedIpcChannel = (typeof DESKTOP_ALLOWED_IPC_CHANNELS)[number]

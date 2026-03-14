@@ -5,6 +5,7 @@
  */
 
 import type { RepairRunOutcome } from '../gates/repair/repair-run-outcome'
+import type { LoopRunInput } from '../gates/repair/repair-loop-orchestrator'
 import type { RepairOperatorHandoff } from '../gates/repair/operator-handoff.types'
 import type { ElectronRepairBridgeResult } from '../runtime/repair-engine-bridge'
 import { runElectronRepairBridge } from '../runtime/repair-engine-bridge'
@@ -258,6 +259,15 @@ function outcomeToBackboneTelemetry(outcome: RepairRunOutcome): BackboneTelemetr
     range_start_unix: startTime,
     range_end_unix: endTime,
   }
+}
+
+/**
+ * OC-1: Triggers a repair run with the given input.
+ * Delegates to runElectronRepairBridge; returns RepairRunOutcome.
+ */
+export function triggerRepairRun(input: LoopRunInput): RepairRunOutcome {
+  const result = runElectronRepairBridge(input)
+  return result.outcome
 }
 
 /** Returns engine-derived RepairRunView. */

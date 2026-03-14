@@ -18,6 +18,7 @@ export const IPC_CHANNELS = {
   INSTALL_UPDATE: 'desktop:updates:install',
   UPDATE_AVAILABLE: 'desktop:updates:available',
   UPDATE_DOWNLOADED: 'desktop:updates:downloaded',
+  TRIGGER_REPAIR_RUN: 'desktop:repair:triggerRun',
 } as const
 
 export type IpcChannel = (typeof IPC_CHANNELS)[keyof typeof IPC_CHANNELS]
