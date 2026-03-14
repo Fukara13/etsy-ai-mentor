@@ -1,0 +1,2899 @@
+{
+  "generatedAt": "deterministic",
+  "root": ".",
+  "summary": {
+    "sourceFileCount": 451,
+    "internalModuleCount": 320,
+    "externalPackageCount": 18,
+    "edgeCount": 1020
+  },
+  "modules": {
+    "archive/legacy-etsy-mentor/electron/db.ts": {
+      "internal": [
+        "archive/legacy-etsy-mentor/electron/sql"
+      ],
+      "external": [
+        "electron",
+        "fs",
+        "path"
+      ]
+    },
+    "archive/legacy-etsy-mentor/electron/gates/persistence.ts": {
+      "internal": [
+        "archive/legacy-etsy-mentor/electron/db.ts",
+        "archive/legacy-etsy-mentor/electron/gates/registry.ts",
+        "archive/legacy-etsy-mentor/electron/gates/store.ts"
+      ],
+      "external": []
+    },
+    "archive/legacy-etsy-mentor/electron/gates/store.ts": {
+      "internal": [
+        "archive/legacy-etsy-mentor/electron/gates/registry.ts"
+      ],
+      "external": []
+    },
+    "archive/legacy-etsy-mentor/electron/main.ts": {
+      "internal": [
+        "archive/legacy-etsy-mentor/electron/db.ts",
+        "archive/legacy-etsy-mentor/electron/gates/persistence.ts",
+        "archive/legacy-etsy-mentor/electron/gates/store.ts",
+        "archive/legacy-etsy-mentor/electron/openai.ts",
+        "archive/legacy-etsy-mentor/electron/parser.ts",
+        "archive/legacy-etsy-mentor/src/application/AppServices.ts",
+        "archive/legacy-etsy-mentor/src/application/types.ts"
+      ],
+      "external": [
+        "electron",
+        "fs",
+        "path"
+      ]
+    },
+    "archive/legacy-etsy-mentor/electron/openai.ts": {
+      "internal": [
+        "archive/legacy-etsy-mentor/electron/db.ts",
+        "archive/legacy-etsy-mentor/electron/parser.ts",
+        "archive/legacy-etsy-mentor/electron/schemas.ts"
+      ],
+      "external": [
+        "openai"
+      ]
+    },
+    "archive/legacy-etsy-mentor/electron/preload.ts": {
+      "internal": [],
+      "external": [
+        "electron"
+      ]
+    },
+    "archive/legacy-etsy-mentor/electron/schemas.ts": {
+      "internal": [],
+      "external": [
+        "zod"
+      ]
+    },
+    "archive/legacy-etsy-mentor/src/App.tsx": {
+      "internal": [
+        "archive/legacy-etsy-mentor/src/index.css",
+        "archive/legacy-etsy-mentor/src/screens/BrowserSession.tsx",
+        "archive/legacy-etsy-mentor/src/screens/Home.tsx",
+        "archive/legacy-etsy-mentor/src/screens/PortfolioDashboard.tsx",
+        "archive/legacy-etsy-mentor/src/screens/Settings.tsx"
+      ],
+      "external": [
+        "react"
+      ]
+    },
+    "archive/legacy-etsy-mentor/src/application/AppServices.ts": {
+      "internal": [
+        "archive/legacy-etsy-mentor/src/application/services/CaptureService.ts",
+        "archive/legacy-etsy-mentor/src/application/services/GateService.ts",
+        "archive/legacy-etsy-mentor/src/application/services/SessionService.ts",
+        "archive/legacy-etsy-mentor/src/application/services/SettingsService.ts",
+        "archive/legacy-etsy-mentor/src/application/services/StoreService.ts",
+        "archive/legacy-etsy-mentor/src/application/types.ts",
+        "archive/legacy-etsy-mentor/src/types.ts"
+      ],
+      "external": []
+    },
+    "archive/legacy-etsy-mentor/src/application/services/CaptureService.ts": {
+      "internal": [
+        "archive/legacy-etsy-mentor/src/application/services/GateService.ts",
+        "archive/legacy-etsy-mentor/src/lib/schemas.ts",
+        "archive/legacy-etsy-mentor/src/types.ts"
+      ],
+      "external": []
+    },
+    "archive/legacy-etsy-mentor/src/application/services/GateService.ts": {
+      "internal": [
+        "archive/legacy-etsy-mentor/src/application/types.ts"
+      ],
+      "external": []
+    },
+    "archive/legacy-etsy-mentor/src/application/services/SessionService.ts": {
+      "internal": [
+        "archive/legacy-etsy-mentor/src/application/services/GateService.ts",
+        "archive/legacy-etsy-mentor/src/types.ts"
+      ],
+      "external": []
+    },
+    "archive/legacy-etsy-mentor/src/application/services/StoreService.ts": {
+      "internal": [
+        "archive/legacy-etsy-mentor/src/types.ts"
+      ],
+      "external": []
+    },
+    "archive/legacy-etsy-mentor/src/components/BrowserPane.tsx": {
+      "internal": [],
+      "external": [
+        "react"
+      ]
+    },
+    "archive/legacy-etsy-mentor/src/components/ErrorBoundary.tsx": {
+      "internal": [],
+      "external": [
+        "react"
+      ]
+    },
+    "archive/legacy-etsy-mentor/src/components/MentorPanel.tsx": {
+      "internal": [],
+      "external": [
+        "react"
+      ]
+    },
+    "archive/legacy-etsy-mentor/src/components/Sidebar.tsx": {
+      "internal": [
+        "archive/legacy-etsy-mentor/src/lib/schemas.ts",
+        "archive/legacy-etsy-mentor/src/types.ts"
+      ],
+      "external": [
+        "react"
+      ]
+    },
+    "archive/legacy-etsy-mentor/src/components/StoreCard.tsx": {
+      "internal": [
+        "archive/legacy-etsy-mentor/src/types.ts"
+      ],
+      "external": [
+        "react"
+      ]
+    },
+    "archive/legacy-etsy-mentor/src/lib/schemas.ts": {
+      "internal": [],
+      "external": [
+        "zod"
+      ]
+    },
+    "archive/legacy-etsy-mentor/src/main.tsx": {
+      "internal": [
+        "archive/legacy-etsy-mentor/src/App.tsx",
+        "archive/legacy-etsy-mentor/src/components/ErrorBoundary.tsx",
+        "archive/legacy-etsy-mentor/src/index.css"
+      ],
+      "external": [
+        "react",
+        "react-dom/client"
+      ]
+    },
+    "archive/legacy-etsy-mentor/src/screens/BrowserSession.tsx": {
+      "internal": [
+        "archive/legacy-etsy-mentor/src/components/BrowserPane.tsx",
+        "archive/legacy-etsy-mentor/src/components/Sidebar.tsx",
+        "archive/legacy-etsy-mentor/src/types.ts"
+      ],
+      "external": [
+        "react"
+      ]
+    },
+    "archive/legacy-etsy-mentor/src/screens/Home.tsx": {
+      "internal": [
+        "archive/legacy-etsy-mentor/src/types.ts"
+      ],
+      "external": [
+        "react"
+      ]
+    },
+    "archive/legacy-etsy-mentor/src/screens/PortfolioDashboard.tsx": {
+      "internal": [
+        "archive/legacy-etsy-mentor/src/components/MentorPanel.tsx",
+        "archive/legacy-etsy-mentor/src/components/StoreCard.tsx",
+        "archive/legacy-etsy-mentor/src/types.ts"
+      ],
+      "external": [
+        "react"
+      ]
+    },
+    "archive/legacy-etsy-mentor/src/screens/Settings.tsx": {
+      "internal": [],
+      "external": [
+        "react"
+      ]
+    },
+    "electron/desktop/allowed-ipc-channels.test.ts": {
+      "internal": [
+        "electron/desktop/allowed-ipc-channels.ts",
+        "electron/ipc/ipc-channels.ts"
+      ],
+      "external": [
+        "vitest"
+      ]
+    },
+    "electron/desktop/create-main-window.ts": {
+      "internal": [
+        "electron/desktop/navigation-policy.ts"
+      ],
+      "external": [
+        "electron",
+        "path"
+      ]
+    },
+    "electron/desktop/engine-backed-provider.test.ts": {
+      "internal": [
+        "electron/desktop/engine-backed-provider.ts"
+      ],
+      "external": [
+        "vitest"
+      ]
+    },
+    "electron/desktop/engine-backed-provider.ts": {
+      "internal": [
+        "electron/gates/repair/operator-handoff-mapper.ts",
+        "electron/gates/repair/operator-handoff.ts",
+        "electron/gates/repair/repair-loop-orchestrator.ts",
+        "electron/gates/repair/repair-run-outcome.ts",
+        "electron/gates/repair/repair-run-verdict-mapper.ts",
+        "src/desktop/backbone",
+        "src/shared/read-models"
+      ],
+      "external": []
+    },
+    "electron/desktop/main.ts": {
+      "internal": [
+        "electron/desktop/create-main-window.ts",
+        "electron/desktop/update-service.ts",
+        "electron/ipc/ipc-registry.ts"
+      ],
+      "external": [
+        "electron",
+        "path"
+      ]
+    },
+    "electron/desktop/navigation-policy.test.ts": {
+      "internal": [
+        "electron/desktop/navigation-policy.ts"
+      ],
+      "external": [
+        "vitest"
+      ]
+    },
+    "electron/desktop/preload/desktop-api.ts": {
+      "internal": [
+        "electron/ipc/ipc-channels.ts",
+        "electron/shared/desktop-contracts.ts"
+      ],
+      "external": [
+        "electron"
+      ]
+    },
+    "electron/desktop/preload/preload-security.test.ts": {
+      "internal": [],
+      "external": [
+        "fs",
+        "path",
+        "vitest"
+      ]
+    },
+    "electron/desktop/preload/preload.ts": {
+      "internal": [],
+      "external": [
+        "electron"
+      ]
+    },
+    "electron/desktop/update-service.ts": {
+      "internal": [
+        "electron/ipc/ipc-channels.ts"
+      ],
+      "external": [
+        "electron",
+        "electron-updater"
+      ]
+    },
+    "electron/gates/repair/actor-dispatcher.test.ts": {
+      "internal": [
+        "electron/gates/repair/actor-dispatcher.ts"
+      ],
+      "external": [
+        "vitest"
+      ]
+    },
+    "electron/gates/repair/actor-dispatcher.ts": {
+      "internal": [
+        "electron/gates/repair/repair-state.ts"
+      ],
+      "external": []
+    },
+    "electron/gates/repair/actor-result.ts": {
+      "internal": [
+        "electron/gates/repair/actor-runtime.ts",
+        "electron/gates/repair/repair-event.ts"
+      ],
+      "external": []
+    },
+    "electron/gates/repair/actor-runtime.ts": {
+      "internal": [
+        "electron/gates/repair/actor-runtime.ts",
+        "electron/gates/repair/evaluator.ts",
+        "electron/gates/repair/guardian.ts"
+      ],
+      "external": []
+    },
+    "electron/gates/repair/actor-runtime.types.ts": {
+      "internal": [
+        "electron/gates/repair/repair-state-machine.ts"
+      ],
+      "external": []
+    },
+    "electron/gates/repair/bridge-types.ts": {
+      "internal": [
+        "electron/gates/repair/types.ts"
+      ],
+      "external": []
+    },
+    "electron/gates/repair/context-resolver.ts": {
+      "internal": [
+        "electron/gates/repair/bridge-types.ts"
+      ],
+      "external": []
+    },
+    "electron/gates/repair/decision-plan-adapter.test.ts": {
+      "internal": [
+        "electron/gates/repair/decision-plan-adapter.ts",
+        "electron/gates/repair/repair-decision.ts"
+      ],
+      "external": [
+        "vitest"
+      ]
+    },
+    "electron/gates/repair/decision-plan-adapter.ts": {
+      "internal": [
+        "electron/gates/repair/action-plan.ts",
+        "electron/gates/repair/repair-decision.ts"
+      ],
+      "external": []
+    },
+    "electron/gates/repair/evaluator.ts": {
+      "internal": [
+        "electron/gates/repair/types.ts"
+      ],
+      "external": []
+    },
+    "electron/gates/repair/event-normalizer.ts": {
+      "internal": [
+        "electron/gates/repair/bridge-types.ts"
+      ],
+      "external": []
+    },
+    "electron/gates/repair/execution-boundary.test.ts": {
+      "internal": [
+        "electron/gates/repair/action-plan.ts",
+        "electron/gates/repair/execution-boundary.ts"
+      ],
+      "external": [
+        "vitest"
+      ]
+    },
+    "electron/gates/repair/execution-boundary.ts": {
+      "internal": [
+        "electron/gates/repair/action-plan.ts",
+        "electron/gates/repair/executable-step.ts"
+      ],
+      "external": []
+    },
+    "electron/gates/repair/external-boundary-mapper.ts": {
+      "internal": [
+        "electron/gates/repair/external-boundary.ts",
+        "electron/gates/repair/operator-handoff.ts",
+        "electron/gates/repair/repair-run-outcome.ts"
+      ],
+      "external": []
+    },
+    "electron/gates/repair/external-boundary.test.ts": {
+      "internal": [
+        "electron/gates/repair/external-boundary-mapper.ts",
+        "electron/gates/repair/operator-handoff.ts",
+        "electron/gates/repair/repair-run-outcome.ts"
+      ],
+      "external": [
+        "vitest"
+      ]
+    },
+    "electron/gates/repair/external-boundary.ts": {
+      "internal": [
+        "electron/gates/repair/external-boundary-mapper.ts"
+      ],
+      "external": []
+    },
+    "electron/gates/repair/github-projection-mapper.ts": {
+      "internal": [
+        "electron/gates/repair/external-boundary.ts",
+        "electron/gates/repair/github-projection.ts"
+      ],
+      "external": []
+    },
+    "electron/gates/repair/github-projection.test.ts": {
+      "internal": [
+        "electron/gates/repair/external-boundary.ts",
+        "electron/gates/repair/github-projection-mapper.ts"
+      ],
+      "external": [
+        "vitest"
+      ]
+    },
+    "electron/gates/repair/github-projection.ts": {
+      "internal": [
+        "electron/gates/repair/github-projection-mapper.ts"
+      ],
+      "external": []
+    },
+    "electron/gates/repair/gpt-analysis-mapper.ts": {
+      "internal": [
+        "electron/gates/repair/gpt-analysis.ts"
+      ],
+      "external": []
+    },
+    "electron/gates/repair/gpt-analysis.test.ts": {
+      "internal": [
+        "electron/gates/repair/gpt-analysis-mapper.ts",
+        "electron/gates/repair/gpt-analysis.ts"
+      ],
+      "external": [
+        "vitest"
+      ]
+    },
+    "electron/gates/repair/gpt-analysis.ts": {
+      "internal": [
+        "electron/gates/repair/gpt-analysis-mapper.ts",
+        "electron/gates/repair/gpt-analysis.ts"
+      ],
+      "external": [
+        "openai"
+      ]
+    },
+    "electron/gates/repair/guardian.ts": {
+      "internal": [
+        "electron/gates/repair/types.ts"
+      ],
+      "external": []
+    },
+    "electron/gates/repair/index.ts": {
+      "internal": [
+        "electron/gates/repair/actor-dispatcher.ts",
+        "electron/gates/repair/actor-result.ts",
+        "electron/gates/repair/context-resolver.ts",
+        "electron/gates/repair/decision-plan-adapter.ts",
+        "electron/gates/repair/evaluator.ts",
+        "electron/gates/repair/event-normalizer.ts",
+        "electron/gates/repair/execution-boundary.ts",
+        "electron/gates/repair/external-boundary.ts",
+        "electron/gates/repair/failure-classifier.ts",
+        "electron/gates/repair/github-projection.ts",
+        "electron/gates/repair/gpt-analysis.ts",
+        "electron/gates/repair/guardian.ts",
+        "electron/gates/repair/jules-integration.ts",
+        "electron/gates/repair/operator-handoff.ts",
+        "electron/gates/repair/orchestrator-bridge.ts",
+        "electron/gates/repair/plan-governor.ts",
+        "electron/gates/repair/plan-validator.ts",
+        "electron/gates/repair/repair-decision.ts",
+        "electron/gates/repair/repair-event.ts",
+        "electron/gates/repair/repair-logger.ts",
+        "electron/gates/repair/repair-loop-orchestrator.ts",
+        "electron/gates/repair/repair-loop-policy.ts",
+        "electron/gates/repair/repair-loop-session.ts",
+        "electron/gates/repair/repair-run-verdict-mapper.ts",
+        "electron/gates/repair/repair-state-machine.ts",
+        "electron/gates/repair/repair-state.ts",
+        "electron/gates/repair/repair-step-executor.ts",
+        "electron/gates/repair/repair-strategy.ts",
+        "electron/gates/repair/repair-telemetry.ts",
+        "electron/gates/repair/repair-trace.ts",
+        "electron/gates/repair/retry-controller.ts",
+        "electron/gates/repair/safety-guard.ts",
+        "electron/gates/repair/safety-policy.ts",
+        "electron/gates/repair/state-machine-runner.ts",
+        "electron/gates/repair/state-machine.ts",
+        "electron/gates/repair/state-transition.ts",
+        "electron/gates/repair/step-actor-dispatcher.ts",
+        "electron/gates/repair/trace-context.ts",
+        "electron/gates/repair/types.ts"
+      ],
+      "external": []
+    },
+    "electron/gates/repair/jules-integration.test.ts": {
+      "internal": [
+        "electron/gates/repair/jules-integration.ts"
+      ],
+      "external": [
+        "vitest"
+      ]
+    },
+    "electron/gates/repair/jules-integration.ts": {
+      "internal": [
+        "electron/gates/repair/types.ts"
+      ],
+      "external": []
+    },
+    "electron/gates/repair/operator-handoff-mapper.ts": {
+      "internal": [
+        "electron/gates/repair/operator-handoff.ts",
+        "electron/gates/repair/repair-run-outcome.ts",
+        "electron/gates/repair/repair-run-verdict.ts",
+        "electron/gates/repair/repair-state.ts"
+      ],
+      "external": []
+    },
+    "electron/gates/repair/operator-handoff.test.ts": {
+      "internal": [
+        "electron/gates/repair/operator-handoff-mapper.ts",
+        "electron/gates/repair/repair-run-outcome.ts",
+        "electron/gates/repair/repair-run-verdict.ts"
+      ],
+      "external": [
+        "vitest"
+      ]
+    },
+    "electron/gates/repair/operator-handoff.ts": {
+      "internal": [
+        "electron/gates/repair/operator-handoff-mapper.ts"
+      ],
+      "external": []
+    },
+    "electron/gates/repair/operator-handoff.types.ts": {
+      "internal": [
+        "electron/gates/repair/repair-run-verdict.ts",
+        "electron/gates/repair/repair-state.ts"
+      ],
+      "external": []
+    },
+    "electron/gates/repair/orchestrator-bridge.test.ts": {
+      "internal": [
+        "electron/gates/repair/context-resolver.ts",
+        "electron/gates/repair/event-normalizer.ts",
+        "electron/gates/repair/orchestrator-bridge.ts"
+      ],
+      "external": [
+        "vitest"
+      ]
+    },
+    "electron/gates/repair/orchestrator-bridge.ts": {
+      "internal": [
+        "electron/gates/repair/bridge-types.ts",
+        "electron/gates/repair/context-resolver.ts",
+        "electron/gates/repair/event-normalizer.ts",
+        "electron/gates/repair/state-machine.ts"
+      ],
+      "external": []
+    },
+    "electron/gates/repair/plan-governor.test.ts": {
+      "internal": [
+        "electron/gates/repair/execution-boundary.ts",
+        "electron/gates/repair/plan-governor.ts",
+        "electron/gates/repair/plan-validator.ts"
+      ],
+      "external": [
+        "vitest"
+      ]
+    },
+    "electron/gates/repair/plan-governor.ts": {
+      "internal": [
+        "electron/gates/repair/action-plan.ts"
+      ],
+      "external": []
+    },
+    "electron/gates/repair/plan-validator.test.ts": {
+      "internal": [
+        "electron/gates/repair/action-plan.ts",
+        "electron/gates/repair/plan-validator.ts"
+      ],
+      "external": [
+        "vitest"
+      ]
+    },
+    "electron/gates/repair/plan-validator.ts": {
+      "internal": [
+        "electron/gates/repair/action-plan.ts"
+      ],
+      "external": []
+    },
+    "electron/gates/repair/repair-decision.test.ts": {
+      "internal": [
+        "electron/gates/repair/failure-classifier.ts",
+        "electron/gates/repair/repair-decision.ts",
+        "electron/gates/repair/repair-strategy.ts"
+      ],
+      "external": [
+        "vitest"
+      ]
+    },
+    "electron/gates/repair/repair-decision.ts": {
+      "internal": [
+        "electron/gates/repair/failure-classifier.ts",
+        "electron/gates/repair/repair-strategy.ts"
+      ],
+      "external": []
+    },
+    "electron/gates/repair/repair-loop-orchestrator.test.ts": {
+      "internal": [
+        "electron/gates/repair/repair-loop-orchestrator.ts"
+      ],
+      "external": [
+        "vitest"
+      ]
+    },
+    "electron/gates/repair/repair-loop-orchestrator.ts": {
+      "internal": [
+        "electron/gates/repair/repair-loop-policy.ts",
+        "electron/gates/repair/repair-loop-session.ts",
+        "electron/gates/repair/repair-run-outcome.ts",
+        "electron/gates/repair/repair-state.ts",
+        "electron/gates/repair/repair-step-executor.ts",
+        "electron/gates/repair/repair-trace.ts"
+      ],
+      "external": []
+    },
+    "electron/gates/repair/repair-loop-policy.ts": {
+      "internal": [
+        "electron/gates/repair/repair-step-executor.ts"
+      ],
+      "external": []
+    },
+    "electron/gates/repair/repair-loop-session.ts": {
+      "internal": [
+        "electron/gates/repair/repair-state.ts",
+        "electron/gates/repair/repair-step-executor.ts"
+      ],
+      "external": []
+    },
+    "electron/gates/repair/repair-loop.test.ts": {
+      "internal": [
+        "electron/gates/repair/index.ts"
+      ],
+      "external": [
+        "vitest"
+      ]
+    },
+    "electron/gates/repair/repair-run-outcome.ts": {
+      "internal": [
+        "electron/gates/repair/repair-state.ts"
+      ],
+      "external": []
+    },
+    "electron/gates/repair/repair-run-verdict-mapper.ts": {
+      "internal": [
+        "electron/gates/repair/repair-run-outcome.ts",
+        "electron/gates/repair/repair-run-verdict.ts"
+      ],
+      "external": []
+    },
+    "electron/gates/repair/repair-run-verdict.test.ts": {
+      "internal": [
+        "electron/gates/repair/repair-run-outcome.ts",
+        "electron/gates/repair/repair-run-verdict-mapper.ts"
+      ],
+      "external": [
+        "vitest"
+      ]
+    },
+    "electron/gates/repair/repair-state-machine.test.ts": {
+      "internal": [
+        "electron/gates/repair/repair-state-machine.ts"
+      ],
+      "external": [
+        "vitest"
+      ]
+    },
+    "electron/gates/repair/repair-step-executor.test.ts": {
+      "internal": [
+        "electron/gates/repair/actor-result.ts",
+        "electron/gates/repair/repair-step-executor.ts",
+        "electron/gates/repair/step-actor-dispatcher.ts"
+      ],
+      "external": [
+        "vitest"
+      ]
+    },
+    "electron/gates/repair/repair-step-executor.ts": {
+      "internal": [
+        "electron/gates/repair/actor-result.ts",
+        "electron/gates/repair/actor-runtime.ts",
+        "electron/gates/repair/repair-event.ts",
+        "electron/gates/repair/repair-state-machine.ts",
+        "electron/gates/repair/repair-state.ts",
+        "electron/gates/repair/state-transition.ts",
+        "electron/gates/repair/step-actor-dispatcher.ts"
+      ],
+      "external": []
+    },
+    "electron/gates/repair/repair-strategy-mapper.ts": {
+      "internal": [
+        "electron/gates/repair/repair-strategy.ts"
+      ],
+      "external": []
+    },
+    "electron/gates/repair/repair-strategy.test.ts": {
+      "internal": [
+        "electron/gates/repair/repair-strategy-mapper.ts"
+      ],
+      "external": [
+        "vitest"
+      ]
+    },
+    "electron/gates/repair/repair-strategy.ts": {
+      "internal": [
+        "electron/gates/repair/failure-classifier.ts",
+        "electron/gates/repair/repair-strategy-mapper.ts"
+      ],
+      "external": []
+    },
+    "electron/gates/repair/repair-telemetry-mapper.ts": {
+      "internal": [
+        "electron/gates/repair/repair-run-outcome.ts",
+        "electron/gates/repair/repair-run-verdict.ts",
+        "electron/gates/repair/repair-telemetry.ts"
+      ],
+      "external": []
+    },
+    "electron/gates/repair/repair-telemetry.test.ts": {
+      "internal": [
+        "electron/gates/repair/repair-run-outcome.ts",
+        "electron/gates/repair/repair-run-verdict.ts",
+        "electron/gates/repair/repair-telemetry-mapper.ts"
+      ],
+      "external": [
+        "vitest"
+      ]
+    },
+    "electron/gates/repair/repair-telemetry.ts": {
+      "internal": [
+        "electron/gates/repair/repair-logger.ts",
+        "electron/gates/repair/repair-telemetry-mapper.ts"
+      ],
+      "external": []
+    },
+    "electron/gates/repair/retry-controller.ts": {
+      "internal": [
+        "electron/gates/repair/types.ts"
+      ],
+      "external": []
+    },
+    "electron/gates/repair/safety-guard.test.ts": {
+      "internal": [
+        "electron/gates/repair/safety-guard.ts"
+      ],
+      "external": [
+        "vitest"
+      ]
+    },
+    "electron/gates/repair/safety-guard.ts": {
+      "internal": [
+        "electron/gates/repair/action-plan.ts",
+        "electron/gates/repair/guard-decision.ts",
+        "electron/gates/repair/plan-governor.ts",
+        "electron/gates/repair/safety-policy.ts"
+      ],
+      "external": []
+    },
+    "electron/gates/repair/state-machine-runner.test.ts": {
+      "internal": [
+        "electron/gates/repair/repair-event.ts",
+        "electron/gates/repair/state-machine-runner.ts"
+      ],
+      "external": [
+        "vitest"
+      ]
+    },
+    "electron/gates/repair/state-machine-runner.ts": {
+      "internal": [
+        "electron/gates/repair/actor-dispatcher.ts",
+        "electron/gates/repair/repair-event.ts",
+        "electron/gates/repair/repair-state.ts",
+        "electron/gates/repair/state-transition.ts"
+      ],
+      "external": []
+    },
+    "electron/gates/repair/state-machine.ts": {
+      "internal": [
+        "electron/gates/repair/retry-controller.ts",
+        "electron/gates/repair/types.ts"
+      ],
+      "external": []
+    },
+    "electron/gates/repair/state-transition.test.ts": {
+      "internal": [
+        "electron/gates/repair/state-transition.ts"
+      ],
+      "external": [
+        "vitest"
+      ]
+    },
+    "electron/gates/repair/state-transition.ts": {
+      "internal": [
+        "electron/gates/repair/repair-event.ts",
+        "electron/gates/repair/repair-state.ts"
+      ],
+      "external": []
+    },
+    "electron/gates/repair/step-actor-dispatcher.ts": {
+      "internal": [
+        "electron/gates/repair/actor-runtime.ts",
+        "electron/gates/repair/repair-state-machine.ts"
+      ],
+      "external": []
+    },
+    "electron/ipc/handlers/backbone-read.ts": {
+      "internal": [
+        "electron/desktop/engine-backed-provider.ts",
+        "electron/ipc/ipc-channels.ts"
+      ],
+      "external": [
+        "electron"
+      ]
+    },
+    "electron/ipc/handlers/health-check.ts": {
+      "internal": [
+        "electron/ipc/ipc-channels.ts",
+        "electron/shared/desktop-contracts.ts"
+      ],
+      "external": [
+        "electron"
+      ]
+    },
+    "electron/ipc/handlers/version-handler.ts": {
+      "internal": [
+        "electron/ipc/ipc-channels.ts"
+      ],
+      "external": [
+        "electron"
+      ]
+    },
+    "electron/ipc/ipc-registry.ts": {
+      "internal": [
+        "electron/ipc/handlers/backbone-read.ts",
+        "electron/ipc/handlers/health-check.ts",
+        "electron/ipc/handlers/version-handler.ts"
+      ],
+      "external": []
+    },
+    "src/desktop/App.tsx": {
+      "internal": [
+        "src/desktop/renderer/features/analysis/GPTAnalysisPanel.tsx",
+        "src/desktop/renderer/features/analysis/RepairStrategyPanel.tsx",
+        "src/desktop/renderer/features/analysis/analysis-panel.css",
+        "src/desktop/renderer/features/decision/DecisionConsolePanel.tsx",
+        "src/desktop/renderer/features/decision/decision-console.css",
+        "src/desktop/renderer/features/repair-timeline/repair-run-timeline.css",
+        "src/desktop/renderer/features/repair-timeline/repair-run-timeline.tsx",
+        "src/desktop/renderer/features/state-machine/StateMachineViewer.tsx",
+        "src/desktop/renderer/features/state-machine/state-machine-viewer.css",
+        "src/desktop/renderer/features/telemetry/TelemetryDashboard.tsx",
+        "src/desktop/renderer/features/telemetry/telemetry-dashboard.css",
+        "src/desktop/renderer/shell.css",
+        "src/desktop/renderer/ui",
+        "src/desktop/styles.css"
+      ],
+      "external": []
+    },
+    "src/desktop/analysis/analysis-view.mapper.test.ts": {
+      "internal": [
+        "src/desktop/analysis/analysis-view",
+        "src/shared/read-models"
+      ],
+      "external": [
+        "vitest"
+      ]
+    },
+    "src/desktop/analysis/analysis-view.mapper.ts": {
+      "internal": [
+        "src/desktop/analysis/analysis",
+        "src/shared/read-models"
+      ],
+      "external": []
+    },
+    "src/desktop/app.ts": {
+      "internal": [
+        "src/desktop/styles.css",
+        "src/shared/read-models"
+      ],
+      "external": []
+    },
+    "src/desktop/backbone/backbone-read.adapter.ts": {
+      "internal": [
+        "src/desktop/backbone/backbone-read"
+      ],
+      "external": []
+    },
+    "src/desktop/backbone/backbone-read.mapper.test.ts": {
+      "internal": [
+        "src/desktop/backbone/backbone-read"
+      ],
+      "external": [
+        "vitest"
+      ]
+    },
+    "src/desktop/backbone/backbone-read.mapper.ts": {
+      "internal": [
+        "src/desktop/backbone/backbone-read",
+        "src/shared/read-models"
+      ],
+      "external": []
+    },
+    "src/desktop/backbone/backbone-read.service.ts": {
+      "internal": [
+        "src/desktop/backbone/backbone-read",
+        "src/shared/read-models"
+      ],
+      "external": []
+    },
+    "src/desktop/backbone/index.ts": {
+      "internal": [
+        "src/desktop/backbone/backbone-read"
+      ],
+      "external": []
+    },
+    "src/desktop/decision/decision-view.mapper.test.ts": {
+      "internal": [
+        "src/desktop/decision/decision-view",
+        "src/shared/read-models"
+      ],
+      "external": [
+        "vitest"
+      ]
+    },
+    "src/desktop/decision/decision-view.mapper.ts": {
+      "internal": [
+        "src/desktop/decision/decision",
+        "src/shared/read-models"
+      ],
+      "external": []
+    },
+    "src/desktop/main.ts": {
+      "internal": [
+        "src/desktop/app.ts"
+      ],
+      "external": []
+    },
+    "src/desktop/main.tsx": {
+      "internal": [
+        "src/desktop/App.tsx"
+      ],
+      "external": [
+        "react",
+        "react-dom/client"
+      ]
+    },
+    "src/desktop/renderer/features/analysis/GPTAnalysisPanel.test.tsx": {
+      "internal": [
+        "src/desktop/renderer/features/analysis/GPTAnalysisPanel.tsx"
+      ],
+      "external": [
+        "@testing-library/react",
+        "vitest"
+      ]
+    },
+    "src/desktop/renderer/features/analysis/GPTAnalysisPanel.tsx": {
+      "internal": [
+        "src/desktop/analysis/analysis",
+        "src/desktop/analysis/analysis-view",
+        "src/desktop/renderer/ui"
+      ],
+      "external": [
+        "react"
+      ]
+    },
+    "src/desktop/renderer/features/analysis/RepairStrategyPanel.test.tsx": {
+      "internal": [
+        "src/desktop/renderer/features/analysis/RepairStrategyPanel.tsx"
+      ],
+      "external": [
+        "@testing-library/react",
+        "vitest"
+      ]
+    },
+    "src/desktop/renderer/features/analysis/RepairStrategyPanel.tsx": {
+      "internal": [
+        "src/desktop/analysis/analysis",
+        "src/desktop/analysis/analysis-view",
+        "src/desktop/renderer/ui"
+      ],
+      "external": [
+        "react"
+      ]
+    },
+    "src/desktop/renderer/features/decision/DecisionConsolePanel.test.tsx": {
+      "internal": [
+        "src/desktop/renderer/features/decision/DecisionConsolePanel.tsx"
+      ],
+      "external": [
+        "@testing-library/react",
+        "vitest"
+      ]
+    },
+    "src/desktop/renderer/features/decision/DecisionConsolePanel.tsx": {
+      "internal": [
+        "src/desktop/decision/decision",
+        "src/desktop/decision/decision-view",
+        "src/desktop/renderer/ui"
+      ],
+      "external": [
+        "react"
+      ]
+    },
+    "src/desktop/renderer/features/repair-timeline/repair-run-timeline-item.tsx": {
+      "internal": [
+        "src/desktop/renderer/features/repair-timeline/repair-run-timeline.tsx",
+        "src/desktop/renderer/ui"
+      ],
+      "external": []
+    },
+    "src/desktop/renderer/features/repair-timeline/repair-run-timeline-mapper.ts": {
+      "internal": [
+        "src/desktop/renderer/features/repair-timeline/repair-run-timeline.tsx",
+        "src/shared/read-models"
+      ],
+      "external": []
+    },
+    "src/desktop/renderer/features/repair-timeline/repair-run-timeline.test.ts": {
+      "internal": [
+        "src/desktop/renderer/features/repair-timeline/repair-run-timeline-mapper.ts",
+        "src/shared/read-models"
+      ],
+      "external": [
+        "vitest"
+      ]
+    },
+    "src/desktop/renderer/features/repair-timeline/repair-run-timeline.tsx": {
+      "internal": [
+        "src/desktop/renderer/features/repair-timeline/repair-run-timeline-item.tsx",
+        "src/desktop/renderer/features/repair-timeline/repair-run-timeline-mapper.ts",
+        "src/desktop/renderer/features/repair-timeline/repair-run-timeline.tsx",
+        "src/desktop/renderer/ui"
+      ],
+      "external": [
+        "react"
+      ]
+    },
+    "src/desktop/renderer/features/state-machine/StateMachineCurrentState.tsx": {
+      "internal": [
+        "src/desktop/renderer/ui"
+      ],
+      "external": []
+    },
+    "src/desktop/renderer/features/state-machine/StateMachineGraph.tsx": {
+      "internal": [
+        "src/desktop/renderer/ui",
+        "src/shared/read-models"
+      ],
+      "external": []
+    },
+    "src/desktop/renderer/features/state-machine/StateMachineHistory.tsx": {
+      "internal": [
+        "src/desktop/renderer/features/state-machine/state-machine-utils.ts",
+        "src/desktop/renderer/ui",
+        "src/shared/read-models"
+      ],
+      "external": []
+    },
+    "src/desktop/renderer/features/state-machine/StateMachineProgress.tsx": {
+      "internal": [
+        "src/desktop/renderer/ui"
+      ],
+      "external": []
+    },
+    "src/desktop/renderer/features/state-machine/StateMachineViewer.test.tsx": {
+      "internal": [
+        "src/desktop/renderer/features/state-machine/StateMachineCurrentState.tsx",
+        "src/desktop/renderer/features/state-machine/StateMachineGraph.tsx",
+        "src/desktop/renderer/features/state-machine/StateMachineHistory.tsx",
+        "src/desktop/renderer/features/state-machine/StateMachineProgress.tsx",
+        "src/shared/read-models"
+      ],
+      "external": [
+        "@testing-library/react",
+        "vitest"
+      ]
+    },
+    "src/desktop/renderer/features/state-machine/StateMachineViewer.tsx": {
+      "internal": [
+        "src/desktop/renderer/features/state-machine/StateMachineCurrentState.tsx",
+        "src/desktop/renderer/features/state-machine/StateMachineGraph.tsx",
+        "src/desktop/renderer/features/state-machine/StateMachineHistory.tsx",
+        "src/desktop/renderer/features/state-machine/StateMachineProgress.tsx",
+        "src/desktop/renderer/ui",
+        "src/shared/read-models"
+      ],
+      "external": [
+        "react"
+      ]
+    },
+    "src/desktop/renderer/features/state-machine/state-machine-utils.test.ts": {
+      "internal": [
+        "src/desktop/renderer/features/state-machine/state-machine-utils.ts",
+        "src/shared/read-models"
+      ],
+      "external": [
+        "vitest"
+      ]
+    },
+    "src/desktop/renderer/features/state-machine/state-machine-utils.ts": {
+      "internal": [
+        "src/shared/read-models"
+      ],
+      "external": []
+    },
+    "src/desktop/renderer/features/telemetry/FailureTypesPanel.tsx": {
+      "internal": [
+        "src/desktop/renderer/ui",
+        "src/desktop/telemetry/telemetry"
+      ],
+      "external": []
+    },
+    "src/desktop/renderer/features/telemetry/RepairTimingPanel.tsx": {
+      "internal": [
+        "src/desktop/renderer/ui",
+        "src/desktop/telemetry/telemetry"
+      ],
+      "external": []
+    },
+    "src/desktop/renderer/features/telemetry/RetryStatsPanel.tsx": {
+      "internal": [
+        "src/desktop/renderer/ui",
+        "src/desktop/telemetry/telemetry"
+      ],
+      "external": []
+    },
+    "src/desktop/renderer/features/telemetry/SystemHealthPanel.tsx": {
+      "internal": [
+        "src/desktop/renderer/ui",
+        "src/desktop/telemetry/telemetry"
+      ],
+      "external": []
+    },
+    "src/desktop/renderer/features/telemetry/TelemetryDashboard.test.tsx": {
+      "internal": [
+        "src/desktop/renderer/features/telemetry/TelemetryDashboard.tsx"
+      ],
+      "external": [
+        "@testing-library/react",
+        "vitest"
+      ]
+    },
+    "src/desktop/renderer/features/telemetry/TelemetryDashboard.tsx": {
+      "internal": [
+        "src/desktop/renderer/features/telemetry/FailureTypesPanel.tsx",
+        "src/desktop/renderer/features/telemetry/RepairTimingPanel.tsx",
+        "src/desktop/renderer/features/telemetry/RetryStatsPanel.tsx",
+        "src/desktop/renderer/features/telemetry/SystemHealthPanel.tsx",
+        "src/desktop/telemetry/telemetry",
+        "src/desktop/telemetry/telemetry-view"
+      ],
+      "external": [
+        "react"
+      ]
+    },
+    "src/desktop/renderer/ui/AppFooter.tsx": {
+      "internal": [],
+      "external": [
+        "react"
+      ]
+    },
+    "src/desktop/renderer/ui/AppShell.tsx": {
+      "internal": [
+        "src/desktop/renderer/ui/Sidebar.tsx",
+        "src/desktop/renderer/ui/Topbar.tsx"
+      ],
+      "external": [
+        "react"
+      ]
+    },
+    "src/desktop/renderer/ui/Card.tsx": {
+      "internal": [],
+      "external": [
+        "react"
+      ]
+    },
+    "src/desktop/renderer/ui/SectionHeader.tsx": {
+      "internal": [],
+      "external": [
+        "react"
+      ]
+    },
+    "src/desktop/renderer/ui/Sidebar.tsx": {
+      "internal": [],
+      "external": [
+        "react"
+      ]
+    },
+    "src/desktop/renderer/ui/index.ts": {
+      "internal": [
+        "src/desktop/renderer/ui/AppFooter.tsx",
+        "src/desktop/renderer/ui/AppShell.tsx",
+        "src/desktop/renderer/ui/Card.tsx",
+        "src/desktop/renderer/ui/DataRow.tsx",
+        "src/desktop/renderer/ui/EmptyState.tsx",
+        "src/desktop/renderer/ui/SectionHeader.tsx",
+        "src/desktop/renderer/ui/Sidebar.tsx",
+        "src/desktop/renderer/ui/StatusBadge.tsx",
+        "src/desktop/renderer/ui/Topbar.tsx"
+      ],
+      "external": []
+    },
+    "src/desktop/telemetry/telemetry-view.mapper.test.ts": {
+      "internal": [
+        "src/desktop/telemetry/telemetry-view",
+        "src/shared/read-models"
+      ],
+      "external": [
+        "vitest"
+      ]
+    },
+    "src/desktop/telemetry/telemetry-view.mapper.ts": {
+      "internal": [
+        "src/desktop/telemetry/telemetry",
+        "src/shared/read-models"
+      ],
+      "external": []
+    },
+    "src/github/event-intake/github-backbone-event.ts": {
+      "internal": [
+        "src/github/event-intake/github-event-category.ts"
+      ],
+      "external": []
+    },
+    "src/github/event-intake/index.ts": {
+      "internal": [
+        "src/github/event-intake/github-event-category.ts",
+        "src/github/event-intake/normalize-github-event.ts"
+      ],
+      "external": []
+    },
+    "src/github/event-intake/normalize-github-event.test.ts": {
+      "internal": [
+        "src/github/event-intake/github-webhook-input.ts",
+        "src/github/event-intake/normalize-github-event.ts"
+      ],
+      "external": [
+        "vitest"
+      ]
+    },
+    "src/github/event-intake/normalize-github-event.ts": {
+      "internal": [
+        "src/github/event-intake/github-backbone-event.ts",
+        "src/github/event-intake/github-event-category.ts",
+        "src/github/event-intake/github-webhook-input.ts"
+      ],
+      "external": []
+    },
+    "src/github/intake-bridge/derive-github-repair-intake.test.ts": {
+      "internal": [
+        "src/github/intake-bridge/derive-github-repair-intake.ts"
+      ],
+      "external": [
+        "vitest"
+      ]
+    },
+    "src/github/intake-bridge/derive-github-repair-intake.ts": {
+      "internal": [
+        "src/github/intake-bridge/github-repair-intake-event.ts",
+        "src/github/intake-bridge/github-repair-intake-input.ts",
+        "src/github/intake-bridge/repair-intake-trigger.ts"
+      ],
+      "external": []
+    },
+    "src/github/intake-bridge/github-repair-intake-event.ts": {
+      "internal": [
+        "src/github/intake-bridge/repair-intake-source.ts",
+        "src/github/intake-bridge/repair-intake-trigger.ts"
+      ],
+      "external": []
+    },
+    "src/github/intake-bridge/github-repair-intake-input.ts": {
+      "internal": [
+        "src/github/event-intake",
+        "src/github/pr-inspection",
+        "src/github/pr-intelligence"
+      ],
+      "external": []
+    },
+    "src/github/intake-bridge/index.ts": {
+      "internal": [
+        "src/github/intake-bridge/derive-github-repair-intake.ts",
+        "src/github/intake-bridge/repair-intake-source.ts",
+        "src/github/intake-bridge/repair-intake-trigger.ts"
+      ],
+      "external": []
+    },
+    "src/github/pr-inspection/index.ts": {
+      "internal": [
+        "src/github/pr-inspection/inspect-pull-request.ts",
+        "src/github/pr-inspection/pr-file-change-status.ts"
+      ],
+      "external": []
+    },
+    "src/github/pr-inspection/inspect-pull-request.test.ts": {
+      "internal": [
+        "src/github/pr-inspection/inspect-pull-request.ts"
+      ],
+      "external": [
+        "vitest"
+      ]
+    },
+    "src/github/pr-inspection/inspect-pull-request.ts": {
+      "internal": [
+        "src/github/pr-inspection/pr-file-change-status.ts",
+        "src/github/pr-inspection/pr-file-change.ts",
+        "src/github/pr-inspection/pull-request-inspection-input.ts",
+        "src/github/pr-inspection/pull-request-inspection-result.ts"
+      ],
+      "external": []
+    },
+    "src/github/pr-inspection/pr-file-change.ts": {
+      "internal": [
+        "src/github/pr-inspection/pr-file-change-status.ts"
+      ],
+      "external": []
+    },
+    "src/github/pr-inspection/pull-request-inspection-result.ts": {
+      "internal": [
+        "src/github/pr-inspection/pr-file-change.ts"
+      ],
+      "external": []
+    },
+    "src/github/pr-intelligence/derive-pr-intelligence.test.ts": {
+      "internal": [
+        "src/github/pr-inspection",
+        "src/github/pr-intelligence/derive-pr-intelligence.ts"
+      ],
+      "external": [
+        "vitest"
+      ]
+    },
+    "src/github/pr-intelligence/derive-pr-intelligence.ts": {
+      "internal": [
+        "src/github/pr-inspection",
+        "src/github/pr-intelligence/pr-intelligence-input.ts",
+        "src/github/pr-intelligence/pr-intelligence-result.ts",
+        "src/github/pr-intelligence/pr-review-complexity.ts",
+        "src/github/pr-intelligence/pr-risk-signal.ts",
+        "src/github/pr-intelligence/pr-size-band.ts"
+      ],
+      "external": []
+    },
+    "src/github/pr-intelligence/index.ts": {
+      "internal": [
+        "src/github/pr-intelligence/derive-pr-intelligence.ts",
+        "src/github/pr-intelligence/pr-review-complexity.ts",
+        "src/github/pr-intelligence/pr-size-band.ts"
+      ],
+      "external": []
+    },
+    "src/github/pr-intelligence/pr-intelligence-input.ts": {
+      "internal": [
+        "src/github/pr-inspection"
+      ],
+      "external": []
+    },
+    "src/github/pr-intelligence/pr-intelligence-result.ts": {
+      "internal": [
+        "src/github/pr-intelligence/pr-review-complexity.ts",
+        "src/github/pr-intelligence/pr-risk-signal.ts",
+        "src/github/pr-intelligence/pr-size-band.ts"
+      ],
+      "external": []
+    },
+    "src/governance/authority/authority-decision-model.ts": {
+      "internal": [
+        "src/governance/authority/authority-decision.ts"
+      ],
+      "external": []
+    },
+    "src/governance/authority/derive-authority-decision.test.ts": {
+      "internal": [
+        "src/governance/authority/authority-decision.ts",
+        "src/governance/authority/derive-authority-decision.ts",
+        "src/governance/zones"
+      ],
+      "external": [
+        "vitest"
+      ]
+    },
+    "src/governance/authority/derive-authority-decision.ts": {
+      "internal": [
+        "src/governance/authority/authority-decision-model.ts",
+        "src/governance/authority/authority-decision.ts",
+        "src/governance/zones"
+      ],
+      "external": []
+    },
+    "src/governance/authority/index.ts": {
+      "internal": [
+        "src/governance/authority/authority-decision-model.ts",
+        "src/governance/authority/authority-decision.ts",
+        "src/governance/authority/derive-authority-decision.ts"
+      ],
+      "external": []
+    },
+    "src/governance/index.ts": {
+      "internal": [
+        "src/governance/policy-integration"
+      ],
+      "external": []
+    },
+    "src/governance/policy-integration/derive-governance-gate.test.ts": {
+      "internal": [
+        "src/governance/policy-integration/derive-governance-gate.ts",
+        "src/governance/policy-integration/governance-gate-decision.ts",
+        "src/governance/security-policy"
+      ],
+      "external": [
+        "vitest"
+      ]
+    },
+    "src/governance/policy-integration/derive-governance-gate.ts": {
+      "internal": [
+        "src/governance/policy-integration/governance-gate-decision.ts",
+        "src/governance/policy-integration/governance-gate-result.ts",
+        "src/governance/security-policy"
+      ],
+      "external": []
+    },
+    "src/governance/policy-integration/governance-gate-result.ts": {
+      "internal": [
+        "src/governance/policy-integration/governance-gate-decision.ts",
+        "src/governance/security-policy"
+      ],
+      "external": []
+    },
+    "src/governance/policy-integration/index.ts": {
+      "internal": [
+        "src/governance/policy-integration/derive-governance-gate.ts",
+        "src/governance/policy-integration/governance-gate-decision.ts"
+      ],
+      "external": []
+    },
+    "src/governance/risk/classify-risk.test.ts": {
+      "internal": [
+        "src/governance/risk/classify-risk.ts"
+      ],
+      "external": [
+        "vitest"
+      ]
+    },
+    "src/governance/risk/classify-risk.ts": {
+      "internal": [
+        "src/governance/risk/risk-classification.ts",
+        "src/governance/risk/risk-level.ts"
+      ],
+      "external": []
+    },
+    "src/governance/risk/index.ts": {
+      "internal": [
+        "src/governance/risk/classify-risk.ts",
+        "src/governance/risk/risk-level.ts"
+      ],
+      "external": []
+    },
+    "src/governance/risk/risk-classification.ts": {
+      "internal": [
+        "src/governance/risk/risk-level.ts"
+      ],
+      "external": []
+    },
+    "src/governance/security-policy/evaluate-security-policy.test.ts": {
+      "internal": [
+        "src/governance/risk",
+        "src/governance/security-policy/evaluate-security-policy.ts",
+        "src/governance/security-policy/index.ts",
+        "src/governance/zones"
+      ],
+      "external": [
+        "vitest"
+      ]
+    },
+    "src/governance/security-policy/evaluate-security-policy.ts": {
+      "internal": [
+        "src/governance/risk",
+        "src/governance/security-policy/security-policy-effect.ts",
+        "src/governance/security-policy/security-policy-result.ts",
+        "src/governance/zones"
+      ],
+      "external": []
+    },
+    "src/governance/security-policy/index.ts": {
+      "internal": [
+        "src/governance/security-policy/evaluate-security-policy.ts"
+      ],
+      "external": []
+    },
+    "src/governance/security-policy/security-policy-result.ts": {
+      "internal": [
+        "src/governance/security-policy/security-policy-effect.ts"
+      ],
+      "external": []
+    },
+    "src/governance/security-policy/security-policy-rule.ts": {
+      "internal": [
+        "src/governance/security-policy/security-policy-effect.ts"
+      ],
+      "external": []
+    },
+    "src/governance/zones/classify-zone.test.ts": {
+      "internal": [
+        "src/governance/risk",
+        "src/governance/zones/index.ts"
+      ],
+      "external": [
+        "vitest"
+      ]
+    },
+    "src/governance/zones/classify-zone.ts": {
+      "internal": [
+        "src/governance/risk",
+        "src/governance/zones/zone-classification.ts",
+        "src/governance/zones/zone-level.ts"
+      ],
+      "external": []
+    },
+    "src/governance/zones/index.ts": {
+      "internal": [
+        "src/governance/zones/classify-zone.ts",
+        "src/governance/zones/zone-level.ts"
+      ],
+      "external": []
+    },
+    "src/governance/zones/zone-classification.ts": {
+      "internal": [
+        "src/governance/zones/zone-level.ts"
+      ],
+      "external": []
+    },
+    "src/heroes/contracts/hero-advice-mapper.ts": {
+      "internal": [
+        "src/heroes/contracts/hero-advice.ts",
+        "src/heroes/core/hero"
+      ],
+      "external": []
+    },
+    "src/heroes/contracts/hero-advice.ts": {
+      "internal": [
+        "src/heroes/contracts/hero-action-suggestion.ts",
+        "src/heroes/contracts/hero-risk-level.ts"
+      ],
+      "external": []
+    },
+    "src/heroes/core/hero.executor.test.ts": {
+      "internal": [
+        "src/heroes/core/hero"
+      ],
+      "external": [
+        "vitest"
+      ]
+    },
+    "src/heroes/core/hero.executor.ts": {
+      "internal": [
+        "src/heroes/core/hero"
+      ],
+      "external": []
+    },
+    "src/heroes/core/hero.registry.test.ts": {
+      "internal": [
+        "src/heroes/core/hero"
+      ],
+      "external": [
+        "vitest"
+      ]
+    },
+    "src/heroes/core/hero.registry.ts": {
+      "internal": [
+        "src/heroes/core/hero"
+      ],
+      "external": []
+    },
+    "src/heroes/decision/decision.frame.mapper.test.ts": {
+      "internal": [
+        "src/heroes/decision/decision.frame.ts",
+        "src/heroes/projection/hero"
+      ],
+      "external": [
+        "vitest"
+      ]
+    },
+    "src/heroes/decision/decision.frame.mapper.ts": {
+      "internal": [
+        "src/heroes/decision/decision",
+        "src/heroes/projection/hero"
+      ],
+      "external": []
+    },
+    "src/heroes/decision/decision.frame.ts": {
+      "internal": [
+        "src/heroes/decision/decision"
+      ],
+      "external": []
+    },
+    "src/heroes/decision/decision.option.ts": {
+      "internal": [
+        "src/heroes/decision/decision"
+      ],
+      "external": []
+    },
+    "src/heroes/heroes/analysis.hero.test.ts": {
+      "internal": [
+        "src/heroes/core/hero",
+        "src/heroes/heroes/analysis",
+        "src/heroes/selection/hero"
+      ],
+      "external": [
+        "vitest"
+      ]
+    },
+    "src/heroes/heroes/analysis.hero.ts": {
+      "internal": [
+        "src/heroes/contracts/hero-action-suggestion.ts",
+        "src/heroes/contracts/hero-advice-mapper.ts",
+        "src/heroes/contracts/hero-advice.ts",
+        "src/heroes/contracts/hero-risk-level.ts",
+        "src/heroes/core/hero",
+        "src/heroes/selection/hero"
+      ],
+      "external": []
+    },
+    "src/heroes/heroes/ci-failure.hero.test.ts": {
+      "internal": [
+        "src/heroes/core/hero",
+        "src/heroes/heroes/ci-failure"
+      ],
+      "external": [
+        "vitest"
+      ]
+    },
+    "src/heroes/heroes/ci-failure.hero.ts": {
+      "internal": [
+        "src/heroes/contracts/hero-advice-mapper.ts",
+        "src/heroes/contracts/hero-advice.ts",
+        "src/heroes/core/hero"
+      ],
+      "external": []
+    },
+    "src/heroes/heroes/dependency.hero.test.ts": {
+      "internal": [
+        "src/heroes/core/hero",
+        "src/heroes/heroes/dependency"
+      ],
+      "external": [
+        "vitest"
+      ]
+    },
+    "src/heroes/heroes/dependency.hero.ts": {
+      "internal": [
+        "src/heroes/contracts/hero-advice-mapper.ts",
+        "src/heroes/contracts/hero-advice.ts",
+        "src/heroes/contracts/hero-risk-level.ts",
+        "src/heroes/core/hero"
+      ],
+      "external": []
+    },
+    "src/heroes/heroes/escalation.hero.test.ts": {
+      "internal": [
+        "src/heroes/core/hero",
+        "src/heroes/heroes/escalation"
+      ],
+      "external": [
+        "vitest"
+      ]
+    },
+    "src/heroes/heroes/escalation.hero.ts": {
+      "internal": [
+        "src/heroes/contracts/hero-advice-mapper.ts",
+        "src/heroes/contracts/hero-advice.ts",
+        "src/heroes/core/hero"
+      ],
+      "external": []
+    },
+    "src/heroes/heroes/index.ts": {
+      "internal": [
+        "src/heroes/core/hero",
+        "src/heroes/heroes/analysis",
+        "src/heroes/heroes/ci-failure",
+        "src/heroes/heroes/dependency",
+        "src/heroes/heroes/escalation",
+        "src/heroes/heroes/refactor",
+        "src/heroes/heroes/repair",
+        "src/heroes/heroes/review",
+        "src/heroes/heroes/security"
+      ],
+      "external": []
+    },
+    "src/heroes/heroes/refactor.hero.test.ts": {
+      "internal": [
+        "src/heroes/core/hero",
+        "src/heroes/heroes/index.ts",
+        "src/heroes/heroes/refactor"
+      ],
+      "external": [
+        "vitest"
+      ]
+    },
+    "src/heroes/heroes/refactor.hero.ts": {
+      "internal": [
+        "src/heroes/contracts/hero-advice-mapper.ts",
+        "src/heroes/contracts/hero-advice.ts",
+        "src/heroes/contracts/hero-risk-level.ts",
+        "src/heroes/core/hero"
+      ],
+      "external": []
+    },
+    "src/heroes/heroes/registry-integration.test.ts": {
+      "internal": [
+        "src/heroes/core/hero",
+        "src/heroes/heroes/analysis",
+        "src/heroes/heroes/ci-failure",
+        "src/heroes/heroes/escalation",
+        "src/heroes/heroes/index.ts",
+        "src/heroes/pipeline/hero",
+        "src/heroes/runtime/hero",
+        "src/heroes/selection/hero"
+      ],
+      "external": [
+        "vitest"
+      ]
+    },
+    "src/heroes/heroes/repair.hero.test.ts": {
+      "internal": [
+        "src/heroes/core/hero",
+        "src/heroes/heroes/repair",
+        "src/heroes/selection/hero"
+      ],
+      "external": [
+        "vitest"
+      ]
+    },
+    "src/heroes/heroes/repair.hero.ts": {
+      "internal": [
+        "src/heroes/contracts/hero-advice-mapper.ts",
+        "src/heroes/contracts/hero-advice.ts",
+        "src/heroes/contracts/hero-risk-level.ts",
+        "src/heroes/core/hero",
+        "src/heroes/selection/hero"
+      ],
+      "external": []
+    },
+    "src/heroes/heroes/review.hero.test.ts": {
+      "internal": [
+        "src/heroes/core/hero",
+        "src/heroes/heroes/review"
+      ],
+      "external": [
+        "vitest"
+      ]
+    },
+    "src/heroes/heroes/review.hero.ts": {
+      "internal": [
+        "src/heroes/contracts/hero-advice-mapper.ts",
+        "src/heroes/contracts/hero-advice.ts",
+        "src/heroes/core/hero"
+      ],
+      "external": []
+    },
+    "src/heroes/heroes/security.hero.test.ts": {
+      "internal": [
+        "src/heroes/core/hero",
+        "src/heroes/heroes/security"
+      ],
+      "external": [
+        "vitest"
+      ]
+    },
+    "src/heroes/heroes/security.hero.ts": {
+      "internal": [
+        "src/heroes/contracts/hero-advice-mapper.ts",
+        "src/heroes/contracts/hero-advice.ts",
+        "src/heroes/contracts/hero-risk-level.ts",
+        "src/heroes/core/hero"
+      ],
+      "external": []
+    },
+    "src/heroes/orchestration/hero.execution-plan.ts": {
+      "internal": [
+        "src/heroes/selection/hero"
+      ],
+      "external": []
+    },
+    "src/heroes/orchestration/hero.orchestration-result.ts": {
+      "internal": [
+        "src/heroes/orchestration/hero",
+        "src/heroes/runtime/hero",
+        "src/heroes/selection/hero"
+      ],
+      "external": []
+    },
+    "src/heroes/orchestration/hero.orchestrator.test.ts": {
+      "internal": [
+        "src/heroes/core/hero",
+        "src/heroes/heroes",
+        "src/heroes/orchestration/hero",
+        "src/heroes/runtime/hero"
+      ],
+      "external": [
+        "vitest"
+      ]
+    },
+    "src/heroes/orchestration/hero.orchestrator.ts": {
+      "internal": [
+        "src/heroes/orchestration/hero",
+        "src/heroes/runtime/hero",
+        "src/heroes/selection/hero"
+      ],
+      "external": []
+    },
+    "src/heroes/orchestration/hero.plan-resolver.ts": {
+      "internal": [
+        "src/heroes/core/hero",
+        "src/heroes/orchestration/hero",
+        "src/heroes/selection/hero"
+      ],
+      "external": []
+    },
+    "src/heroes/pipeline/hero.pipeline-result.ts": {
+      "internal": [
+        "src/heroes/runtime/hero",
+        "src/heroes/selection/hero"
+      ],
+      "external": []
+    },
+    "src/heroes/pipeline/hero.pipeline.test.ts": {
+      "internal": [
+        "src/heroes/core/hero",
+        "src/heroes/pipeline/hero",
+        "src/heroes/runtime/hero",
+        "src/heroes/selection/hero"
+      ],
+      "external": [
+        "vitest"
+      ]
+    },
+    "src/heroes/pipeline/hero.pipeline.ts": {
+      "internal": [
+        "src/heroes/pipeline/hero",
+        "src/heroes/runtime/hero",
+        "src/heroes/selection/hero"
+      ],
+      "external": []
+    },
+    "src/heroes/projection/hero.projection-mapper.test.ts": {
+      "internal": [
+        "src/heroes/pipeline/hero",
+        "src/heroes/projection/hero"
+      ],
+      "external": [
+        "vitest"
+      ]
+    },
+    "src/heroes/projection/hero.projection-mapper.ts": {
+      "internal": [
+        "src/heroes/pipeline/hero",
+        "src/heroes/projection/hero"
+      ],
+      "external": []
+    },
+    "src/heroes/projection/hero.read-model.ts": {
+      "internal": [
+        "src/heroes/contracts/hero-action-suggestion.ts",
+        "src/heroes/contracts/hero-risk-level.ts"
+      ],
+      "external": []
+    },
+    "src/heroes/runtime/hero.execution-result.ts": {
+      "internal": [
+        "src/heroes/contracts/hero-advice.ts"
+      ],
+      "external": []
+    },
+    "src/heroes/runtime/hero.runtime.test.ts": {
+      "internal": [
+        "src/heroes/core/hero",
+        "src/heroes/runtime/hero"
+      ],
+      "external": [
+        "vitest"
+      ]
+    },
+    "src/heroes/runtime/hero.runtime.ts": {
+      "internal": [
+        "src/heroes/contracts/hero-advice.ts",
+        "src/heroes/core/hero",
+        "src/heroes/runtime/hero"
+      ],
+      "external": []
+    },
+    "src/heroes/selection/hero.selection-result.ts": {
+      "internal": [
+        "src/heroes/selection/hero"
+      ],
+      "external": []
+    },
+    "src/heroes/selection/hero.selector.test.ts": {
+      "internal": [
+        "src/heroes/core/hero",
+        "src/heroes/selection/hero"
+      ],
+      "external": [
+        "vitest"
+      ]
+    },
+    "src/heroes/selection/hero.selector.ts": {
+      "internal": [
+        "src/heroes/core/hero",
+        "src/heroes/selection/hero"
+      ],
+      "external": []
+    },
+    "src/operator/playbooks/index.ts": {
+      "internal": [
+        "src/operator/playbooks/operator-playbook-resolver.ts"
+      ],
+      "external": []
+    },
+    "src/operator/playbooks/operator-playbook-resolver.test.ts": {
+      "internal": [
+        "src/operator/playbooks/operator-playbook-resolver.ts",
+        "src/repair-engine/operator/repair-operator-decision-surface.ts"
+      ],
+      "external": [
+        "vitest"
+      ]
+    },
+    "src/operator/playbooks/operator-playbook-resolver.ts": {
+      "internal": [
+        "src/operator/playbooks/operator-playbook-checklist-item.ts",
+        "src/operator/playbooks/operator-playbook-decision-type.ts",
+        "src/operator/playbooks/operator-playbook.ts",
+        "src/repair-engine/operator/repair-operator-decision-surface.ts"
+      ],
+      "external": []
+    },
+    "src/operator/playbooks/operator-playbook.ts": {
+      "internal": [
+        "src/operator/playbooks/operator-playbook-checklist-item.ts",
+        "src/operator/playbooks/operator-playbook-decision-type.ts"
+      ],
+      "external": []
+    },
+    "src/repair-engine/audit/repair-audit-trail-recorder.test.ts": {
+      "internal": [
+        "src/repair-engine/audit/audit-record-input.ts",
+        "src/repair-engine/audit/repair-audit-trail-recorder.ts"
+      ],
+      "external": [
+        "vitest"
+      ]
+    },
+    "src/repair-engine/audit/repair-audit-trail-recorder.ts": {
+      "internal": [
+        "src/repair-engine/audit/audit-record-input.ts",
+        "src/repair-engine/audit/audit-record-result.ts",
+        "src/repair-engine/audit/audit-record.ts"
+      ],
+      "external": []
+    },
+    "src/repair-engine/confidence/derive-confidence-from-signals.test.ts": {
+      "internal": [
+        "src/repair-engine/confidence/derive-confidence-from-signals.ts",
+        "src/repair-engine/contracts/errors/repair-engine-error-code.ts",
+        "src/repair-engine/contracts/event-log/event-log-entry.ts",
+        "src/repair-engine/contracts/execution/execution-result.ts"
+      ],
+      "external": [
+        "vitest"
+      ]
+    },
+    "src/repair-engine/confidence/derive-confidence-from-signals.ts": {
+      "internal": [
+        "src/repair-engine/contracts/confidence",
+        "src/repair-engine/contracts/errors/repair-engine-error-code.ts",
+        "src/repair-engine/contracts/event-log/event-log-entry.ts",
+        "src/repair-engine/contracts/execution/execution-result.ts"
+      ],
+      "external": []
+    },
+    "src/repair-engine/confidence/index.ts": {
+      "internal": [
+        "src/repair-engine/confidence/derive-confidence-from-signals.ts"
+      ],
+      "external": []
+    },
+    "src/repair-engine/contracts/confidence/confidence-factor-input.ts": {
+      "internal": [
+        "src/repair-engine/contracts/confidence/confidence-factor.ts"
+      ],
+      "external": []
+    },
+    "src/repair-engine/contracts/confidence/confidence-score-builder.test.ts": {
+      "internal": [
+        "src/repair-engine/contracts/confidence/confidence-factor-input.ts",
+        "src/repair-engine/contracts/confidence/confidence-score-builder.ts"
+      ],
+      "external": [
+        "vitest"
+      ]
+    },
+    "src/repair-engine/contracts/confidence/confidence-score-builder.ts": {
+      "internal": [
+        "src/repair-engine/contracts/confidence/confidence-factor-input.ts",
+        "src/repair-engine/contracts/confidence/confidence-factor.ts",
+        "src/repair-engine/contracts/confidence/confidence-level.ts",
+        "src/repair-engine/contracts/confidence/confidence-score.ts"
+      ],
+      "external": []
+    },
+    "src/repair-engine/contracts/confidence/confidence-score.ts": {
+      "internal": [
+        "src/repair-engine/contracts/confidence/confidence-factor-input.ts",
+        "src/repair-engine/contracts/confidence/confidence-level.ts"
+      ],
+      "external": []
+    },
+    "src/repair-engine/contracts/confidence/index.ts": {
+      "internal": [
+        "src/repair-engine/contracts/confidence/confidence-score-builder.ts"
+      ],
+      "external": []
+    },
+    "src/repair-engine/contracts/error-taxonomy/error-taxonomy-builder.test.ts": {
+      "internal": [
+        "src/repair-engine/contracts/error-taxonomy/error-recoverability.ts",
+        "src/repair-engine/contracts/error-taxonomy/error-severity.ts",
+        "src/repair-engine/contracts/error-taxonomy/error-taxonomy-builder.ts",
+        "src/repair-engine/contracts/error-taxonomy/error-taxonomy-contract.ts"
+      ],
+      "external": [
+        "vitest"
+      ]
+    },
+    "src/repair-engine/contracts/error-taxonomy/error-taxonomy-builder.ts": {
+      "internal": [
+        "src/repair-engine/contracts/error-taxonomy/deep-freeze.ts",
+        "src/repair-engine/contracts/error-taxonomy/error-category.ts",
+        "src/repair-engine/contracts/error-taxonomy/error-code.ts",
+        "src/repair-engine/contracts/error-taxonomy/error-recoverability.ts",
+        "src/repair-engine/contracts/error-taxonomy/error-severity.ts",
+        "src/repair-engine/contracts/error-taxonomy/error-taxonomy-contract.ts",
+        "src/repair-engine/contracts/error-taxonomy/error-type.ts"
+      ],
+      "external": []
+    },
+    "src/repair-engine/contracts/error-taxonomy/error-taxonomy-contract.ts": {
+      "internal": [
+        "src/repair-engine/contracts/error-taxonomy/error-category.ts",
+        "src/repair-engine/contracts/error-taxonomy/error-code.ts",
+        "src/repair-engine/contracts/error-taxonomy/error-recoverability.ts",
+        "src/repair-engine/contracts/error-taxonomy/error-severity.ts",
+        "src/repair-engine/contracts/error-taxonomy/error-type.ts"
+      ],
+      "external": []
+    },
+    "src/repair-engine/contracts/error-taxonomy/index.ts": {
+      "internal": [
+        "src/repair-engine/contracts/error-taxonomy/deep-freeze.ts",
+        "src/repair-engine/contracts/error-taxonomy/error-taxonomy-builder.ts"
+      ],
+      "external": []
+    },
+    "src/repair-engine/contracts/error/error-classifier.test.ts": {
+      "internal": [
+        "src/repair-engine/contracts/error/error-classifier.ts",
+        "src/repair-engine/contracts/error/error-type.ts"
+      ],
+      "external": [
+        "vitest"
+      ]
+    },
+    "src/repair-engine/contracts/error/error-classifier.ts": {
+      "internal": [
+        "src/repair-engine/contracts/error/error-type.ts"
+      ],
+      "external": []
+    },
+    "src/repair-engine/contracts/errors/index.ts": {
+      "internal": [
+        "src/repair-engine/contracts/errors/repair-engine-error-code.ts",
+        "src/repair-engine/contracts/errors/repair-engine-error.ts"
+      ],
+      "external": []
+    },
+    "src/repair-engine/contracts/errors/repair-engine-error.test.ts": {
+      "internal": [
+        "src/repair-engine/contracts/errors/repair-engine-error-code.ts",
+        "src/repair-engine/contracts/errors/repair-engine-error.ts"
+      ],
+      "external": [
+        "vitest"
+      ]
+    },
+    "src/repair-engine/contracts/errors/repair-engine-error.ts": {
+      "internal": [
+        "src/repair-engine/contracts/errors/repair-engine-error-code.ts"
+      ],
+      "external": []
+    },
+    "src/repair-engine/contracts/event-log/event-log-builder.test.ts": {
+      "internal": [
+        "src/repair-engine/contracts/event-log/event-log-builder.ts",
+        "src/repair-engine/contracts/event-log/event-log-entry-input.ts",
+        "src/repair-engine/contracts/event-log/event-log.ts"
+      ],
+      "external": [
+        "vitest"
+      ]
+    },
+    "src/repair-engine/contracts/event-log/event-log-builder.ts": {
+      "internal": [
+        "src/repair-engine/contracts/event-log/event-log-entry-input.ts",
+        "src/repair-engine/contracts/event-log/event-log-entry.ts",
+        "src/repair-engine/contracts/event-log/event-log.ts"
+      ],
+      "external": []
+    },
+    "src/repair-engine/contracts/event-log/event-log-entry-input.ts": {
+      "internal": [
+        "src/repair-engine/contracts/event-log/event-log-entity-type.ts",
+        "src/repair-engine/contracts/event-log/event-log-event-type.ts"
+      ],
+      "external": []
+    },
+    "src/repair-engine/contracts/event-log/event-log-entry.ts": {
+      "internal": [
+        "src/repair-engine/contracts/event-log/event-log-entity-type.ts",
+        "src/repair-engine/contracts/event-log/event-log-event-type.ts"
+      ],
+      "external": []
+    },
+    "src/repair-engine/contracts/event-log/event-log.ts": {
+      "internal": [
+        "src/repair-engine/contracts/event-log/event-log-entry.ts"
+      ],
+      "external": []
+    },
+    "src/repair-engine/contracts/event-log/index.ts": {
+      "internal": [
+        "src/repair-engine/contracts/event-log/event-log-builder.ts"
+      ],
+      "external": []
+    },
+    "src/repair-engine/contracts/execution/execution-contract-builder.test.ts": {
+      "internal": [
+        "src/repair-engine/contracts/execution/execution-contract-builder.ts",
+        "src/repair-engine/contracts/execution/execution-contract.ts",
+        "src/repair-engine/contracts/execution/execution-entity-type.ts",
+        "src/repair-engine/contracts/execution/execution-phase.ts",
+        "src/repair-engine/contracts/execution/execution-reason-code.ts",
+        "src/repair-engine/contracts/execution/execution-status.ts"
+      ],
+      "external": [
+        "vitest"
+      ]
+    },
+    "src/repair-engine/contracts/execution/execution-contract-builder.ts": {
+      "internal": [
+        "src/repair-engine/contracts/execution/execution-contract.ts",
+        "src/repair-engine/contracts/execution/execution-entity-type.ts",
+        "src/repair-engine/contracts/execution/execution-phase.ts",
+        "src/repair-engine/contracts/execution/execution-reason-code.ts",
+        "src/repair-engine/contracts/execution/execution-status.ts"
+      ],
+      "external": []
+    },
+    "src/repair-engine/contracts/execution/execution-contract.ts": {
+      "internal": [
+        "src/repair-engine/contracts/execution/execution-entity-type.ts",
+        "src/repair-engine/contracts/execution/execution-phase.ts",
+        "src/repair-engine/contracts/execution/execution-reason-code.ts",
+        "src/repair-engine/contracts/execution/execution-status.ts"
+      ],
+      "external": []
+    },
+    "src/repair-engine/contracts/execution/execution-result-builder.test.ts": {
+      "internal": [
+        "src/repair-engine/contracts/errors/repair-engine-error-code.ts",
+        "src/repair-engine/contracts/errors/repair-engine-error.ts",
+        "src/repair-engine/contracts/execution/execution-result-builder.ts"
+      ],
+      "external": [
+        "vitest"
+      ]
+    },
+    "src/repair-engine/contracts/execution/execution-result-builder.ts": {
+      "internal": [
+        "src/repair-engine/contracts/errors/repair-engine-error-code.ts",
+        "src/repair-engine/contracts/execution/execution-result.ts"
+      ],
+      "external": []
+    },
+    "src/repair-engine/contracts/execution/execution-result.ts": {
+      "internal": [
+        "src/repair-engine/contracts/errors/repair-engine-error-code.ts"
+      ],
+      "external": []
+    },
+    "src/repair-engine/contracts/execution/index.ts": {
+      "internal": [
+        "src/repair-engine/contracts/execution/execution-contract-builder.ts",
+        "src/repair-engine/contracts/execution/execution-result-builder.ts",
+        "src/repair-engine/contracts/execution/execution-result.ts"
+      ],
+      "external": []
+    },
+    "src/repair-engine/contracts/repair-engine-evaluation.ts": {
+      "internal": [
+        "src/repair-engine/contracts/repair-lifecycle-state.ts",
+        "src/repair-engine/contracts/repair-verdict.ts"
+      ],
+      "external": []
+    },
+    "src/repair-engine/contracts/repair-engine-event-intake-result.ts": {
+      "internal": [
+        "src/repair-engine/contracts/repair-engine-event.ts",
+        "src/repair-engine/contracts/repair-lifecycle-state.ts"
+      ],
+      "external": []
+    },
+    "src/repair-engine/contracts/repair-engine-event.ts": {
+      "internal": [
+        "src/repair-engine/contracts/repair-engine-event-type.ts"
+      ],
+      "external": []
+    },
+    "src/repair-engine/contracts/repair-evaluation-input.ts": {
+      "internal": [
+        "src/repair-engine/queue/repair-item.ts"
+      ],
+      "external": []
+    },
+    "src/repair-engine/contracts/repair-evaluation.ts": {
+      "internal": [
+        "src/repair-engine/contracts/confidence/confidence-level.ts",
+        "src/repair-engine/contracts/repair-lifecycle-state.ts",
+        "src/repair-engine/contracts/repair-strategy-type.ts",
+        "src/repair-engine/contracts/repair-verdict-reason-code.ts",
+        "src/repair-engine/queue/repair-item-status.ts"
+      ],
+      "external": []
+    },
+    "src/repair-engine/contracts/repair-strategy-candidate.ts": {
+      "internal": [
+        "src/repair-engine/contracts/repair-engine-event-type.ts",
+        "src/repair-engine/contracts/repair-strategy.ts"
+      ],
+      "external": []
+    },
+    "src/repair-engine/contracts/repair-strategy.ts": {
+      "internal": [
+        "src/repair-engine/contracts/repair-engine-event-type.ts",
+        "src/repair-engine/contracts/repair-strategy-type.ts"
+      ],
+      "external": []
+    },
+    "src/repair-engine/contracts/repair-transition.ts": {
+      "internal": [
+        "src/repair-engine/contracts/repair-lifecycle-state.ts"
+      ],
+      "external": []
+    },
+    "src/repair-engine/contracts/repair-verdict-result.ts": {
+      "internal": [
+        "src/repair-engine/contracts/repair-evaluation.ts",
+        "src/repair-engine/contracts/repair-strategy-type.ts",
+        "src/repair-engine/contracts/repair-verdict-decision.ts"
+      ],
+      "external": []
+    },
+    "src/repair-engine/intake/repair-engine-event-intake.test.ts": {
+      "internal": [
+        "src/repair-engine/intake/repair-engine-event-intake.ts"
+      ],
+      "external": [
+        "vitest"
+      ]
+    },
+    "src/repair-engine/intake/repair-engine-event-intake.ts": {
+      "internal": [
+        "src/repair-engine/contracts/repair-engine-event-intake-result.ts",
+        "src/repair-engine/contracts/repair-engine-event-type.ts",
+        "src/repair-engine/contracts/repair-engine-event.ts",
+        "src/repair-engine/contracts/repair-lifecycle-state.ts"
+      ],
+      "external": []
+    },
+    "src/repair-engine/observability/incident-history-summary-builder.test.ts": {
+      "internal": [
+        "src/repair-engine/observability/incident-history-summary-builder.ts",
+        "src/repair-engine/run/repair-run.ts",
+        "src/repair-engine/timeline/incident-timeline-entry.ts",
+        "src/repair-engine/timeline/incident-timeline.ts"
+      ],
+      "external": [
+        "vitest"
+      ]
+    },
+    "src/repair-engine/observability/incident-history-summary-builder.ts": {
+      "internal": [
+        "src/repair-engine/observability/incident-history-summary.ts",
+        "src/repair-engine/run/repair-run.ts",
+        "src/repair-engine/timeline/incident-timeline.ts"
+      ],
+      "external": []
+    },
+    "src/repair-engine/observability/incident-history-summary.ts": {
+      "internal": [
+        "src/repair-engine/run/repair-run-status.ts"
+      ],
+      "external": []
+    },
+    "src/repair-engine/observability/incident-summary-builder.test.ts": {
+      "internal": [
+        "src/repair-engine/observability/incident-summary-builder.ts",
+        "src/repair-engine/timeline/incident-timeline-entry.ts",
+        "src/repair-engine/timeline/incident-timeline.ts"
+      ],
+      "external": [
+        "vitest"
+      ]
+    },
+    "src/repair-engine/observability/incident-summary-builder.ts": {
+      "internal": [
+        "src/repair-engine/observability/incident-summary.ts",
+        "src/repair-engine/timeline/incident-timeline.ts"
+      ],
+      "external": []
+    },
+    "src/repair-engine/observability/incident-summary.ts": {
+      "internal": [
+        "src/repair-engine/timeline/incident-timeline-entry-type.ts"
+      ],
+      "external": []
+    },
+    "src/repair-engine/observability/index.ts": {
+      "internal": [
+        "src/repair-engine/observability/incident-history-summary-builder.ts",
+        "src/repair-engine/observability/incident-summary-builder.ts",
+        "src/repair-engine/observability/repair-run-list-item-builder.ts",
+        "src/repair-engine/observability/repair-run-summary-builder.ts"
+      ],
+      "external": []
+    },
+    "src/repair-engine/observability/repair-run-list-item-builder.test.ts": {
+      "internal": [
+        "src/repair-engine/observability/repair-run-list-item-builder.ts",
+        "src/repair-engine/run/repair-run.ts",
+        "src/repair-engine/timeline/incident-timeline-entry.ts",
+        "src/repair-engine/timeline/incident-timeline.ts"
+      ],
+      "external": [
+        "vitest"
+      ]
+    },
+    "src/repair-engine/observability/repair-run-list-item-builder.ts": {
+      "internal": [
+        "src/repair-engine/observability/repair-run-list-item.ts",
+        "src/repair-engine/run/repair-run.ts"
+      ],
+      "external": []
+    },
+    "src/repair-engine/observability/repair-run-list-item.ts": {
+      "internal": [
+        "src/repair-engine/run/repair-run-status.ts",
+        "src/repair-engine/timeline/incident-timeline-entry-type.ts"
+      ],
+      "external": []
+    },
+    "src/repair-engine/observability/repair-run-summary-builder.test.ts": {
+      "internal": [
+        "src/repair-engine/observability/repair-run-summary-builder.ts",
+        "src/repair-engine/run/repair-run.ts",
+        "src/repair-engine/timeline/incident-timeline-entry.ts",
+        "src/repair-engine/timeline/incident-timeline.ts"
+      ],
+      "external": [
+        "vitest"
+      ]
+    },
+    "src/repair-engine/observability/repair-run-summary-builder.ts": {
+      "internal": [
+        "src/repair-engine/observability/repair-run-summary.ts",
+        "src/repair-engine/run/repair-run.ts"
+      ],
+      "external": []
+    },
+    "src/repair-engine/observability/repair-run-summary.ts": {
+      "internal": [
+        "src/repair-engine/run/repair-run-status.ts"
+      ],
+      "external": []
+    },
+    "src/repair-engine/operator-decision/repair-operator-decision-engine.test.ts": {
+      "internal": [
+        "src/repair-engine/operator-decision/operator-decision-input.ts",
+        "src/repair-engine/operator-decision/repair-operator-decision-engine.ts"
+      ],
+      "external": [
+        "vitest"
+      ]
+    },
+    "src/repair-engine/operator-decision/repair-operator-decision-engine.ts": {
+      "internal": [
+        "src/repair-engine/operator-decision/operator-decision-action-type.ts",
+        "src/repair-engine/operator-decision/operator-decision-event-type.ts",
+        "src/repair-engine/operator-decision/operator-decision-event.ts",
+        "src/repair-engine/operator-decision/operator-decision-input.ts",
+        "src/repair-engine/operator-decision/operator-decision-result.ts"
+      ],
+      "external": []
+    },
+    "src/repair-engine/operator/repair-operator-decision-surface-builder.ts": {
+      "internal": [
+        "src/repair-engine/operator/repair-operator-decision-surface.ts",
+        "src/repair-engine/routing/repair-operator-decision.ts"
+      ],
+      "external": []
+    },
+    "src/repair-engine/operator/repair-operator-decision-surface.test.ts": {
+      "internal": [
+        "src/repair-engine/operator/repair-operator-decision-surface-builder.ts",
+        "src/repair-engine/routing/repair-operator-decision.ts"
+      ],
+      "external": [
+        "vitest"
+      ]
+    },
+    "src/repair-engine/operator/repair-operator-decision-surface.ts": {
+      "internal": [
+        "src/repair-engine/contracts/confidence/confidence-level.ts",
+        "src/repair-engine/routing/repair-operator-decision.ts"
+      ],
+      "external": []
+    },
+    "src/repair-engine/queue-entry/github-intake-to-repair-queue-entry.test.ts": {
+      "internal": [
+        "src/repair-engine/queue-entry/index.ts"
+      ],
+      "external": [
+        "vitest"
+      ]
+    },
+    "src/repair-engine/queue-entry/github-intake-to-repair-queue-entry.ts": {
+      "internal": [
+        "src/github/intake-bridge",
+        "src/repair-engine/queue-entry/repair-queue-entry-status.ts",
+        "src/repair-engine/queue-entry/repair-queue-entry.ts"
+      ],
+      "external": []
+    },
+    "src/repair-engine/queue-entry/index.ts": {
+      "internal": [
+        "src/repair-engine/queue-entry/github-intake-to-repair-queue-entry.ts",
+        "src/repair-engine/queue-entry/repair-queue-entry-source.ts",
+        "src/repair-engine/queue-entry/repair-queue-entry-status.ts"
+      ],
+      "external": []
+    },
+    "src/repair-engine/queue-entry/repair-queue-entry.ts": {
+      "internal": [
+        "src/repair-engine/queue-entry/repair-queue-entry-source.ts",
+        "src/repair-engine/queue-entry/repair-queue-entry-status.ts"
+      ],
+      "external": []
+    },
+    "src/repair-engine/queue/repair-item.ts": {
+      "internal": [
+        "src/repair-engine/contracts/repair-engine-event-type.ts",
+        "src/repair-engine/contracts/repair-engine-event.ts",
+        "src/repair-engine/contracts/repair-lifecycle-state.ts",
+        "src/repair-engine/contracts/repair-strategy-candidate.ts",
+        "src/repair-engine/queue/repair-item-status.ts"
+      ],
+      "external": []
+    },
+    "src/repair-engine/queue/repair-queue-result.ts": {
+      "internal": [
+        "src/repair-engine/queue/repair-item.ts"
+      ],
+      "external": []
+    },
+    "src/repair-engine/queue/repair-queue.test.ts": {
+      "internal": [
+        "src/repair-engine/contracts/repair-engine-event.ts",
+        "src/repair-engine/queue/repair-queue.ts",
+        "src/repair-engine/strategy/repair-strategy-selector.ts"
+      ],
+      "external": [
+        "vitest"
+      ]
+    },
+    "src/repair-engine/queue/repair-queue.ts": {
+      "internal": [
+        "src/repair-engine/contracts/repair-engine-event.ts",
+        "src/repair-engine/contracts/repair-lifecycle-state.ts",
+        "src/repair-engine/contracts/repair-strategy-candidate.ts",
+        "src/repair-engine/queue/repair-item.ts",
+        "src/repair-engine/queue/repair-queue-result.ts"
+      ],
+      "external": []
+    },
+    "src/repair-engine/routing/repair-operator-decision.ts": {
+      "internal": [
+        "src/repair-engine/contracts/confidence/confidence-level.ts"
+      ],
+      "external": []
+    },
+    "src/repair-engine/routing/repair-verdict-router.test.ts": {
+      "internal": [
+        "src/repair-engine/contracts/repair-evaluation.ts",
+        "src/repair-engine/contracts/repair-verdict-result.ts",
+        "src/repair-engine/routing/repair-verdict-router.ts"
+      ],
+      "external": [
+        "vitest"
+      ]
+    },
+    "src/repair-engine/routing/repair-verdict-router.ts": {
+      "internal": [
+        "src/repair-engine/contracts/repair-verdict-result.ts",
+        "src/repair-engine/routing/repair-operator-decision.ts"
+      ],
+      "external": []
+    },
+    "src/repair-engine/run/index.ts": {
+      "internal": [
+        "src/repair-engine/run/repair-run-builder.ts",
+        "src/repair-engine/run/repair-run-event-log-builder.ts",
+        "src/repair-engine/run/repair-run-lifecycle.ts"
+      ],
+      "external": []
+    },
+    "src/repair-engine/run/repair-run-builder.test.ts": {
+      "internal": [
+        "src/repair-engine/run/repair-run-builder.ts",
+        "src/repair-engine/timeline/incident-timeline-entry.ts",
+        "src/repair-engine/timeline/incident-timeline.ts"
+      ],
+      "external": [
+        "vitest"
+      ]
+    },
+    "src/repair-engine/run/repair-run-builder.ts": {
+      "internal": [
+        "src/repair-engine/run/repair-run-status.ts",
+        "src/repair-engine/run/repair-run.ts",
+        "src/repair-engine/timeline/incident-timeline.ts"
+      ],
+      "external": []
+    },
+    "src/repair-engine/run/repair-run-event-log-builder.test.ts": {
+      "internal": [
+        "src/repair-engine/run/repair-run-event-log-builder.ts",
+        "src/repair-engine/run/repair-run.ts",
+        "src/repair-engine/timeline/incident-timeline-entry.ts",
+        "src/repair-engine/timeline/incident-timeline.ts"
+      ],
+      "external": [
+        "vitest"
+      ]
+    },
+    "src/repair-engine/run/repair-run-event-log-builder.ts": {
+      "internal": [
+        "src/repair-engine/contracts/event-log/event-log-builder.ts",
+        "src/repair-engine/contracts/event-log/event-log-entity-type.ts",
+        "src/repair-engine/contracts/event-log/event-log-entry-input.ts",
+        "src/repair-engine/contracts/event-log/event-log-entry.ts",
+        "src/repair-engine/contracts/event-log/event-log-event-type.ts",
+        "src/repair-engine/contracts/event-log/event-log.ts",
+        "src/repair-engine/run/repair-run.ts"
+      ],
+      "external": []
+    },
+    "src/repair-engine/run/repair-run-lifecycle.test.ts": {
+      "internal": [
+        "src/repair-engine/run/repair-run-lifecycle.ts",
+        "src/repair-engine/run/repair-run.ts",
+        "src/repair-engine/timeline/incident-timeline-entry.ts",
+        "src/repair-engine/timeline/incident-timeline.ts"
+      ],
+      "external": [
+        "vitest"
+      ]
+    },
+    "src/repair-engine/run/repair-run-lifecycle.ts": {
+      "internal": [
+        "src/repair-engine/run/repair-run-status.ts",
+        "src/repair-engine/run/repair-run.ts"
+      ],
+      "external": []
+    },
+    "src/repair-engine/run/repair-run.ts": {
+      "internal": [
+        "src/repair-engine/run/repair-run-status.ts",
+        "src/repair-engine/timeline/incident-timeline.ts"
+      ],
+      "external": []
+    },
+    "src/repair-engine/state-machine/repair-state-machine.test.ts": {
+      "internal": [
+        "src/repair-engine/contracts/repair-lifecycle-state.ts",
+        "src/repair-engine/contracts/repair-verdict.ts",
+        "src/repair-engine/escalation/repair-escalation-policy.ts",
+        "src/repair-engine/state-machine/repair-state-machine.ts"
+      ],
+      "external": [
+        "vitest"
+      ]
+    },
+    "src/repair-engine/state-machine/repair-state-machine.ts": {
+      "internal": [
+        "src/repair-engine/contracts/repair-engine-evaluation.ts",
+        "src/repair-engine/contracts/repair-lifecycle-state.ts",
+        "src/repair-engine/contracts/repair-transition.ts",
+        "src/repair-engine/contracts/repair-verdict.ts",
+        "src/repair-engine/escalation/repair-escalation-policy.ts"
+      ],
+      "external": []
+    },
+    "src/repair-engine/strategy/repair-strategy-catalog.ts": {
+      "internal": [
+        "src/repair-engine/contracts/repair-strategy.ts"
+      ],
+      "external": []
+    },
+    "src/repair-engine/strategy/repair-strategy-selector.test.ts": {
+      "internal": [
+        "src/repair-engine/contracts/repair-engine-event.ts",
+        "src/repair-engine/strategy/repair-strategy-selector.ts"
+      ],
+      "external": [
+        "vitest"
+      ]
+    },
+    "src/repair-engine/strategy/repair-strategy-selector.ts": {
+      "internal": [
+        "src/repair-engine/contracts/repair-engine-event-type.ts",
+        "src/repair-engine/contracts/repair-engine-event.ts",
+        "src/repair-engine/contracts/repair-strategy-candidate.ts",
+        "src/repair-engine/contracts/repair-strategy.ts",
+        "src/repair-engine/strategy/repair-strategy-catalog.ts"
+      ],
+      "external": []
+    },
+    "src/repair-engine/timeline/incident-timeline-builder.test.ts": {
+      "internal": [
+        "src/repair-engine/audit/audit-record.ts",
+        "src/repair-engine/timeline/incident-timeline-builder.ts"
+      ],
+      "external": [
+        "vitest"
+      ]
+    },
+    "src/repair-engine/timeline/incident-timeline-builder.ts": {
+      "internal": [
+        "src/repair-engine/audit/audit-record.ts",
+        "src/repair-engine/timeline/incident-timeline-entry.ts",
+        "src/repair-engine/timeline/incident-timeline.ts"
+      ],
+      "external": []
+    },
+    "src/repair-engine/timeline/incident-timeline-entry.ts": {
+      "internal": [
+        "src/repair-engine/timeline/incident-timeline-entry-type.ts"
+      ],
+      "external": []
+    },
+    "src/repair-engine/timeline/incident-timeline.ts": {
+      "internal": [
+        "src/repair-engine/timeline/incident-timeline-entry.ts",
+        "src/repair-engine/timeline/incident-timeline-status.ts"
+      ],
+      "external": []
+    },
+    "src/repair-engine/timeline/index.ts": {
+      "internal": [
+        "src/repair-engine/timeline/incident-timeline-builder.ts"
+      ],
+      "external": []
+    },
+    "src/repair-engine/verdict/derive-confidence-for-verdict-context.test.ts": {
+      "internal": [
+        "src/repair-engine/contracts/error/error-type.ts",
+        "src/repair-engine/verdict/derive-confidence-for-verdict-context.ts"
+      ],
+      "external": [
+        "vitest"
+      ]
+    },
+    "src/repair-engine/verdict/derive-confidence-for-verdict-context.ts": {
+      "internal": [
+        "src/repair-engine/contracts/confidence",
+        "src/repair-engine/contracts/error/error-classifier.ts",
+        "src/repair-engine/contracts/error/error-type.ts",
+        "src/repair-engine/contracts/repair-strategy-type.ts",
+        "src/repair-engine/contracts/repair-verdict-decision.ts"
+      ],
+      "external": []
+    },
+    "src/repair-engine/verdict/repair-verdict-engine.test.ts": {
+      "internal": [
+        "src/repair-engine/contracts/repair-engine-event.ts",
+        "src/repair-engine/contracts/repair-evaluation-input.ts",
+        "src/repair-engine/contracts/repair-strategy-candidate.ts",
+        "src/repair-engine/queue/repair-item.ts",
+        "src/repair-engine/strategy/repair-strategy-catalog.ts",
+        "src/repair-engine/strategy/repair-strategy-selector.ts",
+        "src/repair-engine/verdict/repair-verdict-engine.ts"
+      ],
+      "external": [
+        "vitest"
+      ]
+    },
+    "src/repair-engine/verdict/repair-verdict-engine.ts": {
+      "internal": [
+        "src/repair-engine/contracts/repair-evaluation-input.ts",
+        "src/repair-engine/contracts/repair-evaluation.ts",
+        "src/repair-engine/contracts/repair-strategy-type.ts",
+        "src/repair-engine/contracts/repair-verdict-decision.ts",
+        "src/repair-engine/contracts/repair-verdict-reason-code.ts",
+        "src/repair-engine/contracts/repair-verdict-result.ts",
+        "src/repair-engine/queue/repair-item.ts",
+        "src/repair-engine/verdict/derive-confidence-for-verdict-context.ts"
+      ],
+      "external": []
+    },
+    "src/shared/deterministic.test.ts": {
+      "internal": [
+        "src/shared/deterministic.ts"
+      ],
+      "external": [
+        "vitest"
+      ]
+    },
+    "src/shared/read-models/contracts.ts": {
+      "internal": [
+        "src/shared/read-models/types.ts"
+      ],
+      "external": []
+    },
+    "src/shared/read-models/index.ts": {
+      "internal": [
+        "src/shared/read-models/mocks.ts"
+      ],
+      "external": []
+    },
+    "src/shared/read-models/mocks.ts": {
+      "internal": [
+        "src/shared/read-models/contracts.ts"
+      ],
+      "external": []
+    },
+    "src/shared/read-models/read-models.test.ts": {
+      "internal": [
+        "src/shared/read-models/mocks.ts"
+      ],
+      "external": [
+        "vitest"
+      ]
+    },
+    "tools/arch-snapshot.mjs": {
+      "internal": [],
+      "external": [
+        "fs",
+        "path",
+        "url"
+      ]
+    },
+    "tools/project-understanding/dependency-graph.mjs": {
+      "internal": [
+        "tools/project-understanding/lib/dependency-graph/build-dependency-graph.mjs"
+      ],
+      "external": [
+        "fs",
+        "path",
+        "url"
+      ]
+    },
+    "tools/project-understanding/dependency-graph.test.mjs": {
+      "internal": [
+        "tools/project-understanding/bar",
+        "tools/project-understanding/foo",
+        "tools/project-understanding/lazy",
+        "tools/project-understanding/lib/dependency-graph/build-dependency-graph.mjs",
+        "tools/project-understanding/lib/dependency-graph/collect-source-files.mjs",
+        "tools/project-understanding/lib/dependency-graph/extract-dependencies.mjs",
+        "tools/project-understanding/lib/dependency-graph/normalize-module-id.mjs",
+        "tools/project-understanding/local",
+        "tools/project-understanding/mod"
+      ],
+      "external": [
+        "assert",
+        "fs",
+        "lodash",
+        "path",
+        "pkg",
+        "url"
+      ]
+    },
+    "tools/project-understanding/lib/dependency-graph/build-dependency-graph.mjs": {
+      "internal": [
+        "tools/project-understanding/lib/dependency-graph/collect-source-files.mjs",
+        "tools/project-understanding/lib/dependency-graph/extract-dependencies.mjs",
+        "tools/project-understanding/lib/dependency-graph/normalize-module-id.mjs"
+      ],
+      "external": [
+        "fs",
+        "path"
+      ]
+    },
+    "tools/project-understanding/lib/dependency-graph/collect-source-files.mjs": {
+      "internal": [],
+      "external": [
+        "fs",
+        "path",
+        "url"
+      ]
+    },
+    "tools/project-understanding/lib/dependency-graph/extract-dependencies.mjs": {
+      "internal": [
+        "tools/project-understanding/lib/dependency-graph/mod",
+        "tools/project-understanding/lib/dependency-graph/side",
+        "tools/project-understanding/lib/dependency-graph/y"
+      ],
+      "external": [
+        "pkg",
+        "x"
+      ]
+    },
+    "tools/project-understanding/repo-scanner.mjs": {
+      "internal": [],
+      "external": [
+        "fs",
+        "path",
+        "url"
+      ]
+    },
+    "vite.config.ts": {
+      "internal": [],
+      "external": [
+        "@vitejs/plugin-react",
+        "vite"
+      ]
+    },
+    "vitest.config.ts": {
+      "internal": [],
+      "external": [
+        "vitest/config"
+      ]
+    }
+  },
+  "externalPackages": [
+    "@testing-library/react",
+    "@vitejs/plugin-react",
+    "assert",
+    "electron",
+    "electron-updater",
+    "fs",
+    "lodash",
+    "openai",
+    "path",
+    "pkg",
+    "react",
+    "react-dom/client",
+    "url",
+    "vite",
+    "vitest",
+    "vitest/config",
+    "x",
+    "zod"
+  ]
+}
