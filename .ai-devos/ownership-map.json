@@ -1,0 +1,280 @@
+{
+  "summary": {
+    "totalModules": 15,
+    "primaryCount": 12,
+    "sharedCount": 0,
+    "unknownCount": 3,
+    "highConfidenceCount": 3,
+    "mediumConfidenceCount": 7,
+    "lowConfidenceCount": 5
+  },
+  "thresholds": {
+    "highConfidenceMin": 0.75,
+    "mediumConfidenceMin": 0.5,
+    "sharedDeltaMax": 0.1,
+    "unknownMinConfidence": 0.35
+  },
+  "ownership": [
+    {
+      "module": "archive/legacy-etsy-mentor",
+      "ownerCandidate": "archive-legacy",
+      "ownershipType": "PRIMARY",
+      "confidence": 0.48,
+      "signals": {
+        "pathAffinity": 1,
+        "roleAffinity": 0.7,
+        "dependencyAffinity": 0,
+        "testAffinity": 0,
+        "hotspotAffinity": 0
+      },
+      "explanations": [
+        "module path strongly aligns with archive-legacy domain",
+        "module role aligns with archive-legacy responsibilities"
+      ]
+    },
+    {
+      "module": "electron/desktop",
+      "ownerCandidate": "desktop-control-center",
+      "ownershipType": "PRIMARY",
+      "confidence": 0.9,
+      "signals": {
+        "pathAffinity": 1,
+        "roleAffinity": 0.7,
+        "dependencyAffinity": 1,
+        "testAffinity": 0.7,
+        "hotspotAffinity": 1
+      },
+      "explanations": [
+        "dependency neighborhood clusters around desktop-control-center modules",
+        "module path strongly aligns with desktop-control-center domain",
+        "module role aligns with desktop-control-center responsibilities",
+        "test proximity supports desktop-control-center ownership"
+      ]
+    },
+    {
+      "module": "electron/gates",
+      "ownerCandidate": "desktop-control-center",
+      "ownershipType": "PRIMARY",
+      "confidence": 0.9,
+      "signals": {
+        "pathAffinity": 1,
+        "roleAffinity": 0.7,
+        "dependencyAffinity": 1,
+        "testAffinity": 0.7,
+        "hotspotAffinity": 1
+      },
+      "explanations": [
+        "dependency neighborhood clusters around desktop-control-center modules",
+        "module path strongly aligns with desktop-control-center domain",
+        "module role aligns with desktop-control-center responsibilities",
+        "test proximity supports desktop-control-center ownership"
+      ]
+    },
+    {
+      "module": "electron/ipc",
+      "ownerCandidate": "desktop-control-center",
+      "ownershipType": "PRIMARY",
+      "confidence": 0.83,
+      "signals": {
+        "pathAffinity": 1,
+        "roleAffinity": 0.7,
+        "dependencyAffinity": 1,
+        "testAffinity": 0,
+        "hotspotAffinity": 1
+      },
+      "explanations": [
+        "dependency neighborhood clusters around desktop-control-center modules",
+        "hotspot interaction patterns support desktop-control-center ownership",
+        "module path strongly aligns with desktop-control-center domain",
+        "module role aligns with desktop-control-center responsibilities"
+      ]
+    },
+    {
+      "module": "src/desktop",
+      "ownerCandidate": "desktop-control-center",
+      "ownershipType": "PRIMARY",
+      "confidence": 0.5,
+      "signals": {
+        "pathAffinity": 1,
+        "roleAffinity": 0.5,
+        "dependencyAffinity": 0,
+        "testAffinity": 0.7,
+        "hotspotAffinity": 0
+      },
+      "explanations": [
+        "module path strongly aligns with desktop-control-center domain",
+        "module role aligns with desktop-control-center responsibilities",
+        "test proximity supports desktop-control-center ownership"
+      ]
+    },
+    {
+      "module": "src/github",
+      "ownerCandidate": "github-backbone",
+      "ownershipType": "PRIMARY",
+      "confidence": 0.5,
+      "signals": {
+        "pathAffinity": 1,
+        "roleAffinity": 0.5,
+        "dependencyAffinity": 0,
+        "testAffinity": 0.7,
+        "hotspotAffinity": 0
+      },
+      "explanations": [
+        "module path strongly aligns with github-backbone domain",
+        "module role aligns with github-backbone responsibilities",
+        "test proximity supports github-backbone ownership"
+      ]
+    },
+    {
+      "module": "src/governance",
+      "ownerCandidate": "governance",
+      "ownershipType": "PRIMARY",
+      "confidence": 0.5,
+      "signals": {
+        "pathAffinity": 1,
+        "roleAffinity": 0.5,
+        "dependencyAffinity": 0,
+        "testAffinity": 0.7,
+        "hotspotAffinity": 0
+      },
+      "explanations": [
+        "module path strongly aligns with governance domain",
+        "module role aligns with governance responsibilities",
+        "test proximity supports governance ownership"
+      ]
+    },
+    {
+      "module": "src/heroes",
+      "ownerCandidate": "hero-ministry",
+      "ownershipType": "PRIMARY",
+      "confidence": 0.54,
+      "signals": {
+        "pathAffinity": 1,
+        "roleAffinity": 0.7,
+        "dependencyAffinity": 0,
+        "testAffinity": 0.7,
+        "hotspotAffinity": 0
+      },
+      "explanations": [
+        "module path strongly aligns with hero-ministry domain",
+        "module role aligns with hero-ministry responsibilities",
+        "test proximity supports hero-ministry ownership"
+      ]
+    },
+    {
+      "module": "src/operator",
+      "ownerCandidate": "unknown",
+      "ownershipType": "PRIMARY",
+      "confidence": 0.72,
+      "signals": {
+        "pathAffinity": 1,
+        "roleAffinity": 0,
+        "dependencyAffinity": 1,
+        "testAffinity": 0.7,
+        "hotspotAffinity": 1
+      },
+      "explanations": [
+        "signals were insufficient for confident ownership inference"
+      ]
+    },
+    {
+      "module": "src/repair-engine",
+      "ownerCandidate": "unknown",
+      "ownershipType": "PRIMARY",
+      "confidence": 0.72,
+      "signals": {
+        "pathAffinity": 1,
+        "roleAffinity": 0,
+        "dependencyAffinity": 1,
+        "testAffinity": 0.7,
+        "hotspotAffinity": 1
+      },
+      "explanations": [
+        "signals were insufficient for confident ownership inference"
+      ]
+    },
+    {
+      "module": "src/shared",
+      "ownerCandidate": "shared-core",
+      "ownershipType": "PRIMARY",
+      "confidence": 0.5,
+      "signals": {
+        "pathAffinity": 1,
+        "roleAffinity": 0.5,
+        "dependencyAffinity": 0,
+        "testAffinity": 0.7,
+        "hotspotAffinity": 0
+      },
+      "explanations": [
+        "module path strongly aligns with shared-core domain",
+        "module role aligns with shared-core responsibilities",
+        "test proximity supports shared-core ownership"
+      ]
+    },
+    {
+      "module": "tools/arch-snapshot.mjs",
+      "ownerCandidate": "unknown",
+      "ownershipType": "UNKNOWN",
+      "confidence": 0.3,
+      "signals": {
+        "pathAffinity": 1,
+        "roleAffinity": 0,
+        "dependencyAffinity": 0,
+        "testAffinity": 0,
+        "hotspotAffinity": 0
+      },
+      "explanations": [
+        "signals were insufficient for confident ownership inference"
+      ]
+    },
+    {
+      "module": "tools/project-understanding",
+      "ownerCandidate": "project-understanding",
+      "ownershipType": "PRIMARY",
+      "confidence": 0.43,
+      "signals": {
+        "pathAffinity": 1,
+        "roleAffinity": 0.5,
+        "dependencyAffinity": 0,
+        "testAffinity": 0,
+        "hotspotAffinity": 0
+      },
+      "explanations": [
+        "module path strongly aligns with project-understanding domain",
+        "module role aligns with project-understanding responsibilities"
+      ]
+    },
+    {
+      "module": "vite.config.ts",
+      "ownerCandidate": "unknown",
+      "ownershipType": "UNKNOWN",
+      "confidence": 0.3,
+      "signals": {
+        "pathAffinity": 1,
+        "roleAffinity": 0,
+        "dependencyAffinity": 0,
+        "testAffinity": 0,
+        "hotspotAffinity": 0
+      },
+      "explanations": [
+        "signals were insufficient for confident ownership inference"
+      ]
+    },
+    {
+      "module": "vitest.config.ts",
+      "ownerCandidate": "unknown",
+      "ownershipType": "UNKNOWN",
+      "confidence": 0.3,
+      "signals": {
+        "pathAffinity": 1,
+        "roleAffinity": 0,
+        "dependencyAffinity": 0,
+        "testAffinity": 0,
+        "hotspotAffinity": 0
+      },
+      "explanations": [
+        "signals were insufficient for confident ownership inference"
+      ]
+    }
+  ]
+}

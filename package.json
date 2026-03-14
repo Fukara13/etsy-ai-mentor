@@ -23,7 +23,9 @@
     "test:module-mapping": "node tools/project-understanding/module-mapping.test.mjs",
     "test:architecture-summary": "node tools/project-understanding/architecture-summary.test.mjs",
     "test:risk-hotspots": "node tools/project-understanding/risk-hotspots.test.mjs",
-    "ai-devos:risk-hotspots": "node tools/project-understanding/risk-hotspots.mjs"
+    "ai-devos:risk-hotspots": "node tools/project-understanding/risk-hotspots.mjs",
+    "test:ownership-inference": "node tools/project-understanding/ownership-inference.test.mjs",
+    "ai-devos:ownership-inference": "node tools/project-understanding/ownership-inference.mjs"
   },
   "build": {
     "appId": "com.etsy-mentor.desktop",
