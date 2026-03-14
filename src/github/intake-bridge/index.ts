@@ -9,3 +9,4 @@ export {
 export type { GitHubRepairIntakeInput } from './github-repair-intake-input';
 export type { GitHubRepairIntakeEvent } from './github-repair-intake-event';
 export { deriveGitHubRepairIntake } from './derive-github-repair-intake';
+export { mapGitHubRepairIntakeToOrchestratorInput } from './map-github-repair-intake-to-orchestrator-input';

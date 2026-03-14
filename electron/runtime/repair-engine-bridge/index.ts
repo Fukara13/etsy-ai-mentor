@@ -10,4 +10,5 @@ export type { ElectronRepairBridgeInput } from './map-electron-input-to-orchestr
 export type {
   ElectronRepairBridgeResult,
   ElectronGovernanceProjection,
+  ElectronProjectUnderstandingProjection,
 } from './map-orchestrator-result-to-electron-result';

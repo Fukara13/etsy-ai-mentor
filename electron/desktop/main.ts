@@ -9,6 +9,7 @@ import path from 'path'
 import { createMainWindow } from './create-main-window'
 import { registerIpcHandlers } from '../ipc/ipc-registry'
 import { createUpdateService } from './update-service'
+import { startWebhookServerIfEnabled } from '../runtime/webhook-intake'
 
 let mainWindow: Electron.BrowserWindow | null = null
 
@@ -39,6 +40,7 @@ function createWindow(): void {
 
 app.whenReady().then(() => {
   registerIpcHandlers()
+  startWebhookServerIfEnabled()
   createWindow()
   if (app.isPackaged) {
     createUpdateService(() => mainWindow)

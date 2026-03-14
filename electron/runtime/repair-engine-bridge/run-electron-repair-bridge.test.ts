@@ -8,6 +8,7 @@ import { mapOrchestratorResultToElectronResult } from './map-orchestrator-result
 import { runElectronRepairBridge } from './run-electron-repair-bridge';
 import { runBoundedRepairLoop } from '../../gates/repair/repair-loop-orchestrator';
 import { bindGovernanceRuntime } from '../../../src/repair-engine/governance-runtime';
+import { bindProjectUnderstandingRuntime } from '../../../src/repair-engine/project-understanding-runtime';
 import type { ElectronRepairBridgeInput } from './map-electron-input-to-orchestrator-input';
 import { orchestrateRepairEngine } from '../../../src/repair-engine/orchestrator';
 
@@ -61,8 +62,13 @@ describe('RE-10: mapOrchestratorResultToElectronResult', () => {
   it('produces outcome with correct shape', () => {
     const orchInput = mapElectronInputToOrchestratorInput(makeInput());
     const orchResult = orchestrateRepairEngine(orchInput);
-    const boundResult = bindGovernanceRuntime(orchResult);
-    const result = mapOrchestratorResultToElectronResult(boundResult);
+    const govResult = bindGovernanceRuntime(orchResult);
+    const projectResult = bindProjectUnderstandingRuntime({
+      result: govResult,
+      changedFiles: [],
+      artifactBundle: { architectureSummary: null, dependencyGraph: null, moduleMap: null, riskHotspots: null },
+    });
+    const result = mapOrchestratorResultToElectronResult(projectResult);
 
     expect(result.outcome).toBeDefined();
     expect(result.outcome.sessionId).toBe('test-session-1');
@@ -79,8 +85,13 @@ describe('RE-10: mapOrchestratorResultToElectronResult', () => {
   it('preserves operator review and escalation signals', () => {
     const orchInput = mapElectronInputToOrchestratorInput(makeInput());
     const orchResult = orchestrateRepairEngine(orchInput);
-    const boundResult = bindGovernanceRuntime(orchResult);
-    const result = mapOrchestratorResultToElectronResult(boundResult);
+    const govResult = bindGovernanceRuntime(orchResult);
+    const projectResult = bindProjectUnderstandingRuntime({
+      result: govResult,
+      changedFiles: [],
+      artifactBundle: { architectureSummary: null, dependencyGraph: null, moduleMap: null, riskHotspots: null },
+    });
+    const result = mapOrchestratorResultToElectronResult(projectResult);
 
     expect(typeof result.requiresOperatorReview).toBe('boolean');
     expect(typeof result.isEscalated).toBe('boolean');
@@ -130,6 +141,26 @@ describe('RE-10: runElectronRepairBridge', () => {
     expect(typeof result.governance.executionAllowed).toBe('boolean');
     expect(typeof result.governance.requiresOperatorReview).toBe('boolean');
     expect(typeof result.governance.requiresEscalation).toBe('boolean');
+  });
+
+  it('bridge output includes projectUnderstanding (RE-12)', () => {
+    const result = runElectronRepairBridge(makeInput());
+    expect(result.projectUnderstanding).toBeDefined();
+    expect(result.projectUnderstanding.artifactStatus).toBeDefined();
+    expect(Array.isArray(result.projectUnderstanding.summarySignals)).toBe(true);
+  });
+
+  it('governance and projectUnderstanding coexist', () => {
+    const result = runElectronRepairBridge(makeInput());
+    expect(result.governance).toBeDefined();
+    expect(result.projectUnderstanding).toBeDefined();
+    expect(result.outcome).toBeDefined();
+  });
+
+  it('missing artifacts do not break runtime', () => {
+    const result = runElectronRepairBridge(makeInput());
+    expect(result.projectUnderstanding.artifactStatus).toMatch(/available|partial|missing/);
+    expect(result.outcome).toBeDefined();
   });
 
   it('legacy wrapper delegates to bridge', () => {

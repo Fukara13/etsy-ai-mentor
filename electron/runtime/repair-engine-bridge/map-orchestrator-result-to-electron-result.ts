@@ -1,10 +1,11 @@
 /**
  * RE-10: Maps RepairEngineOrchestratorResult to Electron-facing runtime result.
- * RE-11: Projects governance (Electron does not derive; receives canonical output).
- * Pure, deterministic, machine-readable.
+ * RE-11: Projects governance.
+ * RE-12: Projects project-understanding. Projection only, no derivation.
  */
 
 import type { GovernanceBoundOrchestratorResult } from '../../../src/repair-engine/governance-runtime';
+import type { ProjectUnderstandingBoundResult } from '../../../src/repair-engine/project-understanding-runtime';
 import type { RepairRunOutcome, TerminationReason } from '../../gates/repair/repair-run-outcome';
 import type { RepairOperatorHandoff } from '../../gates/repair/operator-handoff.types';
 import type { RepairState } from '../../gates/repair/repair-state';
@@ -18,6 +19,17 @@ export type ElectronGovernanceProjection = {
   readonly requiresEscalation: boolean;
 };
 
+export type ElectronProjectUnderstandingProjection = {
+  readonly artifactStatus: string;
+  readonly architecturalLayer: string | null;
+  readonly moduleName: string | null;
+  readonly moduleOwner: string | null;
+  readonly moduleHotspotScore: number | null;
+  readonly moduleRiskLevel: string | null;
+  readonly dependencyBlastRadius: number | null;
+  readonly summarySignals: readonly string[];
+};
+
 export type ElectronRepairBridgeResult = {
   readonly outcome: RepairRunOutcome;
   readonly handoff: RepairOperatorHandoff;
@@ -27,6 +39,7 @@ export type ElectronRepairBridgeResult = {
   readonly routingSummary: string;
   readonly traceStageCount: number;
   readonly governance: ElectronGovernanceProjection;
+  readonly projectUnderstanding: ElectronProjectUnderstandingProjection;
 };
 
 function routingToFinalState(routing: RepairEngineOrchestratorResult['routing']): RepairState {
@@ -41,10 +54,10 @@ function routingToTerminationReason(routing: RepairEngineOrchestratorResult['rou
 }
 
 /**
- * Maps governance-bound orchestrator result to Electron runtime result.
+ * Maps governance- and project-understanding-bound result to Electron runtime result.
  */
 export function mapOrchestratorResultToElectronResult(
-  result: GovernanceBoundOrchestratorResult
+  result: ProjectUnderstandingBoundResult
 ): ElectronRepairBridgeResult {
   const { run, routing, status, trace } = result;
   const finalState = routingToFinalState(routing);
@@ -77,6 +90,18 @@ export function mapOrchestratorResultToElectronResult(
     requiresEscalation: result.governance.requiresEscalation,
   });
 
+  const pu = result.projectUnderstanding;
+  const projectUnderstanding: ElectronProjectUnderstandingProjection = Object.freeze({
+    artifactStatus: pu.artifactStatus,
+    architecturalLayer: pu.architecturalLayer,
+    moduleName: pu.moduleName,
+    moduleOwner: pu.moduleOwner,
+    moduleHotspotScore: pu.moduleHotspotScore,
+    moduleRiskLevel: pu.moduleRiskLevel,
+    dependencyBlastRadius: pu.dependencyBlastRadius,
+    summarySignals: pu.summarySignals,
+  });
+
   return Object.freeze({
     outcome,
     handoff,
@@ -86,5 +111,6 @@ export function mapOrchestratorResultToElectronResult(
     routingSummary: `${routing.finalChannel}: ${routing.reason}`,
     traceStageCount: trace.length,
     governance,
+    projectUnderstanding,
   });
 }
