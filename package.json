@@ -14,7 +14,8 @@
     "desktop:package:dir": "npm run desktop:build && electron-builder --dir",
     "test": "vitest run",
     "preview": "vite preview",
-    "arch:snapshot": "node tools/arch-snapshot.mjs"
+    "arch:snapshot": "node tools/arch-snapshot.mjs",
+    "repo:scan": "node tools/project-understanding/repo-scanner.mjs"
   },
   "build": {
     "appId": "com.etsy-mentor.desktop",
