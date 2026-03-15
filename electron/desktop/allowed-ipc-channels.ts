@@ -20,6 +20,8 @@ export const DESKTOP_ALLOWED_IPC_CHANNELS = [
   'desktop:repair:triggerRun',
   /** OC-7: Read-only operator advisory projection. */
   'operator:get-advisory-projection',
+  /** OC-15: Read-only operator incident history surface. */
+  'operator:get-incident-history-surface',
 ] as const
 
 export type DesktopAllowedIpcChannel = (typeof DESKTOP_ALLOWED_IPC_CHANNELS)[number]

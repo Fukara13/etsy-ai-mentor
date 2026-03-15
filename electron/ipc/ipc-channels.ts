@@ -21,6 +21,8 @@ export const IPC_CHANNELS = {
   TRIGGER_REPAIR_RUN: 'desktop:repair:triggerRun',
   /** OC-7: Read-only operator advisory projection for desktop renderer. */
   OPERATOR_GET_ADVISORY_PROJECTION: 'operator:get-advisory-projection',
+  /** OC-15: Read-only operator incident history surface for desktop renderer. */
+  OPERATOR_GET_INCIDENT_HISTORY_SURFACE: 'operator:get-incident-history-surface',
 } as const
 
 export type IpcChannel = (typeof IPC_CHANNELS)[keyof typeof IPC_CHANNELS]

@@ -22,6 +22,7 @@ const CHANNELS = {
   UPDATE_DOWNLOADED: 'desktop:updates:downloaded',
   TRIGGER_REPAIR_RUN: 'desktop:repair:triggerRun',
   OPERATOR_GET_ADVISORY_PROJECTION: 'operator:get-advisory-projection',
+  OPERATOR_GET_INCIDENT_HISTORY_SURFACE: 'operator:get-incident-history-surface',
 }
 
 const desktopApi = {
@@ -57,6 +58,8 @@ const desktopApi = {
     getDecisionView: () => ipcRenderer.invoke(CHANNELS.GET_DECISION_VIEW),
     getOperatorAdvisoryProjection: () =>
       ipcRenderer.invoke(CHANNELS.OPERATOR_GET_ADVISORY_PROJECTION),
+    getOperatorIncidentHistorySurface: () =>
+      ipcRenderer.invoke(CHANNELS.OPERATOR_GET_INCIDENT_HISTORY_SURFACE),
   },
 }
 

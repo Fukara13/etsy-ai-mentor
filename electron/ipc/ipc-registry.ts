@@ -9,6 +9,7 @@ import { registerBackboneReadHandlers } from './handlers/backbone-read'
 import { registerVersionHandler } from './handlers/version-handler'
 import { registerTriggerRepairRunHandler } from './repair/trigger-repair-run-ipc'
 import { registerOperatorAdvisoryIpc } from '../runtime/operator-advisory-ipc'
+import { registerOperatorIncidentHistoryIpc } from '../runtime/operator-incident-history-ipc'
 
 let registered = false
 
@@ -20,4 +21,5 @@ export function registerIpcHandlers(): void {
   registerBackboneReadHandlers()
   registerTriggerRepairRunHandler()
   registerOperatorAdvisoryIpc()
+  registerOperatorIncidentHistoryIpc()
 }
