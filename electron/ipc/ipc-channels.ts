@@ -23,6 +23,8 @@ export const IPC_CHANNELS = {
   OPERATOR_GET_ADVISORY_PROJECTION: 'operator:get-advisory-projection',
   /** OC-15: Read-only operator incident history surface for desktop renderer. */
   OPERATOR_GET_INCIDENT_HISTORY_SURFACE: 'operator:get-incident-history-surface',
+  /** OC-16: Unified operator timeline panel surface. */
+  OPERATOR_GET_TIMELINE_PANEL_SURFACE: 'operator:get-timeline-panel-surface',
 } as const
 
 export type IpcChannel = (typeof IPC_CHANNELS)[keyof typeof IPC_CHANNELS]

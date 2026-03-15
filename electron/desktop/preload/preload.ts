@@ -23,6 +23,7 @@ const CHANNELS = {
   TRIGGER_REPAIR_RUN: 'desktop:repair:triggerRun',
   OPERATOR_GET_ADVISORY_PROJECTION: 'operator:get-advisory-projection',
   OPERATOR_GET_INCIDENT_HISTORY_SURFACE: 'operator:get-incident-history-surface',
+  OPERATOR_GET_TIMELINE_PANEL_SURFACE: 'operator:get-timeline-panel-surface',
 }
 
 const desktopApi = {
@@ -60,6 +61,8 @@ const desktopApi = {
       ipcRenderer.invoke(CHANNELS.OPERATOR_GET_ADVISORY_PROJECTION),
     getOperatorIncidentHistorySurface: () =>
       ipcRenderer.invoke(CHANNELS.OPERATOR_GET_INCIDENT_HISTORY_SURFACE),
+    getOperatorTimelinePanelSurface: () =>
+      ipcRenderer.invoke(CHANNELS.OPERATOR_GET_TIMELINE_PANEL_SURFACE),
   },
 }
 

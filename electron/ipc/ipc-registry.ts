@@ -10,6 +10,7 @@ import { registerVersionHandler } from './handlers/version-handler'
 import { registerTriggerRepairRunHandler } from './repair/trigger-repair-run-ipc'
 import { registerOperatorAdvisoryIpc } from '../runtime/operator-advisory-ipc'
 import { registerOperatorIncidentHistoryIpc } from '../runtime/operator-incident-history-ipc'
+import { registerOperatorTimelinePanelIpc } from '../runtime/operator-timeline-panel-ipc'
 
 let registered = false
 
@@ -22,4 +23,5 @@ export function registerIpcHandlers(): void {
   registerTriggerRepairRunHandler()
   registerOperatorAdvisoryIpc()
   registerOperatorIncidentHistoryIpc()
+  registerOperatorTimelinePanelIpc()
 }

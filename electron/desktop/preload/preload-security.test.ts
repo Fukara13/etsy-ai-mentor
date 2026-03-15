@@ -47,6 +47,7 @@ describe('preload security contract', () => {
       'getDecisionView',
       'getOperatorAdvisoryProjection',
       'getOperatorIncidentHistorySurface',
+      'getOperatorTimelinePanelSurface',
     ]
     const content = readPreload()
     for (const m of expectedReadMethods) {
