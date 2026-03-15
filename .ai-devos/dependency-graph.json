@@ -2,10 +2,10 @@
   "generatedAt": "deterministic",
   "root": ".",
   "summary": {
-    "sourceFileCount": 469,
-    "internalModuleCount": 334,
-    "externalPackageCount": 19,
-    "edgeCount": 1064
+    "sourceFileCount": 564,
+    "internalModuleCount": 404,
+    "externalPackageCount": 21,
+    "edgeCount": 1347
   },
   "modules": {
     "archive/legacy-etsy-mentor/electron/db.ts": {
@@ -235,11 +235,10 @@
     },
     "electron/desktop/engine-backed-provider.ts": {
       "internal": [
-        "electron/gates/repair/operator-handoff-mapper.ts",
         "electron/gates/repair/operator-handoff.ts",
         "electron/gates/repair/repair-loop-orchestrator.ts",
         "electron/gates/repair/repair-run-outcome.ts",
-        "electron/gates/repair/repair-run-verdict-mapper.ts",
+        "electron/runtime/repair-engine-bridge",
         "src/desktop/backbone",
         "src/shared/read-models"
       ],
@@ -249,7 +248,8 @@
       "internal": [
         "electron/desktop/create-main-window.ts",
         "electron/desktop/update-service.ts",
-        "electron/ipc/ipc-registry.ts"
+        "electron/ipc/ipc-registry.ts",
+        "electron/runtime/webhook-intake"
       ],
       "external": [
         "electron",
@@ -266,6 +266,7 @@
     },
     "electron/desktop/preload/desktop-api.ts": {
       "internal": [
+        "electron/gates/repair/repair-run-outcome.ts",
         "electron/ipc/ipc-channels.ts",
         "electron/shared/desktop-contracts.ts"
       ],
@@ -630,12 +631,9 @@
     },
     "electron/gates/repair/repair-loop-orchestrator.ts": {
       "internal": [
-        "electron/gates/repair/repair-loop-policy.ts",
-        "electron/gates/repair/repair-loop-session.ts",
         "electron/gates/repair/repair-run-outcome.ts",
         "electron/gates/repair/repair-state.ts",
-        "electron/gates/repair/repair-step-executor.ts",
-        "electron/gates/repair/repair-trace.ts"
+        "electron/runtime/repair-engine-bridge"
       ],
       "external": []
     },
@@ -858,9 +856,393 @@
       "internal": [
         "electron/ipc/handlers/backbone-read.ts",
         "electron/ipc/handlers/health-check.ts",
-        "electron/ipc/handlers/version-handler.ts"
+        "electron/ipc/handlers/version-handler.ts",
+        "electron/ipc/repair/trigger-repair-run-ipc.ts"
       ],
       "external": []
+    },
+    "electron/ipc/repair/trigger-repair-run-ipc.test.ts": {
+      "internal": [
+        "electron/desktop/engine-backed-provider.ts",
+        "electron/ipc/repair/repair-ipc-command.ts",
+        "electron/ipc/repair/trigger-repair-run-ipc.ts"
+      ],
+      "external": [
+        "vitest"
+      ]
+    },
+    "electron/ipc/repair/trigger-repair-run-ipc.ts": {
+      "internal": [
+        "electron/desktop/engine-backed-provider.ts",
+        "electron/gates/repair/repair-loop-orchestrator.ts",
+        "electron/ipc/repair/repair-ipc-command.ts"
+      ],
+      "external": [
+        "electron"
+      ]
+    },
+    "electron/runtime/heroes-runtime/default-runtime-hero-adapters.ts": {
+      "internal": [
+        "electron/runtime/heroes-runtime/hero-runtime-advisory.ts",
+        "electron/runtime/heroes-runtime/hero-runtime-invocation.ts",
+        "src/heroes/core/hero",
+        "src/heroes/heroes",
+        "src/heroes/runtime/hero"
+      ],
+      "external": []
+    },
+    "electron/runtime/heroes-runtime/hero-runtime-advisory.test.ts": {
+      "internal": [
+        "electron/runtime/heroes-runtime/hero-runtime-advisory.ts"
+      ],
+      "external": [
+        "vitest"
+      ]
+    },
+    "electron/runtime/heroes-runtime/hero-runtime-advisory.ts": {
+      "internal": [
+        "electron/runtime/heroes-runtime/runtime-hero-advisory-entry.ts"
+      ],
+      "external": []
+    },
+    "electron/runtime/heroes-runtime/hero-runtime-invocation.ts": {
+      "internal": [
+        "electron/runtime/heroes-runtime/hero-runtime-advisory.ts",
+        "electron/runtime/heroes-runtime/hero-runtime-input.ts",
+        "electron/runtime/heroes-runtime/runtime-hero-advisory-entry.ts"
+      ],
+      "external": []
+    },
+    "electron/runtime/heroes-runtime/hero-runtime-result.ts": {
+      "internal": [
+        "electron/runtime/heroes-runtime/runtime-hero-advisory-entry.ts",
+        "electron/runtime/heroes-runtime/runtime-hero-status.ts"
+      ],
+      "external": []
+    },
+    "electron/runtime/heroes-runtime/hero-runtime-selection.test.ts": {
+      "internal": [
+        "electron/runtime/heroes-runtime/hero-runtime-selection.ts"
+      ],
+      "external": [
+        "vitest"
+      ]
+    },
+    "electron/runtime/heroes-runtime/hero-runtime-selection.ts": {
+      "internal": [
+        "electron/runtime/heroes-runtime/hero-runtime-input.ts",
+        "electron/runtime/heroes-runtime/runtime-hero-selection-result.ts"
+      ],
+      "external": []
+    },
+    "electron/runtime/heroes-runtime/index.ts": {
+      "internal": [
+        "electron/runtime/heroes-runtime/default-runtime-hero-adapters.ts",
+        "electron/runtime/heroes-runtime/hero-runtime-advisory.ts",
+        "electron/runtime/heroes-runtime/hero-runtime-invocation.ts",
+        "electron/runtime/heroes-runtime/hero-runtime-selection.ts",
+        "electron/runtime/heroes-runtime/run-heroes-runtime.ts"
+      ],
+      "external": []
+    },
+    "electron/runtime/heroes-runtime/run-heroes-runtime.test.ts": {
+      "internal": [
+        "electron/runtime/heroes-runtime/default-runtime-hero-adapters.ts",
+        "electron/runtime/heroes-runtime/hero-runtime-input.ts",
+        "electron/runtime/heroes-runtime/hero-runtime-invocation.ts",
+        "electron/runtime/heroes-runtime/run-heroes-runtime.ts"
+      ],
+      "external": [
+        "vitest"
+      ]
+    },
+    "electron/runtime/heroes-runtime/run-heroes-runtime.ts": {
+      "internal": [
+        "electron/runtime/heroes-runtime/hero-runtime-input.ts",
+        "electron/runtime/heroes-runtime/hero-runtime-invocation.ts",
+        "electron/runtime/heroes-runtime/hero-runtime-result.ts",
+        "electron/runtime/heroes-runtime/hero-runtime-selection.ts",
+        "electron/runtime/heroes-runtime/runtime-hero-advisory-entry.ts"
+      ],
+      "external": []
+    },
+    "electron/runtime/project-understanding-auto-refresh/default-runtime-adapters.ts": {
+      "internal": [
+        "electron/runtime/project-understanding-auto-refresh/refresh-project-understanding.ts",
+        "electron/runtime/project-understanding-auto-refresh/run-project-understanding-refresh.ts"
+      ],
+      "external": [
+        "child_process",
+        "fs"
+      ]
+    },
+    "electron/runtime/project-understanding-auto-refresh/index.ts": {
+      "internal": [
+        "electron/runtime/project-understanding-auto-refresh/default-runtime-adapters.ts",
+        "electron/runtime/project-understanding-auto-refresh/refresh-project-understanding.ts",
+        "electron/runtime/project-understanding-auto-refresh/run-project-understanding-refresh.ts",
+        "electron/runtime/project-understanding-auto-refresh/should-refresh-project-understanding.ts"
+      ],
+      "external": []
+    },
+    "electron/runtime/project-understanding-auto-refresh/refresh-project-understanding.test.ts": {
+      "internal": [
+        "electron/runtime/project-understanding-auto-refresh/refresh-project-understanding.ts",
+        "electron/runtime/project-understanding-auto-refresh/run-project-understanding-refresh.ts"
+      ],
+      "external": [
+        "path",
+        "vitest"
+      ]
+    },
+    "electron/runtime/project-understanding-auto-refresh/refresh-project-understanding.ts": {
+      "internal": [
+        "electron/runtime/project-understanding-auto-refresh/project-understanding-refresh-result.ts",
+        "electron/runtime/project-understanding-auto-refresh/run-project-understanding-refresh.ts",
+        "electron/runtime/project-understanding-auto-refresh/should-refresh-project-understanding.ts"
+      ],
+      "external": [
+        "path"
+      ]
+    },
+    "electron/runtime/project-understanding-auto-refresh/run-project-understanding-refresh.test.ts": {
+      "internal": [
+        "electron/runtime/project-understanding-auto-refresh/run-project-understanding-refresh.ts"
+      ],
+      "external": [
+        "vitest"
+      ]
+    },
+    "electron/runtime/project-understanding-auto-refresh/run-project-understanding-refresh.ts": {
+      "internal": [
+        "electron/runtime/project-understanding-auto-refresh/project-understanding-refresh-result.ts"
+      ],
+      "external": []
+    },
+    "electron/runtime/project-understanding-auto-refresh/should-refresh-project-understanding.test.ts": {
+      "internal": [
+        "electron/runtime/project-understanding-auto-refresh/should-refresh-project-understanding.ts"
+      ],
+      "external": [
+        "vitest"
+      ]
+    },
+    "electron/runtime/project-understanding-loader/index.ts": {
+      "internal": [
+        "electron/runtime/project-understanding-loader/load-project-understanding-artifacts.ts"
+      ],
+      "external": []
+    },
+    "electron/runtime/project-understanding-loader/load-project-understanding-artifacts.test.ts": {
+      "internal": [
+        "electron/runtime/project-understanding-loader/load-project-understanding-artifacts.ts"
+      ],
+      "external": [
+        "path",
+        "vitest"
+      ]
+    },
+    "electron/runtime/project-understanding-loader/load-project-understanding-artifacts.ts": {
+      "internal": [
+        "electron/runtime/project-understanding-loader/project-understanding-artifact-bundle.ts"
+      ],
+      "external": [
+        "fs",
+        "path"
+      ]
+    },
+    "electron/runtime/repair-engine-bridge/index.ts": {
+      "internal": [
+        "electron/runtime/repair-engine-bridge/map-electron-input-to-orchestrator-input.ts",
+        "electron/runtime/repair-engine-bridge/map-orchestrator-result-to-electron-result.ts",
+        "electron/runtime/repair-engine-bridge/run-electron-repair-bridge.ts"
+      ],
+      "external": []
+    },
+    "electron/runtime/repair-engine-bridge/map-electron-input-to-orchestrator-input.ts": {
+      "internal": [
+        "electron/gates/repair/repair-loop-orchestrator.ts",
+        "src/repair-engine/contracts/repair-engine-event.ts",
+        "src/repair-engine/orchestrator"
+      ],
+      "external": []
+    },
+    "electron/runtime/repair-engine-bridge/map-orchestrator-result-to-electron-result.ts": {
+      "internal": [
+        "electron/gates/repair/operator-handoff-mapper.ts",
+        "electron/gates/repair/operator-handoff.ts",
+        "electron/gates/repair/repair-run-outcome.ts",
+        "electron/gates/repair/repair-run-verdict-mapper.ts",
+        "electron/gates/repair/repair-state.ts",
+        "src/repair-engine/orchestrator",
+        "src/repair-engine/project-understanding-runtime"
+      ],
+      "external": []
+    },
+    "electron/runtime/repair-engine-bridge/run-electron-repair-bridge.test.ts": {
+      "internal": [
+        "electron/gates/repair/repair-loop-orchestrator.ts",
+        "electron/runtime/repair-engine-bridge/map-electron-input-to-orchestrator-input.ts",
+        "electron/runtime/repair-engine-bridge/map-orchestrator-result-to-electron-result.ts",
+        "electron/runtime/repair-engine-bridge/run-electron-repair-bridge.ts",
+        "src/repair-engine/governance-runtime",
+        "src/repair-engine/orchestrator",
+        "src/repair-engine/project-understanding-runtime"
+      ],
+      "external": [
+        "vitest"
+      ]
+    },
+    "electron/runtime/repair-engine-bridge/run-electron-repair-bridge.ts": {
+      "internal": [
+        "electron/runtime/project-understanding-loader",
+        "electron/runtime/repair-engine-bridge/map-electron-input-to-orchestrator-input.ts",
+        "electron/runtime/repair-engine-bridge/map-orchestrator-result-to-electron-result.ts",
+        "src/repair-engine/governance-runtime",
+        "src/repair-engine/orchestrator",
+        "src/repair-engine/project-understanding-runtime"
+      ],
+      "external": []
+    },
+    "electron/runtime/runtime-advisory-projection/index.ts": {
+      "internal": [
+        "electron/runtime/runtime-advisory-projection/map-hero-runtime-result-to-operator-advisory-projection.ts"
+      ],
+      "external": []
+    },
+    "electron/runtime/runtime-advisory-projection/map-hero-runtime-result-to-operator-advisory-projection.test.ts": {
+      "internal": [
+        "electron/runtime/heroes-runtime/hero-runtime-result.ts",
+        "electron/runtime/runtime-advisory-projection/map-hero-runtime-result-to-operator-advisory-projection.ts"
+      ],
+      "external": [
+        "vitest"
+      ]
+    },
+    "electron/runtime/runtime-advisory-projection/map-hero-runtime-result-to-operator-advisory-projection.ts": {
+      "internal": [
+        "electron/runtime/heroes-runtime/hero-runtime-result.ts",
+        "electron/runtime/runtime-advisory-projection/operator-runtime-advisory-projection.ts"
+      ],
+      "external": []
+    },
+    "electron/runtime/webhook-intake/create-webhook-server.test.ts": {
+      "internal": [
+        "electron/runtime/webhook-intake/create-webhook-server.ts",
+        "electron/runtime/webhook-intake/webhook-intake-handler.ts"
+      ],
+      "external": [
+        "crypto",
+        "http",
+        "vitest"
+      ]
+    },
+    "electron/runtime/webhook-intake/create-webhook-server.ts": {
+      "internal": [
+        "electron/runtime/webhook-intake/webhook-intake-handler.ts",
+        "electron/runtime/webhook-security"
+      ],
+      "external": [
+        "http"
+      ]
+    },
+    "electron/runtime/webhook-intake/index.ts": {
+      "internal": [
+        "electron/runtime/webhook-intake/create-webhook-server.ts",
+        "electron/runtime/webhook-intake/parse-webhook-request.ts",
+        "electron/runtime/webhook-intake/start-webhook-server.ts",
+        "electron/runtime/webhook-intake/webhook-intake-handler.ts"
+      ],
+      "external": []
+    },
+    "electron/runtime/webhook-intake/parse-webhook-request.test.ts": {
+      "internal": [
+        "electron/runtime/webhook-intake/parse-webhook-request.ts"
+      ],
+      "external": [
+        "vitest"
+      ]
+    },
+    "electron/runtime/webhook-intake/parse-webhook-request.ts": {
+      "internal": [
+        "src/github/event-intake/github-webhook-input.ts"
+      ],
+      "external": []
+    },
+    "electron/runtime/webhook-intake/start-webhook-server.test.ts": {
+      "internal": [
+        "electron/runtime/webhook-intake/create-webhook-server.ts",
+        "electron/runtime/webhook-intake/start-webhook-server.ts"
+      ],
+      "external": [
+        "vitest"
+      ]
+    },
+    "electron/runtime/webhook-intake/start-webhook-server.ts": {
+      "internal": [
+        "electron/runtime/webhook-intake/create-webhook-server.ts"
+      ],
+      "external": []
+    },
+    "electron/runtime/webhook-intake/webhook-intake-handler.test.ts": {
+      "internal": [
+        "electron/runtime/webhook-intake/webhook-intake-handler.ts",
+        "src/repair-engine/orchestrator"
+      ],
+      "external": [
+        "vitest"
+      ]
+    },
+    "electron/runtime/webhook-intake/webhook-intake-handler.ts": {
+      "internal": [
+        "electron/runtime/heroes-runtime",
+        "electron/runtime/project-understanding-auto-refresh",
+        "electron/runtime/project-understanding-loader",
+        "electron/runtime/runtime-advisory-projection",
+        "electron/runtime/webhook-intake/parse-webhook-request.ts",
+        "src/github/event-intake/normalize-github-event.ts",
+        "src/github/intake-bridge/derive-github-repair-intake.ts",
+        "src/github/intake-bridge/map-github-repair-intake-to-orchestrator-input.ts",
+        "src/github/pr-inspection/inspect-pull-request.ts",
+        "src/github/pr-intelligence/derive-pr-intelligence.ts",
+        "src/repair-engine/governance-runtime",
+        "src/repair-engine/orchestrator",
+        "src/repair-engine/project-understanding-runtime"
+      ],
+      "external": []
+    },
+    "electron/runtime/webhook-security/index.ts": {
+      "internal": [
+        "electron/runtime/webhook-security/parse-webhook-signature.ts",
+        "electron/runtime/webhook-security/verify-webhook-signature.ts"
+      ],
+      "external": []
+    },
+    "electron/runtime/webhook-security/parse-webhook-signature.test.ts": {
+      "internal": [
+        "electron/runtime/webhook-security/parse-webhook-signature.ts"
+      ],
+      "external": [
+        "vitest"
+      ]
+    },
+    "electron/runtime/webhook-security/verify-webhook-signature.test.ts": {
+      "internal": [
+        "electron/runtime/webhook-security/verify-webhook-signature.ts"
+      ],
+      "external": [
+        "crypto",
+        "vitest"
+      ]
+    },
+    "electron/runtime/webhook-security/verify-webhook-signature.ts": {
+      "internal": [
+        "electron/runtime/webhook-security/parse-webhook-signature.ts",
+        "electron/runtime/webhook-security/webhook-signature-verification-result.ts"
+      ],
+      "external": [
+        "crypto"
+      ]
     },
     "src/desktop/App.tsx": {
       "internal": [
@@ -1305,8 +1687,27 @@
     "src/github/intake-bridge/index.ts": {
       "internal": [
         "src/github/intake-bridge/derive-github-repair-intake.ts",
+        "src/github/intake-bridge/map-github-repair-intake-to-orchestrator-input.ts",
         "src/github/intake-bridge/repair-intake-source.ts",
         "src/github/intake-bridge/repair-intake-trigger.ts"
+      ],
+      "external": []
+    },
+    "src/github/intake-bridge/map-github-repair-intake-to-orchestrator-input.test.ts": {
+      "internal": [
+        "src/github/intake-bridge/github-repair-intake-event.ts",
+        "src/github/intake-bridge/map-github-repair-intake-to-orchestrator-input.ts"
+      ],
+      "external": [
+        "vitest"
+      ]
+    },
+    "src/github/intake-bridge/map-github-repair-intake-to-orchestrator-input.ts": {
+      "internal": [
+        "src/github/intake-bridge/github-repair-intake-event.ts",
+        "src/repair-engine/contracts/repair-engine-event-type.ts",
+        "src/repair-engine/contracts/repair-engine-event.ts",
+        "src/repair-engine/orchestrator"
       ],
       "external": []
     },
@@ -2294,6 +2695,49 @@
       ],
       "external": []
     },
+    "src/repair-engine/governance-runtime/bind-governance-runtime.test.ts": {
+      "internal": [
+        "src/repair-engine/governance-runtime/bind-governance-runtime.ts",
+        "src/repair-engine/orchestrator"
+      ],
+      "external": [
+        "vitest"
+      ]
+    },
+    "src/repair-engine/governance-runtime/bind-governance-runtime.ts": {
+      "internal": [
+        "src/repair-engine/governance-runtime/derive-governance-runtime-decision.ts",
+        "src/repair-engine/governance-runtime/governance-runtime-result.ts",
+        "src/repair-engine/orchestrator"
+      ],
+      "external": []
+    },
+    "src/repair-engine/governance-runtime/derive-governance-runtime-decision.ts": {
+      "internal": [
+        "src/governance/policy-integration/derive-governance-gate.ts",
+        "src/governance/risk",
+        "src/governance/risk/classify-risk.ts",
+        "src/governance/security-policy/evaluate-security-policy.ts",
+        "src/governance/zones/classify-zone.ts",
+        "src/repair-engine/governance-runtime/governance-runtime-result.ts",
+        "src/repair-engine/orchestrator"
+      ],
+      "external": []
+    },
+    "src/repair-engine/governance-runtime/governance-runtime-result.ts": {
+      "internal": [
+        "src/governance/security-policy"
+      ],
+      "external": []
+    },
+    "src/repair-engine/governance-runtime/index.ts": {
+      "internal": [
+        "src/repair-engine/governance-runtime/bind-governance-runtime.ts",
+        "src/repair-engine/governance-runtime/derive-governance-runtime-decision.ts",
+        "src/repair-engine/governance-runtime/governance-runtime-decision.ts"
+      ],
+      "external": []
+    },
     "src/repair-engine/intake/repair-engine-event-intake.test.ts": {
       "internal": [
         "src/repair-engine/intake/repair-engine-event-intake.ts"
@@ -2456,6 +2900,139 @@
       "internal": [
         "src/repair-engine/contracts/confidence/confidence-level.ts",
         "src/repair-engine/routing/repair-operator-decision.ts"
+      ],
+      "external": []
+    },
+    "src/repair-engine/orchestrator/index.ts": {
+      "internal": [
+        "src/repair-engine/orchestrator/orchestrate-repair-engine.ts",
+        "src/repair-engine/orchestrator/orchestrator-stage-name.ts",
+        "src/repair-engine/orchestrator/orchestrator-status.ts",
+        "src/repair-engine/orchestrator/resolve-orchestration-routing-outcome.ts",
+        "src/repair-engine/orchestrator/run-repair-engine-pipeline.ts"
+      ],
+      "external": []
+    },
+    "src/repair-engine/orchestrator/orchestrate-repair-engine.test.ts": {
+      "internal": [
+        "src/repair-engine/contracts/repair-engine-event.ts",
+        "src/repair-engine/orchestrator/orchestrate-repair-engine.ts",
+        "src/repair-engine/orchestrator/orchestrator-stage-name.ts",
+        "src/repair-engine/orchestrator/repair-engine-orchestrator-input.ts",
+        "src/repair-engine/orchestrator/resolve-orchestration-routing-outcome.ts",
+        "src/repair-engine/orchestrator/run-repair-engine-pipeline.ts"
+      ],
+      "external": [
+        "vitest"
+      ]
+    },
+    "src/repair-engine/orchestrator/orchestrate-repair-engine.ts": {
+      "internal": [
+        "src/repair-engine/orchestrator/orchestrator-stage-name.ts",
+        "src/repair-engine/orchestrator/orchestrator-status.ts",
+        "src/repair-engine/orchestrator/repair-engine-orchestrator-input.ts",
+        "src/repair-engine/orchestrator/repair-engine-orchestrator-result.ts",
+        "src/repair-engine/orchestrator/repair-engine-orchestrator-trace-entry.ts",
+        "src/repair-engine/orchestrator/resolve-orchestration-routing-outcome.ts",
+        "src/repair-engine/orchestrator/run-repair-engine-pipeline.ts"
+      ],
+      "external": []
+    },
+    "src/repair-engine/orchestrator/repair-engine-orchestrator-input.ts": {
+      "internal": [
+        "src/repair-engine/contracts/repair-engine-event.ts"
+      ],
+      "external": []
+    },
+    "src/repair-engine/orchestrator/repair-engine-orchestrator-result.ts": {
+      "internal": [
+        "src/repair-engine/contracts/confidence",
+        "src/repair-engine/contracts/repair-engine-evaluation.ts",
+        "src/repair-engine/contracts/repair-engine-event-intake-result.ts",
+        "src/repair-engine/contracts/repair-engine-event.ts",
+        "src/repair-engine/contracts/repair-strategy-candidate.ts",
+        "src/repair-engine/contracts/repair-verdict-result.ts",
+        "src/repair-engine/orchestrator/orchestrator-status.ts",
+        "src/repair-engine/orchestrator/repair-engine-orchestrator-input.ts",
+        "src/repair-engine/orchestrator/repair-engine-orchestrator-trace-entry.ts",
+        "src/repair-engine/orchestrator/resolve-orchestration-routing-outcome.ts",
+        "src/repair-engine/queue-entry/repair-queue-entry.ts",
+        "src/repair-engine/routing/repair-operator-decision.ts",
+        "src/repair-engine/run/repair-run-lifecycle.ts",
+        "src/repair-engine/run/repair-run.ts"
+      ],
+      "external": []
+    },
+    "src/repair-engine/orchestrator/repair-engine-orchestrator-trace-entry.ts": {
+      "internal": [
+        "src/repair-engine/orchestrator/orchestrator-stage-name.ts"
+      ],
+      "external": []
+    },
+    "src/repair-engine/orchestrator/resolve-orchestration-routing-outcome.ts": {
+      "internal": [
+        "src/repair-engine/contracts/repair-verdict-result.ts",
+        "src/repair-engine/routing/repair-operator-decision.ts"
+      ],
+      "external": []
+    },
+    "src/repair-engine/orchestrator/run-repair-engine-pipeline.ts": {
+      "internal": [
+        "src/repair-engine/confidence/derive-confidence-from-signals.ts",
+        "src/repair-engine/contracts/confidence",
+        "src/repair-engine/contracts/repair-engine-evaluation.ts",
+        "src/repair-engine/contracts/repair-engine-event-intake-result.ts",
+        "src/repair-engine/contracts/repair-engine-event.ts",
+        "src/repair-engine/contracts/repair-lifecycle-state.ts",
+        "src/repair-engine/contracts/repair-strategy-candidate.ts",
+        "src/repair-engine/contracts/repair-verdict-result.ts",
+        "src/repair-engine/intake/repair-engine-event-intake.ts",
+        "src/repair-engine/queue-entry/repair-queue-entry.ts",
+        "src/repair-engine/queue/repair-item.ts",
+        "src/repair-engine/routing/repair-operator-decision.ts",
+        "src/repair-engine/routing/repair-verdict-router.ts",
+        "src/repair-engine/run/repair-run-builder.ts",
+        "src/repair-engine/run/repair-run-lifecycle.ts",
+        "src/repair-engine/run/repair-run.ts",
+        "src/repair-engine/state-machine/repair-state-machine.ts",
+        "src/repair-engine/strategy/repair-strategy-selector.ts",
+        "src/repair-engine/timeline/incident-timeline-entry.ts",
+        "src/repair-engine/timeline/incident-timeline.ts",
+        "src/repair-engine/verdict/repair-verdict-engine.ts"
+      ],
+      "external": []
+    },
+    "src/repair-engine/project-understanding-runtime/bind-project-understanding-runtime.test.ts": {
+      "internal": [
+        "src/repair-engine/governance-runtime",
+        "src/repair-engine/orchestrator",
+        "src/repair-engine/project-understanding-runtime/bind-project-understanding-runtime.ts",
+        "src/repair-engine/project-understanding-runtime/project-understanding-runtime-input.ts"
+      ],
+      "external": [
+        "vitest"
+      ]
+    },
+    "src/repair-engine/project-understanding-runtime/bind-project-understanding-runtime.ts": {
+      "internal": [
+        "src/repair-engine/governance-runtime",
+        "src/repair-engine/project-understanding-runtime/derive-project-understanding-runtime.ts",
+        "src/repair-engine/project-understanding-runtime/project-understanding-runtime-input.ts",
+        "src/repair-engine/project-understanding-runtime/project-understanding-runtime-result.ts"
+      ],
+      "external": []
+    },
+    "src/repair-engine/project-understanding-runtime/derive-project-understanding-runtime.ts": {
+      "internal": [
+        "src/repair-engine/project-understanding-runtime/project-understanding-runtime-input.ts",
+        "src/repair-engine/project-understanding-runtime/project-understanding-runtime-result.ts"
+      ],
+      "external": []
+    },
+    "src/repair-engine/project-understanding-runtime/index.ts": {
+      "internal": [
+        "src/repair-engine/project-understanding-runtime/bind-project-understanding-runtime.ts",
+        "src/repair-engine/project-understanding-runtime/derive-project-understanding-runtime.ts"
       ],
       "external": []
     },
@@ -2916,6 +3493,70 @@
       ],
       "external": []
     },
+    "tools/project-understanding/lib/ownership-inference/build-ownership-map.mjs": {
+      "internal": [
+        "tools/project-understanding/lib/ownership-inference/bucket-rules.mjs",
+        "tools/project-understanding/lib/ownership-inference/explanation-templates.mjs",
+        "tools/project-understanding/lib/ownership-inference/infer-dependency-affinity.mjs",
+        "tools/project-understanding/lib/ownership-inference/infer-hotspot-affinity.mjs",
+        "tools/project-understanding/lib/ownership-inference/infer-path-affinity.mjs",
+        "tools/project-understanding/lib/ownership-inference/infer-role-affinity.mjs",
+        "tools/project-understanding/lib/ownership-inference/infer-test-affinity.mjs",
+        "tools/project-understanding/lib/ownership-inference/normalize-score.mjs",
+        "tools/project-understanding/lib/ownership-inference/score-ownership-signals.mjs"
+      ],
+      "external": []
+    },
+    "tools/project-understanding/lib/ownership-inference/index.mjs": {
+      "internal": [
+        "tools/project-understanding/lib/ownership-inference/bucket-rules.mjs",
+        "tools/project-understanding/lib/ownership-inference/build-ownership-map.mjs",
+        "tools/project-understanding/lib/ownership-inference/normalize-score.mjs"
+      ],
+      "external": []
+    },
+    "tools/project-understanding/lib/ownership-inference/infer-dependency-affinity.mjs": {
+      "internal": [
+        "tools/project-understanding/lib/ownership-inference/bucket-rules.mjs",
+        "tools/project-understanding/lib/ownership-inference/normalize-score.mjs"
+      ],
+      "external": []
+    },
+    "tools/project-understanding/lib/ownership-inference/infer-hotspot-affinity.mjs": {
+      "internal": [
+        "tools/project-understanding/lib/ownership-inference/bucket-rules.mjs",
+        "tools/project-understanding/lib/ownership-inference/normalize-score.mjs"
+      ],
+      "external": []
+    },
+    "tools/project-understanding/lib/ownership-inference/infer-path-affinity.mjs": {
+      "internal": [
+        "tools/project-understanding/lib/ownership-inference/bucket-rules.mjs",
+        "tools/project-understanding/lib/ownership-inference/normalize-score.mjs"
+      ],
+      "external": []
+    },
+    "tools/project-understanding/lib/ownership-inference/infer-role-affinity.mjs": {
+      "internal": [
+        "tools/project-understanding/lib/ownership-inference/bucket-rules.mjs",
+        "tools/project-understanding/lib/ownership-inference/normalize-score.mjs"
+      ],
+      "external": []
+    },
+    "tools/project-understanding/lib/ownership-inference/infer-test-affinity.mjs": {
+      "internal": [
+        "tools/project-understanding/lib/ownership-inference/bucket-rules.mjs",
+        "tools/project-understanding/lib/ownership-inference/normalize-score.mjs"
+      ],
+      "external": []
+    },
+    "tools/project-understanding/lib/ownership-inference/score-ownership-signals.mjs": {
+      "internal": [
+        "tools/project-understanding/lib/ownership-inference/bucket-rules.mjs",
+        "tools/project-understanding/lib/ownership-inference/normalize-score.mjs"
+      ],
+      "external": []
+    },
     "tools/project-understanding/module-mapping.mjs": {
       "internal": [
         "tools/project-understanding/lib/module-mapping/derive-module-map.mjs"
@@ -2942,9 +3583,51 @@
         "url"
       ]
     },
+    "tools/project-understanding/ownership-inference.mjs": {
+      "internal": [
+        "tools/project-understanding/lib/ownership-inference/build-ownership-map.mjs"
+      ],
+      "external": [
+        "fs",
+        "path",
+        "url"
+      ]
+    },
+    "tools/project-understanding/ownership-inference.test.mjs": {
+      "internal": [
+        "tools/project-understanding/lib/ownership-inference/index.mjs"
+      ],
+      "external": [
+        "assert",
+        "fs",
+        "path",
+        "url"
+      ]
+    },
     "tools/project-understanding/repo-scanner.mjs": {
       "internal": [],
       "external": [
+        "fs",
+        "path",
+        "url"
+      ]
+    },
+    "tools/project-understanding/risk-hotspots.mjs": {
+      "internal": [
+        "tools/project-understanding/lib/risk-hotspots/build-hotspot-report.mjs"
+      ],
+      "external": [
+        "fs",
+        "path",
+        "url"
+      ]
+    },
+    "tools/project-understanding/risk-hotspots.test.mjs": {
+      "internal": [
+        "tools/project-understanding/lib/risk-hotspots/build-hotspot-report.mjs"
+      ],
+      "external": [
+        "assert",
         "fs",
         "path",
         "url"
@@ -2969,9 +3652,11 @@
     "@vitejs/plugin-react",
     "assert",
     "child_process",
+    "crypto",
     "electron",
     "electron-updater",
     "fs",
+    "http",
     "lodash",
     "openai",
     "path",

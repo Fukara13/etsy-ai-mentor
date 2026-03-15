@@ -45,12 +45,18 @@ describe('preload security contract', () => {
       'getRepairStrategyView',
       'getTelemetryView',
       'getDecisionView',
+      'getOperatorAdvisoryProjection',
     ]
     const content = readPreload()
     for (const m of expectedReadMethods) {
       expect(content).toContain(m)
     }
-    expect(content).toContain('getDecisionView')
+  })
+
+  it('preload getOperatorAdvisoryProjection invokes operator channel (OC-7)', () => {
+    const content = readPreload()
+    expect(content).toContain('OPERATOR_GET_ADVISORY_PROJECTION')
+    expect(content).toContain('operator:get-advisory-projection')
   })
 
   it('preload system API includes getVersion (DC-12)', () => {

@@ -25,7 +25,8 @@
     "test:risk-hotspots": "node tools/project-understanding/risk-hotspots.test.mjs",
     "ai-devos:risk-hotspots": "node tools/project-understanding/risk-hotspots.mjs",
     "test:ownership-inference": "node tools/project-understanding/ownership-inference.test.mjs",
-    "ai-devos:ownership-inference": "node tools/project-understanding/ownership-inference.mjs"
+    "ai-devos:ownership-inference": "node tools/project-understanding/ownership-inference.mjs",
+    "gate:snapshot": "pwsh -NoProfile -File scripts/gate-snapshot.ps1"
   },
   "build": {
     "appId": "com.etsy-mentor.desktop",

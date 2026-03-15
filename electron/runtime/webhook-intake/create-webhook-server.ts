@@ -81,7 +81,9 @@ export function createWebhookServer(options?: {
       cwd,
     });
 
-    res.writeHead(response.statusCode);
+    const resHeaders: Record<string, string> = {};
+    if (response.body) resHeaders['Content-Type'] = 'application/json';
+    res.writeHead(response.statusCode, resHeaders);
     res.end(response.body ?? '');
   });
 }

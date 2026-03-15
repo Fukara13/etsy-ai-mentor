@@ -4,11 +4,11 @@
     "dependencyGraphPath": ".ai-devos/dependency-graph.json"
   },
   "summary": {
-    "totalFiles": 353,
-    "mappedFiles": 353,
+    "totalFiles": 427,
+    "mappedFiles": 427,
     "unassignedFiles": 0,
-    "moduleCount": 15,
-    "crossModuleEdgeCount": 4
+    "moduleCount": 16,
+    "crossModuleEdgeCount": 10
   },
   "modules": [
     {
@@ -45,7 +45,16 @@
       "rootPaths": [
         "electron/ipc"
       ],
-      "fileCount": 4
+      "fileCount": 6
+    },
+    {
+      "id": "electron-runtime",
+      "name": "electron/runtime",
+      "kind": "feature",
+      "rootPaths": [
+        "electron/runtime"
+      ],
+      "fileCount": 41
     },
     {
       "id": "src-desktop",
@@ -63,7 +72,7 @@
       "rootPaths": [
         "src/github"
       ],
-      "fileCount": 19
+      "fileCount": 21
     },
     {
       "id": "src-governance",
@@ -99,7 +108,7 @@
       "rootPaths": [
         "src/repair-engine"
       ],
-      "fileCount": 94
+      "fileCount": 111
     },
     {
       "id": "src-shared",
@@ -126,7 +135,7 @@
       "rootPaths": [
         "tools/project-understanding"
       ],
-      "fileCount": 14
+      "fileCount": 26
     },
     {
       "id": "vite.config.ts",
@@ -761,6 +770,264 @@
       "reason": "root: electron/ipc"
     },
     {
+      "filePath": "electron/ipc/repair/trigger-repair-run-ipc.test.ts",
+      "moduleId": "electron-ipc",
+      "classification": "mapped",
+      "reason": "root: electron/ipc"
+    },
+    {
+      "filePath": "electron/ipc/repair/trigger-repair-run-ipc.ts",
+      "moduleId": "electron-ipc",
+      "classification": "mapped",
+      "reason": "root: electron/ipc"
+    },
+    {
+      "filePath": "electron/runtime/heroes-runtime/default-runtime-hero-adapters.ts",
+      "moduleId": "electron-runtime",
+      "classification": "mapped",
+      "reason": "root: electron/runtime"
+    },
+    {
+      "filePath": "electron/runtime/heroes-runtime/hero-runtime-advisory.test.ts",
+      "moduleId": "electron-runtime",
+      "classification": "mapped",
+      "reason": "root: electron/runtime"
+    },
+    {
+      "filePath": "electron/runtime/heroes-runtime/hero-runtime-advisory.ts",
+      "moduleId": "electron-runtime",
+      "classification": "mapped",
+      "reason": "root: electron/runtime"
+    },
+    {
+      "filePath": "electron/runtime/heroes-runtime/hero-runtime-invocation.ts",
+      "moduleId": "electron-runtime",
+      "classification": "mapped",
+      "reason": "root: electron/runtime"
+    },
+    {
+      "filePath": "electron/runtime/heroes-runtime/hero-runtime-result.ts",
+      "moduleId": "electron-runtime",
+      "classification": "mapped",
+      "reason": "root: electron/runtime"
+    },
+    {
+      "filePath": "electron/runtime/heroes-runtime/hero-runtime-selection.test.ts",
+      "moduleId": "electron-runtime",
+      "classification": "mapped",
+      "reason": "root: electron/runtime"
+    },
+    {
+      "filePath": "electron/runtime/heroes-runtime/hero-runtime-selection.ts",
+      "moduleId": "electron-runtime",
+      "classification": "mapped",
+      "reason": "root: electron/runtime"
+    },
+    {
+      "filePath": "electron/runtime/heroes-runtime/index.ts",
+      "moduleId": "electron-runtime",
+      "classification": "mapped",
+      "reason": "root: electron/runtime"
+    },
+    {
+      "filePath": "electron/runtime/heroes-runtime/run-heroes-runtime.test.ts",
+      "moduleId": "electron-runtime",
+      "classification": "mapped",
+      "reason": "root: electron/runtime"
+    },
+    {
+      "filePath": "electron/runtime/heroes-runtime/run-heroes-runtime.ts",
+      "moduleId": "electron-runtime",
+      "classification": "mapped",
+      "reason": "root: electron/runtime"
+    },
+    {
+      "filePath": "electron/runtime/project-understanding-auto-refresh/default-runtime-adapters.ts",
+      "moduleId": "electron-runtime",
+      "classification": "mapped",
+      "reason": "root: electron/runtime"
+    },
+    {
+      "filePath": "electron/runtime/project-understanding-auto-refresh/index.ts",
+      "moduleId": "electron-runtime",
+      "classification": "mapped",
+      "reason": "root: electron/runtime"
+    },
+    {
+      "filePath": "electron/runtime/project-understanding-auto-refresh/refresh-project-understanding.test.ts",
+      "moduleId": "electron-runtime",
+      "classification": "mapped",
+      "reason": "root: electron/runtime"
+    },
+    {
+      "filePath": "electron/runtime/project-understanding-auto-refresh/refresh-project-understanding.ts",
+      "moduleId": "electron-runtime",
+      "classification": "mapped",
+      "reason": "root: electron/runtime"
+    },
+    {
+      "filePath": "electron/runtime/project-understanding-auto-refresh/run-project-understanding-refresh.test.ts",
+      "moduleId": "electron-runtime",
+      "classification": "mapped",
+      "reason": "root: electron/runtime"
+    },
+    {
+      "filePath": "electron/runtime/project-understanding-auto-refresh/run-project-understanding-refresh.ts",
+      "moduleId": "electron-runtime",
+      "classification": "mapped",
+      "reason": "root: electron/runtime"
+    },
+    {
+      "filePath": "electron/runtime/project-understanding-auto-refresh/should-refresh-project-understanding.test.ts",
+      "moduleId": "electron-runtime",
+      "classification": "mapped",
+      "reason": "root: electron/runtime"
+    },
+    {
+      "filePath": "electron/runtime/project-understanding-loader/index.ts",
+      "moduleId": "electron-runtime",
+      "classification": "mapped",
+      "reason": "root: electron/runtime"
+    },
+    {
+      "filePath": "electron/runtime/project-understanding-loader/load-project-understanding-artifacts.test.ts",
+      "moduleId": "electron-runtime",
+      "classification": "mapped",
+      "reason": "root: electron/runtime"
+    },
+    {
+      "filePath": "electron/runtime/project-understanding-loader/load-project-understanding-artifacts.ts",
+      "moduleId": "electron-runtime",
+      "classification": "mapped",
+      "reason": "root: electron/runtime"
+    },
+    {
+      "filePath": "electron/runtime/repair-engine-bridge/index.ts",
+      "moduleId": "electron-runtime",
+      "classification": "mapped",
+      "reason": "root: electron/runtime"
+    },
+    {
+      "filePath": "electron/runtime/repair-engine-bridge/map-electron-input-to-orchestrator-input.ts",
+      "moduleId": "electron-runtime",
+      "classification": "mapped",
+      "reason": "root: electron/runtime"
+    },
+    {
+      "filePath": "electron/runtime/repair-engine-bridge/map-orchestrator-result-to-electron-result.ts",
+      "moduleId": "electron-runtime",
+      "classification": "mapped",
+      "reason": "root: electron/runtime"
+    },
+    {
+      "filePath": "electron/runtime/repair-engine-bridge/run-electron-repair-bridge.test.ts",
+      "moduleId": "electron-runtime",
+      "classification": "mapped",
+      "reason": "root: electron/runtime"
+    },
+    {
+      "filePath": "electron/runtime/repair-engine-bridge/run-electron-repair-bridge.ts",
+      "moduleId": "electron-runtime",
+      "classification": "mapped",
+      "reason": "root: electron/runtime"
+    },
+    {
+      "filePath": "electron/runtime/runtime-advisory-projection/index.ts",
+      "moduleId": "electron-runtime",
+      "classification": "mapped",
+      "reason": "root: electron/runtime"
+    },
+    {
+      "filePath": "electron/runtime/runtime-advisory-projection/map-hero-runtime-result-to-operator-advisory-projection.test.ts",
+      "moduleId": "electron-runtime",
+      "classification": "mapped",
+      "reason": "root: electron/runtime"
+    },
+    {
+      "filePath": "electron/runtime/runtime-advisory-projection/map-hero-runtime-result-to-operator-advisory-projection.ts",
+      "moduleId": "electron-runtime",
+      "classification": "mapped",
+      "reason": "root: electron/runtime"
+    },
+    {
+      "filePath": "electron/runtime/webhook-intake/create-webhook-server.test.ts",
+      "moduleId": "electron-runtime",
+      "classification": "mapped",
+      "reason": "root: electron/runtime"
+    },
+    {
+      "filePath": "electron/runtime/webhook-intake/create-webhook-server.ts",
+      "moduleId": "electron-runtime",
+      "classification": "mapped",
+      "reason": "root: electron/runtime"
+    },
+    {
+      "filePath": "electron/runtime/webhook-intake/index.ts",
+      "moduleId": "electron-runtime",
+      "classification": "mapped",
+      "reason": "root: electron/runtime"
+    },
+    {
+      "filePath": "electron/runtime/webhook-intake/parse-webhook-request.test.ts",
+      "moduleId": "electron-runtime",
+      "classification": "mapped",
+      "reason": "root: electron/runtime"
+    },
+    {
+      "filePath": "electron/runtime/webhook-intake/parse-webhook-request.ts",
+      "moduleId": "electron-runtime",
+      "classification": "mapped",
+      "reason": "root: electron/runtime"
+    },
+    {
+      "filePath": "electron/runtime/webhook-intake/start-webhook-server.test.ts",
+      "moduleId": "electron-runtime",
+      "classification": "mapped",
+      "reason": "root: electron/runtime"
+    },
+    {
+      "filePath": "electron/runtime/webhook-intake/start-webhook-server.ts",
+      "moduleId": "electron-runtime",
+      "classification": "mapped",
+      "reason": "root: electron/runtime"
+    },
+    {
+      "filePath": "electron/runtime/webhook-intake/webhook-intake-handler.test.ts",
+      "moduleId": "electron-runtime",
+      "classification": "mapped",
+      "reason": "root: electron/runtime"
+    },
+    {
+      "filePath": "electron/runtime/webhook-intake/webhook-intake-handler.ts",
+      "moduleId": "electron-runtime",
+      "classification": "mapped",
+      "reason": "root: electron/runtime"
+    },
+    {
+      "filePath": "electron/runtime/webhook-security/index.ts",
+      "moduleId": "electron-runtime",
+      "classification": "mapped",
+      "reason": "root: electron/runtime"
+    },
+    {
+      "filePath": "electron/runtime/webhook-security/parse-webhook-signature.test.ts",
+      "moduleId": "electron-runtime",
+      "classification": "mapped",
+      "reason": "root: electron/runtime"
+    },
+    {
+      "filePath": "electron/runtime/webhook-security/verify-webhook-signature.test.ts",
+      "moduleId": "electron-runtime",
+      "classification": "mapped",
+      "reason": "root: electron/runtime"
+    },
+    {
+      "filePath": "electron/runtime/webhook-security/verify-webhook-signature.ts",
+      "moduleId": "electron-runtime",
+      "classification": "mapped",
+      "reason": "root: electron/runtime"
+    },
+    {
       "filePath": "src/desktop/analysis/analysis-view.mapper.test.ts",
       "moduleId": "src-desktop",
       "classification": "mapped",
@@ -1080,6 +1347,18 @@
     },
     {
       "filePath": "src/github/intake-bridge/index.ts",
+      "moduleId": "src-github",
+      "classification": "mapped",
+      "reason": "root: src/github"
+    },
+    {
+      "filePath": "src/github/intake-bridge/map-github-repair-intake-to-orchestrator-input.test.ts",
+      "moduleId": "src-github",
+      "classification": "mapped",
+      "reason": "root: src/github"
+    },
+    {
+      "filePath": "src/github/intake-bridge/map-github-repair-intake-to-orchestrator-input.ts",
       "moduleId": "src-github",
       "classification": "mapped",
       "reason": "root: src/github"
@@ -1817,6 +2096,36 @@
       "reason": "root: src/repair-engine"
     },
     {
+      "filePath": "src/repair-engine/governance-runtime/bind-governance-runtime.test.ts",
+      "moduleId": "src-repair-engine",
+      "classification": "mapped",
+      "reason": "root: src/repair-engine"
+    },
+    {
+      "filePath": "src/repair-engine/governance-runtime/bind-governance-runtime.ts",
+      "moduleId": "src-repair-engine",
+      "classification": "mapped",
+      "reason": "root: src/repair-engine"
+    },
+    {
+      "filePath": "src/repair-engine/governance-runtime/derive-governance-runtime-decision.ts",
+      "moduleId": "src-repair-engine",
+      "classification": "mapped",
+      "reason": "root: src/repair-engine"
+    },
+    {
+      "filePath": "src/repair-engine/governance-runtime/governance-runtime-result.ts",
+      "moduleId": "src-repair-engine",
+      "classification": "mapped",
+      "reason": "root: src/repair-engine"
+    },
+    {
+      "filePath": "src/repair-engine/governance-runtime/index.ts",
+      "moduleId": "src-repair-engine",
+      "classification": "mapped",
+      "reason": "root: src/repair-engine"
+    },
+    {
       "filePath": "src/repair-engine/intake/repair-engine-event-intake.test.ts",
       "moduleId": "src-repair-engine",
       "classification": "mapped",
@@ -1932,6 +2241,78 @@
     },
     {
       "filePath": "src/repair-engine/operator/repair-operator-decision-surface.ts",
+      "moduleId": "src-repair-engine",
+      "classification": "mapped",
+      "reason": "root: src/repair-engine"
+    },
+    {
+      "filePath": "src/repair-engine/orchestrator/index.ts",
+      "moduleId": "src-repair-engine",
+      "classification": "mapped",
+      "reason": "root: src/repair-engine"
+    },
+    {
+      "filePath": "src/repair-engine/orchestrator/orchestrate-repair-engine.test.ts",
+      "moduleId": "src-repair-engine",
+      "classification": "mapped",
+      "reason": "root: src/repair-engine"
+    },
+    {
+      "filePath": "src/repair-engine/orchestrator/orchestrate-repair-engine.ts",
+      "moduleId": "src-repair-engine",
+      "classification": "mapped",
+      "reason": "root: src/repair-engine"
+    },
+    {
+      "filePath": "src/repair-engine/orchestrator/repair-engine-orchestrator-input.ts",
+      "moduleId": "src-repair-engine",
+      "classification": "mapped",
+      "reason": "root: src/repair-engine"
+    },
+    {
+      "filePath": "src/repair-engine/orchestrator/repair-engine-orchestrator-result.ts",
+      "moduleId": "src-repair-engine",
+      "classification": "mapped",
+      "reason": "root: src/repair-engine"
+    },
+    {
+      "filePath": "src/repair-engine/orchestrator/repair-engine-orchestrator-trace-entry.ts",
+      "moduleId": "src-repair-engine",
+      "classification": "mapped",
+      "reason": "root: src/repair-engine"
+    },
+    {
+      "filePath": "src/repair-engine/orchestrator/resolve-orchestration-routing-outcome.ts",
+      "moduleId": "src-repair-engine",
+      "classification": "mapped",
+      "reason": "root: src/repair-engine"
+    },
+    {
+      "filePath": "src/repair-engine/orchestrator/run-repair-engine-pipeline.ts",
+      "moduleId": "src-repair-engine",
+      "classification": "mapped",
+      "reason": "root: src/repair-engine"
+    },
+    {
+      "filePath": "src/repair-engine/project-understanding-runtime/bind-project-understanding-runtime.test.ts",
+      "moduleId": "src-repair-engine",
+      "classification": "mapped",
+      "reason": "root: src/repair-engine"
+    },
+    {
+      "filePath": "src/repair-engine/project-understanding-runtime/bind-project-understanding-runtime.ts",
+      "moduleId": "src-repair-engine",
+      "classification": "mapped",
+      "reason": "root: src/repair-engine"
+    },
+    {
+      "filePath": "src/repair-engine/project-understanding-runtime/derive-project-understanding-runtime.ts",
+      "moduleId": "src-repair-engine",
+      "classification": "mapped",
+      "reason": "root: src/repair-engine"
+    },
+    {
+      "filePath": "src/repair-engine/project-understanding-runtime/index.ts",
       "moduleId": "src-repair-engine",
       "classification": "mapped",
       "reason": "root: src/repair-engine"
@@ -2237,6 +2618,54 @@
       "reason": "root: tools/project-understanding"
     },
     {
+      "filePath": "tools/project-understanding/lib/ownership-inference/build-ownership-map.mjs",
+      "moduleId": "tools-project-understanding",
+      "classification": "mapped",
+      "reason": "root: tools/project-understanding"
+    },
+    {
+      "filePath": "tools/project-understanding/lib/ownership-inference/index.mjs",
+      "moduleId": "tools-project-understanding",
+      "classification": "mapped",
+      "reason": "root: tools/project-understanding"
+    },
+    {
+      "filePath": "tools/project-understanding/lib/ownership-inference/infer-dependency-affinity.mjs",
+      "moduleId": "tools-project-understanding",
+      "classification": "mapped",
+      "reason": "root: tools/project-understanding"
+    },
+    {
+      "filePath": "tools/project-understanding/lib/ownership-inference/infer-hotspot-affinity.mjs",
+      "moduleId": "tools-project-understanding",
+      "classification": "mapped",
+      "reason": "root: tools/project-understanding"
+    },
+    {
+      "filePath": "tools/project-understanding/lib/ownership-inference/infer-path-affinity.mjs",
+      "moduleId": "tools-project-understanding",
+      "classification": "mapped",
+      "reason": "root: tools/project-understanding"
+    },
+    {
+      "filePath": "tools/project-understanding/lib/ownership-inference/infer-role-affinity.mjs",
+      "moduleId": "tools-project-understanding",
+      "classification": "mapped",
+      "reason": "root: tools/project-understanding"
+    },
+    {
+      "filePath": "tools/project-understanding/lib/ownership-inference/infer-test-affinity.mjs",
+      "moduleId": "tools-project-understanding",
+      "classification": "mapped",
+      "reason": "root: tools/project-understanding"
+    },
+    {
+      "filePath": "tools/project-understanding/lib/ownership-inference/score-ownership-signals.mjs",
+      "moduleId": "tools-project-understanding",
+      "classification": "mapped",
+      "reason": "root: tools/project-understanding"
+    },
+    {
       "filePath": "tools/project-understanding/module-mapping.mjs",
       "moduleId": "tools-project-understanding",
       "classification": "mapped",
@@ -2249,7 +2678,31 @@
       "reason": "root: tools/project-understanding"
     },
     {
+      "filePath": "tools/project-understanding/ownership-inference.mjs",
+      "moduleId": "tools-project-understanding",
+      "classification": "mapped",
+      "reason": "root: tools/project-understanding"
+    },
+    {
+      "filePath": "tools/project-understanding/ownership-inference.test.mjs",
+      "moduleId": "tools-project-understanding",
+      "classification": "mapped",
+      "reason": "root: tools/project-understanding"
+    },
+    {
       "filePath": "tools/project-understanding/repo-scanner.mjs",
+      "moduleId": "tools-project-understanding",
+      "classification": "mapped",
+      "reason": "root: tools/project-understanding"
+    },
+    {
+      "filePath": "tools/project-understanding/risk-hotspots.mjs",
+      "moduleId": "tools-project-understanding",
+      "classification": "mapped",
+      "reason": "root: tools/project-understanding"
+    },
+    {
+      "filePath": "tools/project-understanding/risk-hotspots.test.mjs",
       "moduleId": "tools-project-understanding",
       "classification": "mapped",
       "reason": "root: tools/project-understanding"
@@ -2271,7 +2724,7 @@
     {
       "fromModuleId": "electron-desktop",
       "toModuleId": "electron-gates",
-      "edgeCount": 5
+      "edgeCount": 4
     },
     {
       "fromModuleId": "electron-desktop",
@@ -2281,12 +2734,42 @@
     {
       "fromModuleId": "electron-ipc",
       "toModuleId": "electron-desktop",
+      "edgeCount": 3
+    },
+    {
+      "fromModuleId": "electron-ipc",
+      "toModuleId": "electron-gates",
+      "edgeCount": 1
+    },
+    {
+      "fromModuleId": "electron-runtime",
+      "toModuleId": "electron-gates",
+      "edgeCount": 6
+    },
+    {
+      "fromModuleId": "electron-runtime",
+      "toModuleId": "src-github",
+      "edgeCount": 5
+    },
+    {
+      "fromModuleId": "electron-runtime",
+      "toModuleId": "src-repair-engine",
+      "edgeCount": 1
+    },
+    {
+      "fromModuleId": "src-github",
+      "toModuleId": "src-repair-engine",
       "edgeCount": 1
     },
     {
       "fromModuleId": "src-operator",
       "toModuleId": "src-repair-engine",
       "edgeCount": 2
+    },
+    {
+      "fromModuleId": "src-repair-engine",
+      "toModuleId": "src-governance",
+      "edgeCount": 4
     }
   ],
   "unassignedFiles": []

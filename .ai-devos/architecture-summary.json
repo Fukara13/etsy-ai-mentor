@@ -11,7 +11,7 @@
     ]
   },
   "modules": {
-    "totalModules": 15,
+    "totalModules": 16,
     "modules": [
       {
         "name": "archive/legacy-etsy-mentor",
@@ -30,7 +30,12 @@
       },
       {
         "name": "electron/ipc",
-        "fileCount": 4,
+        "fileCount": 6,
+        "role": "domain"
+      },
+      {
+        "name": "electron/runtime",
+        "fileCount": 41,
         "role": "domain"
       },
       {
@@ -40,7 +45,7 @@
       },
       {
         "name": "src/github",
-        "fileCount": 19,
+        "fileCount": 21,
         "role": "domain"
       },
       {
@@ -60,7 +65,7 @@
       },
       {
         "name": "src/repair-engine",
-        "fileCount": 94,
+        "fileCount": 111,
         "role": "domain"
       },
       {
@@ -75,7 +80,7 @@
       },
       {
         "name": "tools/project-understanding",
-        "fileCount": 14,
+        "fileCount": 26,
         "role": "interface"
       },
       {
@@ -113,6 +118,10 @@
       },
       {
         "module": "electron/ipc",
+        "layer": "domain"
+      },
+      {
+        "module": "electron/runtime",
         "layer": "domain"
       },
       {
@@ -247,6 +256,38 @@
       "type": "cli"
     },
     {
+      "path": "tools/project-understanding/lib/ownership-inference/build-ownership-map.mjs",
+      "type": "cli"
+    },
+    {
+      "path": "tools/project-understanding/lib/ownership-inference/index.mjs",
+      "type": "cli"
+    },
+    {
+      "path": "tools/project-understanding/lib/ownership-inference/infer-dependency-affinity.mjs",
+      "type": "cli"
+    },
+    {
+      "path": "tools/project-understanding/lib/ownership-inference/infer-hotspot-affinity.mjs",
+      "type": "cli"
+    },
+    {
+      "path": "tools/project-understanding/lib/ownership-inference/infer-path-affinity.mjs",
+      "type": "cli"
+    },
+    {
+      "path": "tools/project-understanding/lib/ownership-inference/infer-role-affinity.mjs",
+      "type": "cli"
+    },
+    {
+      "path": "tools/project-understanding/lib/ownership-inference/infer-test-affinity.mjs",
+      "type": "cli"
+    },
+    {
+      "path": "tools/project-understanding/lib/ownership-inference/score-ownership-signals.mjs",
+      "type": "cli"
+    },
+    {
       "path": "tools/project-understanding/module-mapping.mjs",
       "type": "cli"
     },
@@ -255,15 +296,33 @@
       "type": "cli"
     },
     {
+      "path": "tools/project-understanding/ownership-inference.mjs",
+      "type": "cli"
+    },
+    {
+      "path": "tools/project-understanding/ownership-inference.test.mjs",
+      "type": "cli"
+    },
+    {
       "path": "tools/project-understanding/repo-scanner.mjs",
+      "type": "cli"
+    },
+    {
+      "path": "tools/project-understanding/risk-hotspots.mjs",
+      "type": "cli"
+    },
+    {
+      "path": "tools/project-understanding/risk-hotspots.test.mjs",
       "type": "cli"
     }
   ],
   "testTopology": {
-    "testFiles": 93,
+    "testFiles": 113,
     "testModules": [
       "electron/desktop",
       "electron/gates",
+      "electron/ipc",
+      "electron/runtime",
       "src/desktop",
       "src/github",
       "src/governance",
@@ -272,7 +331,7 @@
       "src/repair-engine",
       "src/shared"
     ],
-    "testDensity": 0.263
+    "testDensity": 0.265
   },
   "infrastructure": {
     "hasGitHubWorkflows": true,
@@ -284,7 +343,7 @@
     {
       "from": "electron/desktop",
       "to": "electron/gates",
-      "edgeCount": 5
+      "edgeCount": 4
     },
     {
       "from": "electron/desktop",
@@ -294,19 +353,54 @@
     {
       "from": "electron/ipc",
       "to": "electron/desktop",
+      "edgeCount": 3
+    },
+    {
+      "from": "electron/ipc",
+      "to": "electron/gates",
+      "edgeCount": 1
+    },
+    {
+      "from": "electron/runtime",
+      "to": "electron/gates",
+      "edgeCount": 6
+    },
+    {
+      "from": "electron/runtime",
+      "to": "src/github",
+      "edgeCount": 5
+    },
+    {
+      "from": "electron/runtime",
+      "to": "src/repair-engine",
+      "edgeCount": 1
+    },
+    {
+      "from": "src/github",
+      "to": "src/repair-engine",
       "edgeCount": 1
     },
     {
       "from": "src/operator",
       "to": "src/repair-engine",
       "edgeCount": 2
+    },
+    {
+      "from": "src/repair-engine",
+      "to": "src/governance",
+      "edgeCount": 4
     }
   ],
   "signals": {
     "circularDependencySignals": 1,
     "highCouplingModules": [
       "electron/desktop",
-      "electron/gates"
+      "electron/gates",
+      "electron/ipc",
+      "electron/runtime",
+      "src/github",
+      "src/governance",
+      "src/repair-engine"
     ]
   }
 }

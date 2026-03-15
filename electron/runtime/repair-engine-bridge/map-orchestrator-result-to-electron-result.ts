@@ -4,7 +4,7 @@
  * RE-12: Projects project-understanding. Projection only, no derivation.
  */
 
-import type { GovernanceBoundOrchestratorResult } from '../../../src/repair-engine/governance-runtime';
+import type { RepairEngineOrchestratorResult } from '../../../src/repair-engine/orchestrator';
 import type { ProjectUnderstandingBoundResult } from '../../../src/repair-engine/project-understanding-runtime';
 import type { RepairRunOutcome, TerminationReason } from '../../gates/repair/repair-run-outcome';
 import type { RepairOperatorHandoff } from '../../gates/repair/operator-handoff.types';
@@ -63,12 +63,13 @@ export function mapOrchestratorResultToElectronResult(
   const finalState = routingToFinalState(routing);
   const terminationReason = routingToTerminationReason(routing);
 
+  const visitedPath = Object.freeze(['ANALYZE', finalState] as readonly RepairState[]);
   const outcome: RepairRunOutcome = Object.freeze({
     sessionId: result.event.subjectId,
     initialState: 'ANALYZE',
     finalState,
     totalSteps: trace.length,
-    visitedPath: Object.freeze(['ANALYZE', finalState]),
+    visitedPath,
     halted: false,
     terminal: true,
     requiresHuman: routing.requiresOperatorReview || routing.isEscalated,

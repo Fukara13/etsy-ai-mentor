@@ -27,9 +27,12 @@ describe('allowed-ipc-channels', () => {
     }
   })
 
-  it('all channels use desktop prefix', () => {
+  it('all channels use desktop or operator prefix', () => {
     for (const ch of DESKTOP_ALLOWED_IPC_CHANNELS) {
-      expect(ch.startsWith('desktop:')).toBe(true)
+      expect(
+        ch.startsWith('desktop:') || ch.startsWith('operator:'),
+        `channel "${ch}" must start with desktop: or operator:`
+      ).toBe(true)
     }
   })
 

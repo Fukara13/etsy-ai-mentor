@@ -15,6 +15,20 @@ interface TriggerRepairInput {
   readonly metadata?: Readonly<Record<string, unknown>>
 }
 
+/** OC-7: Read-only operator advisory projection (hero-runtime). */
+interface OperatorRuntimeAdvisoryProjection {
+  readonly source: 'hero-runtime'
+  readonly status: 'completed' | 'skipped' | 'partial' | 'failed'
+  readonly advisorySummaries: readonly Readonly<{
+    readonly summary: string
+    readonly rationaleExcerpt: string
+    readonly confidence?: number
+    readonly recommendedNextStep?: string
+    readonly supportingSignalSummaries?: readonly string[]
+  }>[]
+  readonly failureSummary?: string
+}
+
 interface DesktopApi {
   system: {
     ping: () => Promise<HealthCheckResponse>
@@ -22,6 +36,16 @@ interface DesktopApi {
   }
   repair: {
     triggerRun: (input: TriggerRepairInput) => Promise<unknown>
+  }
+  read: {
+    getRepairRunView: () => Promise<unknown>
+    getStateMachineView: () => Promise<unknown>
+    getFailureTimelineView: () => Promise<unknown>
+    getGPTAnalysisView: () => Promise<unknown>
+    getRepairStrategyView: () => Promise<unknown>
+    getTelemetryView: () => Promise<unknown>
+    getDecisionView: () => Promise<unknown>
+    getOperatorAdvisoryProjection: () => Promise<OperatorRuntimeAdvisoryProjection | null>
   }
   updates: {
     checkForUpdates: () => Promise<void>

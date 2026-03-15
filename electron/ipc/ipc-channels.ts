@@ -19,6 +19,8 @@ export const IPC_CHANNELS = {
   UPDATE_AVAILABLE: 'desktop:updates:available',
   UPDATE_DOWNLOADED: 'desktop:updates:downloaded',
   TRIGGER_REPAIR_RUN: 'desktop:repair:triggerRun',
+  /** OC-7: Read-only operator advisory projection for desktop renderer. */
+  OPERATOR_GET_ADVISORY_PROJECTION: 'operator:get-advisory-projection',
 } as const
 
 export type IpcChannel = (typeof IPC_CHANNELS)[keyof typeof IPC_CHANNELS]

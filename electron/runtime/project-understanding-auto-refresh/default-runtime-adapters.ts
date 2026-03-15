@@ -28,9 +28,11 @@ export function createDefaultFsAdapter(): FsAdapter {
 export function createDefaultProcessRunner(): ProcessRunner {
   return (params) =>
     new Promise((resolve) => {
+      // On Windows, npm is typically a .cmd script; spawn needs shell to resolve it.
+      const useShell = process.platform === 'win32';
       const proc = spawn(params.command, params.args, {
         cwd: params.cwd,
-        shell: false,
+        shell: useShell,
         stdio: ['ignore', 'pipe', 'pipe'],
       });
       let stdout = '';

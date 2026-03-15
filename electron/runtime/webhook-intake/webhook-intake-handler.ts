@@ -3,6 +3,7 @@
  * OC-3: Auto-refresh project-understanding artifacts before load when needed.
  * OC-4: Hero advisory run after context is ready; advisory only, no execution authority.
  * OC-5: Operator advisory projection prepared as visibility artifact; informational only.
+ * OC-6: Optional advisory attachment in 202 response when requested via header.
  */
 
 import { normalizeGitHubEvent } from '../../../src/github/event-intake/normalize-github-event';
@@ -24,14 +25,35 @@ import {
   runHeroesRuntime,
   createDefaultHeroAdvisoryRunner,
 } from '../heroes-runtime';
-import { mapHeroRuntimeResultToOperatorAdvisoryProjection } from '../runtime-advisory-projection';
+import {
+  mapHeroRuntimeResultToOperatorAdvisoryProjection,
+  type OperatorRuntimeAdvisoryProjection,
+} from '../runtime-advisory-projection';
+import { setCurrentOperatorAdvisoryProjection } from '../operator-advisory-runtime';
 
 const PROJECT_UNDERSTANDING_FRESHNESS_MS = 5 * 60 * 1000;
+const ADVISORY_REQUEST_HEADER = 'x-ai-devos-advisory';
 
 export type WebhookHandlerResponse = {
   statusCode: number;
   body?: string;
 };
+
+/** OC-6: Accepted 202 response body may optionally include operator advisory projection. */
+export type WebhookAcceptedResponse = {
+  operatorAdvisoryProjection?: OperatorRuntimeAdvisoryProjection;
+};
+
+/**
+ * OC-6: Returns true only when client explicitly requests advisory via X-AI-DEVOS-Advisory: 1.
+ */
+export function shouldAttachAdvisoryToWebhookResponse(
+  headers: { get?: (name: string) => string | string[] | undefined }
+): boolean {
+  const raw = headers.get?.(ADVISORY_REQUEST_HEADER);
+  const value = Array.isArray(raw) ? raw[0] ?? '' : raw ?? '';
+  return String(value).trim() === '1';
+}
 
 function safeExtractPullRequest(payload: Record<string, unknown>): Record<string, unknown> | null {
   const pr = payload.pull_request;
@@ -167,6 +189,7 @@ export async function webhookIntakeHandler(params: {
     const heroResult = await runHeroesRuntime(heroInput, createDefaultHeroAdvisoryRunner());
     const operatorAdvisoryProjection =
       mapHeroRuntimeResultToOperatorAdvisoryProjection(heroResult);
+    setCurrentOperatorAdvisoryProjection(operatorAdvisoryProjection);
 
     bindProjectUnderstandingRuntime({
       result: govResult,
@@ -174,6 +197,10 @@ export async function webhookIntakeHandler(params: {
       artifactBundle,
     });
 
+    if (shouldAttachAdvisoryToWebhookResponse(params.headers)) {
+      const acceptedBody: WebhookAcceptedResponse = { operatorAdvisoryProjection };
+      return { statusCode: 202, body: JSON.stringify(acceptedBody) };
+    }
     return { statusCode: 202 };
   } catch {
     return { statusCode: 500, body: 'Internal error' };

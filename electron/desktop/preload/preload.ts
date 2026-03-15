@@ -21,6 +21,7 @@ const CHANNELS = {
   UPDATE_AVAILABLE: 'desktop:updates:available',
   UPDATE_DOWNLOADED: 'desktop:updates:downloaded',
   TRIGGER_REPAIR_RUN: 'desktop:repair:triggerRun',
+  OPERATOR_GET_ADVISORY_PROJECTION: 'operator:get-advisory-projection',
 }
 
 const desktopApi = {
@@ -54,6 +55,8 @@ const desktopApi = {
     getRepairStrategyView: () => ipcRenderer.invoke(CHANNELS.GET_REPAIR_STRATEGY_VIEW),
     getTelemetryView: () => ipcRenderer.invoke(CHANNELS.GET_TELEMETRY_VIEW),
     getDecisionView: () => ipcRenderer.invoke(CHANNELS.GET_DECISION_VIEW),
+    getOperatorAdvisoryProjection: () =>
+      ipcRenderer.invoke(CHANNELS.OPERATOR_GET_ADVISORY_PROJECTION),
   },
 }
 

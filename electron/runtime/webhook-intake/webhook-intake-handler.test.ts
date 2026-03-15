@@ -3,7 +3,10 @@
  */
 
 import { describe, it, expect, vi } from 'vitest';
-import { webhookIntakeHandler } from './webhook-intake-handler';
+import {
+  webhookIntakeHandler,
+  shouldAttachAdvisoryToWebhookResponse,
+} from './webhook-intake-handler';
 
 vi.mock('../project-understanding-auto-refresh', () => ({
   refreshProjectUnderstanding: vi.fn().mockResolvedValue({
@@ -145,6 +148,116 @@ describe('RE-13: webhookIntakeHandler', () => {
       expect(res.body).toContain('Internal');
     } finally {
       spy.mockRestore();
+    }
+  });
+});
+
+describe('OC-6: shouldAttachAdvisoryToWebhookResponse', () => {
+  it('returns true only when header value is "1"', () => {
+    expect(
+      shouldAttachAdvisoryToWebhookResponse(headers({ 'x-ai-devos-advisory': '1' }))
+    ).toBe(true);
+    expect(
+      shouldAttachAdvisoryToWebhookResponse(headers({ 'x-ai-devos-advisory': ' 1 ' }))
+    ).toBe(true);
+  });
+
+  it('returns false when header is absent', () => {
+    expect(shouldAttachAdvisoryToWebhookResponse(headers())).toBe(false);
+  });
+
+  it('returns false for non-trigger values', () => {
+    expect(
+      shouldAttachAdvisoryToWebhookResponse(headers({ 'x-ai-devos-advisory': '0' }))
+    ).toBe(false);
+    expect(
+      shouldAttachAdvisoryToWebhookResponse(headers({ 'x-ai-devos-advisory': '' }))
+    ).toBe(false);
+    expect(
+      shouldAttachAdvisoryToWebhookResponse(headers({ 'x-ai-devos-advisory': 'true' }))
+    ).toBe(false);
+  });
+});
+
+describe('OC-6: optional advisory attachment', () => {
+  it('when X-AI-DEVOS-Advisory: 1, response includes operatorAdvisoryProjection', async () => {
+    const res = await webhookIntakeHandler({
+      method: 'POST',
+      headers: headers({
+        'x-github-event': 'workflow_run',
+        'x-ai-devos-advisory': '1',
+      }),
+      rawBody: JSON.stringify(workflowRunPayload),
+    });
+    expect(res.statusCode).toBe(202);
+    expect(res.body).toBeDefined();
+    const parsed = JSON.parse(res.body!) as { operatorAdvisoryProjection?: unknown };
+    expect(parsed.operatorAdvisoryProjection).toBeDefined();
+    const proj = parsed.operatorAdvisoryProjection as Record<string, unknown>;
+    expect(proj.source).toBe('hero-runtime');
+    expect(proj.status).toBeDefined();
+    expect(Array.isArray(proj.advisorySummaries)).toBe(true);
+    expect(proj.selectedHeroIds).toBeUndefined();
+    expect(proj.execute).toBeUndefined();
+    expect(proj.approve).toBeUndefined();
+  });
+
+  it('when header absent, response body is unchanged (no advisory)', async () => {
+    const res = await webhookIntakeHandler({
+      method: 'POST',
+      headers: headers({ 'x-github-event': 'workflow_run' }),
+      rawBody: JSON.stringify(workflowRunPayload),
+    });
+    expect(res.statusCode).toBe(202);
+    expect(res.body).toBeUndefined();
+  });
+
+  it('when X-AI-DEVOS-Advisory is 0, advisory is not attached', async () => {
+    const res = await webhookIntakeHandler({
+      method: 'POST',
+      headers: headers({
+        'x-github-event': 'workflow_run',
+        'x-ai-devos-advisory': '0',
+      }),
+      rawBody: JSON.stringify(workflowRunPayload),
+    });
+    expect(res.statusCode).toBe(202);
+    expect(res.body).toBeUndefined();
+  });
+
+  it('when X-AI-DEVOS-Advisory is empty string, advisory is not attached', async () => {
+    const res = await webhookIntakeHandler({
+      method: 'POST',
+      headers: headers({
+        'x-github-event': 'workflow_run',
+        'x-ai-devos-advisory': '',
+      }),
+      rawBody: JSON.stringify(workflowRunPayload),
+    });
+    expect(res.statusCode).toBe(202);
+    expect(res.body).toBeUndefined();
+  });
+
+  it('projection in response has same shape as runtime mapping', async () => {
+    const res = await webhookIntakeHandler({
+      method: 'POST',
+      headers: headers({
+        'x-github-event': 'workflow_run',
+        'x-ai-devos-advisory': '1',
+      }),
+      rawBody: JSON.stringify(workflowRunPayload),
+    });
+    const parsed = JSON.parse(res.body!) as { operatorAdvisoryProjection?: Record<string, unknown> };
+    const proj = parsed.operatorAdvisoryProjection;
+    expect(proj).toBeDefined();
+    expect(proj!.source).toBe('hero-runtime');
+    expect(['completed', 'skipped', 'partial', 'failed']).toContain(proj!.status);
+    expect(Array.isArray(proj!.advisorySummaries)).toBe(true);
+    if ((proj!.advisorySummaries as unknown[]).length > 0) {
+      const item = (proj!.advisorySummaries as Record<string, unknown>[])[0];
+      expect(typeof item.summary).toBe('string');
+      expect(typeof item.rationaleExcerpt).toBe('string');
+      expect(item.heroId).toBeUndefined();
     }
   });
 });
