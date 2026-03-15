@@ -2,6 +2,7 @@
  * RE-13: Webhook intake handler. Runs canonical pipeline for valid GitHub webhooks.
  * OC-3: Auto-refresh project-understanding artifacts before load when needed.
  * OC-4: Hero advisory run after context is ready; advisory only, no execution authority.
+ * OC-5: Operator advisory projection prepared as visibility artifact; informational only.
  */
 
 import { normalizeGitHubEvent } from '../../../src/github/event-intake/normalize-github-event';
@@ -23,6 +24,7 @@ import {
   runHeroesRuntime,
   createDefaultHeroAdvisoryRunner,
 } from '../heroes-runtime';
+import { mapHeroRuntimeResultToOperatorAdvisoryProjection } from '../runtime-advisory-projection';
 
 const PROJECT_UNDERSTANDING_FRESHNESS_MS = 5 * 60 * 1000;
 
@@ -163,6 +165,8 @@ export async function webhookIntakeHandler(params: {
       ),
     };
     const heroResult = await runHeroesRuntime(heroInput, createDefaultHeroAdvisoryRunner());
+    const operatorAdvisoryProjection =
+      mapHeroRuntimeResultToOperatorAdvisoryProjection(heroResult);
 
     bindProjectUnderstandingRuntime({
       result: govResult,
