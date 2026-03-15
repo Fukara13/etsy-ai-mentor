@@ -1,8 +1,10 @@
 /**
  * RE-13: Minimal HTTP server for webhook intake.
+ * OC-2: Signature verification guard runs before intake.
  */
 
 import * as http from 'http';
+import { verifyWebhookSignature } from '../webhook-security';
 import { webhookIntakeHandler } from './webhook-intake-handler';
 
 const DEFAULT_PATH = '/webhook';
@@ -22,13 +24,20 @@ function toHeadersRecord(req: http.IncomingMessage): { get?: (name: string) => s
   };
 }
 
+function getDefaultWebhookSecret(): string | undefined {
+  const v = process.env.WEBHOOK_SECRET;
+  return typeof v === 'string' ? v : undefined;
+}
+
 export function createWebhookServer(options?: {
   path?: string;
   port?: number;
   cwd?: string;
+  getWebhookSecret?: () => string | undefined;
 }): http.Server {
   const path = options?.path ?? DEFAULT_PATH;
   const cwd = options?.cwd ?? process.cwd();
+  const getSecret = options?.getWebhookSecret ?? getDefaultWebhookSecret;
 
   return http.createServer(async (req, res) => {
     const url = req.url ?? '';
@@ -46,6 +55,22 @@ export function createWebhookServer(options?: {
     } catch {
       res.writeHead(500);
       res.end();
+      return;
+    }
+
+    const verification = verifyWebhookSignature({
+      headers: toHeadersRecord(req),
+      rawBody,
+      getSecret,
+    });
+
+    if (!verification.accepted) {
+      const body = JSON.stringify({
+        status: 'rejected',
+        reason: verification.reason,
+      });
+      res.writeHead(401, { 'Content-Type': 'application/json' });
+      res.end(body);
       return;
     }
 
