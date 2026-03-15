@@ -20,6 +20,7 @@ const CHANNELS = {
   INSTALL_UPDATE: 'desktop:updates:install',
   UPDATE_AVAILABLE: 'desktop:updates:available',
   UPDATE_DOWNLOADED: 'desktop:updates:downloaded',
+  TRIGGER_REPAIR_RUN: 'desktop:repair:triggerRun',
 }
 
 const desktopApi = {
@@ -40,6 +41,10 @@ const desktopApi = {
       ipcRenderer.on(CHANNELS.UPDATE_DOWNLOADED, fn)
       return () => ipcRenderer.removeListener(CHANNELS.UPDATE_DOWNLOADED, fn)
     },
+  },
+  repair: {
+    triggerRun: (input: { source?: string; sessionId?: string; metadata?: Record<string, unknown> }) =>
+      ipcRenderer.invoke(CHANNELS.TRIGGER_REPAIR_RUN, input),
   },
   read: {
     getRepairRunView: () => ipcRenderer.invoke(CHANNELS.GET_REPAIR_RUN_VIEW),

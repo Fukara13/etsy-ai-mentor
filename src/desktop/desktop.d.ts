@@ -8,10 +8,20 @@ interface HealthCheckResponse {
   source: 'main'
 }
 
+/** Minimal input for repair.triggerRun. */
+interface TriggerRepairInput {
+  readonly source?: string
+  readonly sessionId?: string
+  readonly metadata?: Readonly<Record<string, unknown>>
+}
+
 interface DesktopApi {
   system: {
     ping: () => Promise<HealthCheckResponse>
     getVersion: () => Promise<string>
+  }
+  repair: {
+    triggerRun: (input: TriggerRepairInput) => Promise<unknown>
   }
   updates: {
     checkForUpdates: () => Promise<void>
