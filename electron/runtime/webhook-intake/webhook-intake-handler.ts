@@ -30,6 +30,7 @@ import {
   type OperatorRuntimeAdvisoryProjection,
 } from '../runtime-advisory-projection';
 import { setCurrentOperatorAdvisoryProjection } from '../operator-advisory-runtime';
+import { readOperatorVisibilitySnapshot } from '../operator-visibility';
 
 const PROJECT_UNDERSTANDING_FRESHNESS_MS = 5 * 60 * 1000;
 const ADVISORY_REQUEST_HEADER = 'x-ai-devos-advisory';
@@ -198,7 +199,12 @@ export async function webhookIntakeHandler(params: {
     });
 
     if (shouldAttachAdvisoryToWebhookResponse(params.headers)) {
-      const acceptedBody: WebhookAcceptedResponse = { operatorAdvisoryProjection };
+      const snapshot = readOperatorVisibilitySnapshot();
+      const acceptedBody: WebhookAcceptedResponse = {
+        ...(snapshot.advisoryProjection != null && {
+          operatorAdvisoryProjection: snapshot.advisoryProjection,
+        }),
+      };
       return { statusCode: 202, body: JSON.stringify(acceptedBody) };
     }
     return { statusCode: 202 };
