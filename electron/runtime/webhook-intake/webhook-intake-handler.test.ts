@@ -5,6 +5,20 @@
 import { describe, it, expect, vi } from 'vitest';
 import { webhookIntakeHandler } from './webhook-intake-handler';
 
+vi.mock('../project-understanding-auto-refresh', () => ({
+  refreshProjectUnderstanding: vi.fn().mockResolvedValue({
+    status: 'skipped',
+    reason: 'fresh-enough',
+    artifactPaths: [],
+    commandsRun: [],
+    startedAt: '',
+    finishedAt: '',
+    durationMs: 0,
+  }),
+  createDefaultFsAdapter: vi.fn(),
+  createDefaultProcessRunner: vi.fn(),
+}));
+
 const workflowRunPayload = {
   action: 'completed',
   workflow_run: {
@@ -42,8 +56,8 @@ function headers(overrides: Record<string, string> = {}): { get: (n: string) => 
 }
 
 describe('RE-13: webhookIntakeHandler', () => {
-  it('valid workflow_run returns 202', () => {
-    const res = webhookIntakeHandler({
+  it('valid workflow_run returns 202', async () => {
+    const res = await webhookIntakeHandler({
       method: 'POST',
       headers: headers({ 'x-github-event': 'workflow_run' }),
       rawBody: JSON.stringify(workflowRunPayload),
@@ -51,8 +65,8 @@ describe('RE-13: webhookIntakeHandler', () => {
     expect(res.statusCode).toBe(202);
   });
 
-  it('valid pull_request returns 202', () => {
-    const res = webhookIntakeHandler({
+  it('valid pull_request returns 202', async () => {
+    const res = await webhookIntakeHandler({
       method: 'POST',
       headers: headers({ 'x-github-event': 'pull_request' }),
       rawBody: JSON.stringify(pullRequestPayload),
@@ -60,8 +74,8 @@ describe('RE-13: webhookIntakeHandler', () => {
     expect(res.statusCode).toBe(202);
   });
 
-  it('invalid JSON returns 400', () => {
-    const res = webhookIntakeHandler({
+  it('invalid JSON returns 400', async () => {
+    const res = await webhookIntakeHandler({
       method: 'POST',
       headers: headers(),
       rawBody: 'not json',
@@ -70,8 +84,8 @@ describe('RE-13: webhookIntakeHandler', () => {
     expect(res.body).toContain('Invalid');
   });
 
-  it('unsupported method returns 405', () => {
-    const res = webhookIntakeHandler({
+  it('unsupported method returns 405', async () => {
+    const res = await webhookIntakeHandler({
       method: 'GET',
       headers: headers(),
       rawBody: JSON.stringify(workflowRunPayload),
@@ -79,8 +93,8 @@ describe('RE-13: webhookIntakeHandler', () => {
     expect(res.statusCode).toBe(405);
   });
 
-  it('missing X-GitHub-Event returns 400', () => {
-    const res = webhookIntakeHandler({
+  it('missing X-GitHub-Event returns 400', async () => {
+    const res = await webhookIntakeHandler({
       method: 'POST',
       headers: headers({ 'x-github-event': '' }),
       rawBody: JSON.stringify(workflowRunPayload),
@@ -88,8 +102,8 @@ describe('RE-13: webhookIntakeHandler', () => {
     expect(res.statusCode).toBe(400);
   });
 
-  it('empty body returns 400', () => {
-    const res = webhookIntakeHandler({
+  it('empty body returns 400', async () => {
+    const res = await webhookIntakeHandler({
       method: 'POST',
       headers: headers(),
       rawBody: '',
@@ -97,18 +111,18 @@ describe('RE-13: webhookIntakeHandler', () => {
     expect(res.statusCode).toBe(400);
   });
 
-  it('no crash on malformed input', () => {
-    expect(() =>
+  it('no crash on malformed input', async () => {
+    await expect(
       webhookIntakeHandler({
         method: 'POST',
         headers: headers(),
         rawBody: '{{{',
       })
-    ).not.toThrow();
+    ).resolves.toBeDefined();
   });
 
-  it('pipeline invoked for valid event', () => {
-    const res = webhookIntakeHandler({
+  it('pipeline invoked for valid event', async () => {
+    const res = await webhookIntakeHandler({
       method: 'POST',
       headers: headers({ 'x-github-event': 'workflow_run' }),
       rawBody: JSON.stringify(workflowRunPayload),
@@ -122,7 +136,7 @@ describe('RE-13: webhookIntakeHandler', () => {
       throw new Error('pipeline error');
     });
     try {
-      const res = webhookIntakeHandler({
+      const res = await webhookIntakeHandler({
         method: 'POST',
         headers: headers({ 'x-github-event': 'workflow_run' }),
         rawBody: JSON.stringify(workflowRunPayload),

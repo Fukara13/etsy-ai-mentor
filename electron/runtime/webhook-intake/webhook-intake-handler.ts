@@ -1,5 +1,6 @@
 /**
  * RE-13: Webhook intake handler. Runs canonical pipeline for valid GitHub webhooks.
+ * OC-3: Auto-refresh project-understanding artifacts before load when needed.
  */
 
 import { normalizeGitHubEvent } from '../../../src/github/event-intake/normalize-github-event';
@@ -12,6 +13,13 @@ import { bindGovernanceRuntime } from '../../../src/repair-engine/governance-run
 import { loadProjectUnderstandingArtifacts } from '../project-understanding-loader';
 import { bindProjectUnderstandingRuntime } from '../../../src/repair-engine/project-understanding-runtime';
 import { parseWebhookRequest } from './parse-webhook-request';
+import {
+  refreshProjectUnderstanding,
+  createDefaultFsAdapter,
+  createDefaultProcessRunner,
+} from '../project-understanding-auto-refresh';
+
+const PROJECT_UNDERSTANDING_FRESHNESS_MS = 5 * 60 * 1000;
 
 export type WebhookHandlerResponse = {
   statusCode: number;
@@ -72,12 +80,12 @@ function buildInspectionInputFromPayload(payload: Record<string, unknown>): {
   };
 }
 
-export function webhookIntakeHandler(params: {
+export async function webhookIntakeHandler(params: {
   method: string;
   headers: { get?: (name: string) => string | string[] | undefined };
   rawBody: string;
   cwd?: string;
-}): WebhookHandlerResponse {
+}): Promise<WebhookHandlerResponse> {
   const parseResult = parseWebhookRequest({
     method: params.method,
     headers: params.headers,
@@ -113,8 +121,28 @@ export function webhookIntakeHandler(params: {
     const orchResult = orchestrateRepairEngine(orchestratorInput);
     const govResult = bindGovernanceRuntime(orchResult);
 
+    const cwd = params.cwd ?? process.cwd();
+    const refreshResult = await refreshProjectUnderstanding({
+      cwd,
+      freshnessWindowMs: PROJECT_UNDERSTANDING_FRESHNESS_MS,
+      eventCategory: backboneEvent.category,
+      eventName: backboneEvent.eventKind,
+      fsAdapter: createDefaultFsAdapter(),
+      processRunner: createDefaultProcessRunner(),
+    });
+    if (refreshResult.status === 'failed') {
+      return {
+        statusCode: 503,
+        body: JSON.stringify({
+          error: 'project-understanding-refresh-failed',
+          reason: refreshResult.reason,
+          exitCode: refreshResult.exitCode,
+        }),
+      };
+    }
+
     const changedFiles = inspectionResult?.changedFiles?.map((f) => f.path) ?? [];
-    const artifactBundle = loadProjectUnderstandingArtifacts(params.cwd ?? process.cwd());
+    const artifactBundle = loadProjectUnderstandingArtifacts(cwd);
     bindProjectUnderstandingRuntime({
       result: govResult,
       changedFiles,

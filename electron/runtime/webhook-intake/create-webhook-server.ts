@@ -74,7 +74,7 @@ export function createWebhookServer(options?: {
       return;
     }
 
-    const response = webhookIntakeHandler({
+    const response = await webhookIntakeHandler({
       method,
       headers: toHeadersRecord(req),
       rawBody,
