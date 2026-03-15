@@ -1,6 +1,7 @@
 /**
  * RE-13: Webhook intake handler. Runs canonical pipeline for valid GitHub webhooks.
  * OC-3: Auto-refresh project-understanding artifacts before load when needed.
+ * OC-4: Hero advisory run after context is ready; advisory only, no execution authority.
  */
 
 import { normalizeGitHubEvent } from '../../../src/github/event-intake/normalize-github-event';
@@ -18,6 +19,10 @@ import {
   createDefaultFsAdapter,
   createDefaultProcessRunner,
 } from '../project-understanding-auto-refresh';
+import {
+  runHeroesRuntime,
+  createDefaultHeroAdvisoryRunner,
+} from '../heroes-runtime';
 
 const PROJECT_UNDERSTANDING_FRESHNESS_MS = 5 * 60 * 1000;
 
@@ -143,6 +148,22 @@ export async function webhookIntakeHandler(params: {
 
     const changedFiles = inspectionResult?.changedFiles?.map((f) => f.path) ?? [];
     const artifactBundle = loadProjectUnderstandingArtifacts(cwd);
+
+    const heroInput = {
+      eventCategory: backboneEvent.category,
+      eventKind: backboneEvent.eventKind,
+      action: backboneEvent.action,
+      summary: backboneEvent.summary,
+      repositoryFullName: backboneEvent.repository?.fullName,
+      subjectId: backboneEvent.subjectId,
+      deliveryId: backboneEvent.deliveryId,
+      changedFilePaths: changedFiles,
+      hasArtifactBundle: Boolean(
+        artifactBundle.architectureSummary ?? artifactBundle.dependencyGraph ?? artifactBundle.moduleMap
+      ),
+    };
+    const heroResult = await runHeroesRuntime(heroInput, createDefaultHeroAdvisoryRunner());
+
     bindProjectUnderstandingRuntime({
       result: govResult,
       changedFiles,
